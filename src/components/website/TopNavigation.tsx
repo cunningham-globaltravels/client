@@ -1,10 +1,8 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-//import classNames from 'classnames';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-// import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../ui/select';
 import { Search, Menu, X, UserPlus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';

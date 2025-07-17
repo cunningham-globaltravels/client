@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+.wrapper {
+  @apply min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-2;
+}
+.auth-content {
+  @apply flex justify-center items-center my-4;
+}
+.static-options {
+  @apply my-4 font-normal text-xs leading-4;
+}
+.static-display {
+  -webkit-box-align: center;
+  @apply flex items-center my-2 mx-0 whitespace-nowrap;
+}
+.static-display::before {
+  @apply content-[''] block w-full h-[1px] bg-[#E1E6EF] mr-4;
+}
+.static-display::after {
+  @apply content-[''] block w-full h-[1px] bg-[#E1E6EF] ml-4;
+}
+.login-options {
+  @apply block mb-3;
+}
+.login-option-wrapper {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-box-lines: multiple;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  @apply flex justify-between gap-4;
+}
