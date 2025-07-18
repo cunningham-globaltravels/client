@@ -126,12 +126,7 @@ const FeatureProperty = () => {
           <div className={`px-8 pt-4 pb-12 bg-white slide-container`}>
             <Slider ref={sliderRef} {...settings}>
               {propertyList.map((item) => (
-                <div
-                  ref={(el) => (cardsRef.current[item.id] = el)}
-                  key={item.id}
-                  className=' shrink-0 px-2'
-                  style={{ width: `${cardWidth}px` }}
-                >
+                <div key={item.id} className=' shrink-0 px-2' style={{ width: `${cardWidth}px` }}>
                   <PropertyItem {...item} />
                 </div>
               ))}

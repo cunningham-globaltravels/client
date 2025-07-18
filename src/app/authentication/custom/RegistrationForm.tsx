@@ -111,12 +111,12 @@ const RegistrationForm = () => {
           {/* Confirm Password */}
           <div className='mb-2'>
             <Label htmlFor='password' className='block text-sm font-medium text-[#667085] mb-2'>
-              confirmPassword
+              Confirm Password
             </Label>
             <Input
               id='password'
               type='password'
-              placeholder='Password'
+              placeholder='Confirm Password'
               {...register('confirmPassword')}
               className={`w-full p-3 border rounded-md focus:outline-none focus:ring-1 focus:ring-gray-200 placeholder:text-gray-400 transition duration-200 focus-visible:border-ring focus-visible:ring-ring/10 focus-visible:ring-[1px] ${
                 errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
@@ -154,7 +154,7 @@ const RegistrationForm = () => {
             <div className='flex items-start'>
               <SVGIcon fileName='google-socials.svg' width={20} height={16} alt='Mail' />
               <div className='w-1/2 mx-auto'>
-                <span className='font-sans font-medium text-base leading-6'>Login with Google</span>
+                <span className='font-sans font-medium text-base leading-6'>Sign Up with Google</span>
               </div>
             </div>
           </Button>
@@ -162,7 +162,7 @@ const RegistrationForm = () => {
             <div className='flex items-start'>
               <SVGIcon fileName='icon-apple.svg' width={20} height={16} alt='Mail' />
               <div className='w-1/2 mx-auto'>
-                <span className='font-sans font-medium text-base leading-6'>Login with Apple</span>
+                <span className='font-sans font-medium text-base leading-6'>Sign Up with Apple</span>
               </div>
             </div>
           </Button>

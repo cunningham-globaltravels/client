@@ -40,7 +40,7 @@ const AuthenticationForm = ({ tabs }: IAuthTabProps) => {
           ))}
         </TabsList>
         {tabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value} ref={(el) => (contentRefs.current[tab.value] = el)}>
+          <TabsContent key={tab.value} value={tab.value}>
             {tab.content}
           </TabsContent>
         ))}

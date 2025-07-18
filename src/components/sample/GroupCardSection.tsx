@@ -54,7 +54,7 @@ const GroupCardSection = () => {
     <section className={`w-full max-w-[62rem] mx-auto overflow-hidden mt-32 mb-12`}>
       <Slider ref={sliderRef} {...settings}>
         {cards.map((item, idx) => (
-          <div key={item.id} className={styles.cardWrapper} ref={(el) => (cardRefs.current[idx] = el)}>
+          <div key={item.id} className={styles.cardWrapper}>
             <div
               onMouseEnter={() =>
                 gsap.to(cardRefs.current[idx], {

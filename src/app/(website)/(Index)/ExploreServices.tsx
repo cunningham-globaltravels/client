@@ -80,13 +80,8 @@ const ExploreServices = () => {
     <section className='w-full max-w-[62rem] mx-auto overflow-hidden mt-52 mb-12'>
       <div className={`p-8 bg-white slide-container`}>
         <Slider ref={sliderRef} {...settings}>
-          {cgtServiceList.map((card, i) => (
-            <div
-              key={card.id}
-              ref={(el) => (cardsRef.current[i] = el)}
-              className='shrink-0 px-2'
-              style={{ width: `${cardWidth}px` }}
-            >
+          {cgtServiceList.map((card) => (
+            <div key={card.id} className='shrink-0 px-2' style={{ width: `${cardWidth}px` }}>
               <Card className='h-full shadow-lg bg-gray-100 hover:bg-gray-200 transition-transform duration-300'>
                 <CardContent className='p-4'>
                   <div className='flex flex-row'>

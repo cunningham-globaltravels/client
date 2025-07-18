@@ -150,12 +150,7 @@ const TrendingFlight = () => {
         <div ref={containerRef} className='px-8 pt-4 pb-12 slide-container overflow-hidden scroll-smooth'>
           <Slider ref={sliderRef} {...settings}>
             {destinationList.map((item) => (
-              <div
-                ref={(el) => (cardsRef.current[item.id] = el)}
-                key={item.id}
-                className=' shrink-0 px-2'
-                style={{ width: `${cardWidth}px` }}
-              >
+              <div key={item.id} className=' shrink-0 px-2' style={{ width: `${cardWidth}px` }}>
                 <Card className='py-2 rounded-sm shadow-lg transition-transform duration-300 w-full shrink-0 card-mdf'>
                   <CardContent className='p-0'>
                     <div className={styles.cardWrapper}>
@@ -221,7 +216,7 @@ const TrendingFlight = () => {
                       </div>
                     </div>
                   </CardContent>
-                  <CardFooter ref={(el) => (cardsRef.current[item.id] = el)} className='my-4'>
+                  <CardFooter className='my-4'>
                     <div className='w-full py-0 pb-2 flex justify-between'>
                       <Image src={'/images/logo/Airline Logo.png'} alt='qatar Airways' width={67} height={22.86} />
                       <Button
