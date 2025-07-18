@@ -25,7 +25,12 @@ const HeroTabPanel: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
     animateIn(activeTab);
   }, [activeTab]);
   return (
-    <Tabs value={activeTab} defaultValue={firstTabValue} onValueChange={setActiveTab} className='relative w-full'>
+    <Tabs
+      value={activeTab}
+      defaultValue={firstTabValue}
+      onValueChange={setActiveTab}
+      className='relative w-full bg-[#D9F0F6]'
+    >
       <TabsList className='bg-[#121826CC] flex flex-wrap md:flex-nowrap w-full justify-start gap-2 overflow-x-auto'>
         {tabs.map(({ value, label, icon: Icon }) => (
           <TabsTrigger
@@ -42,8 +47,8 @@ const HeroTabPanel: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
       </TabsList>
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
-          <Card className='card-wrapper destination-card absolute top-[4px] left-1/2 transform -translate-x-1/2 -translate-y-[9%] w-full lg:w-[130%] max-w-[80rem] bg-white backdrop-blur-md border-white/20 text-gray-700 pointer-events-auto hover:bg-white/80 transition-all cursor-pointer group'>
-            <CardContent className='px-4 box-border rounded-xl'>{tab.content}</CardContent>
+          <Card className='destination-card absolute top-[35px] left-1/2 transform -translate-x-1/2 -translate-y-[0%] w-[110%] bg-white backdrop-blur-md border-white/20 text-gray-700 pointer-events-auto hover:bg-white/80 transition-all cursor-pointer group'>
+            <CardContent className='px-4'>{tab.content}</CardContent>
           </Card>
         </TabsContent>
       ))}
