@@ -16,6 +16,11 @@ export interface ITabItem {
   content?: React.ReactNode;
 }
 
+export interface ICategoryTabItem extends ITabItem {
+  amount?: string;
+  timeline?: string;
+}
+
 export type TStarRatingProps = {
   rating: number;
   maxStars?: number;

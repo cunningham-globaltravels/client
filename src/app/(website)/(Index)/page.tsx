@@ -9,6 +9,7 @@ import FeatureDeals from './FeatureDeals';
 import RecomendedCars from './RecomendedCars';
 import PopularAttraction from './PopularAttraction';
 import FeatureProperty from './FeatureProperty';
+import FeatureDealsBottom from './FeatureDealsBottom';
 
 const page = () => {
   return (
@@ -21,6 +22,7 @@ const page = () => {
         <RecomendedCars />
         <FeatureProperty />
         <PopularAttraction />
+        <FeatureDealsBottom />
       </div>
     </main>
   );

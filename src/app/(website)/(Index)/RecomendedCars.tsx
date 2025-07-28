@@ -1,8 +1,9 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { gsap } from 'gsap';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import SVGIcon from '@/components/defaults/SVGIcons';
 import { Button } from '@/components/ui/button';
@@ -44,7 +45,53 @@ const productList: TCarRecommended[] = Array.from({ length: 6 }, (_, i) => ({
 }));
 
 const RecomendedCars = () => {
+  const [currentIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef(new Map());
+  const cardWidth = 300; // You can adjust this
+
+  const scrollToIndex = (i: number) => {
+    const offset = i * cardWidth;
+    containerRef.current?.scrollTo({
+      left: offset,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    scrollToIndex(currentIndex);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    cardsRef.current.forEach((card) => {
+      if (card) {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: -50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.2,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 90%',
+              toggleActions: 'play none none reverse',
+            },
+          }
+        );
+      }
+    });
+  }, []);
+
+  const setRef = (el: unknown, index: number) => {
+    if (el) {
+      cardsRef.current.set(index, el);
+    } else {
+      cardsRef.current.delete(index);
+    }
+  };
 
   const settings = {
     slidesToShow: 3,
@@ -87,11 +134,16 @@ const RecomendedCars = () => {
           </div>
         </CardTitle>
         <CardContent>
-          <div className={`px-8 pt-4 pb-12 bg-white slide-container`}>
+          <div ref={containerRef} className={`px-8 pt-4 pb-12 bg-white slide-container`}>
             <Slider ref={sliderRef} {...settings}>
-              {productList.map((product) => (
-                <div key={product.id} className=' shrink-0'>
-                  <CarRecommendedProfile {...product} />
+              {productList.map((item) => (
+                <div
+                  ref={(el) => setRef(el, item.id)}
+                  key={item.id}
+                  className=' shrink-0 px-2'
+                  style={{ width: `${cardWidth}px` }}
+                >
+                  <CarRecommendedProfile {...item} />
                 </div>
               ))}
             </Slider>

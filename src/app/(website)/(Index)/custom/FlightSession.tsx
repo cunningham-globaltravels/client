@@ -10,6 +10,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
+import { useRouter } from 'next/navigation';
 
 const flightSchema = z.object({
   comingFrom: z.string().min(2),
@@ -20,6 +21,7 @@ const flightSchema = z.object({
 type FlightFormValues = z.infer<typeof flightSchema>;
 
 const FlightSession = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -29,7 +31,10 @@ const FlightSession = () => {
   });
 
   const onSubmit = (data: FlightFormValues) => {
-    console.log(`Destination Profile recorded: ${data}`);
+    localStorage.setItem('flightprofile', JSON.stringify(data));
+    router.push('/flight/profile');
+    //router.push('/flight', { state: { profile: data } });
+    //console.log(`Destination Profile recorded: ${data}`);
     // Handle the login logic here (e.g., API call to authenticate)
   };
 

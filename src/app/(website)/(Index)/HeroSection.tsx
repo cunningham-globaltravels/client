@@ -74,39 +74,44 @@ const HeroSection = () => {
     return () => ctx.revert();
   }, []);
   return (
-    <section>
-      <div className='bg-overlay'>
-        <div ref={heroRef} className=' container row-rep py-20 lg:py-12'>
-          <div className='pb-0'>
-            <div className='w-full flex flex-col justify-center items-center gap-2'>
-              <h1 ref={titleRef} className='text-xl font-normal md:text-3xl lg:text-5xl md:leading-[67.2px]'>
-                UAB Cunningham Global Travel
-              </h1>
-              <h5
-                ref={subtitleRef}
-                className='text-base font-light md:text-xl text-[#666666] max-w-xl lg:max-w-2xl text-center'
-              >
-                Lörem ipsum stenonat sprängbälte. Dampa olig. Kåsm ast, poktigt. Finanssmälta mir i kov trar. Preras
-                resat innan esås.
-              </h5>
-              <div
-                ref={buttonsRef}
-                className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-8 '
-              >
-                {heroProfileData.map((profile) => (
-                  <div key={profile.name} className='flex flex-col items-center gap-2 w-full'>
-                    <Button
-                      variant={'outline'}
-                      size={'lg'}
-                      className='shadow-2xl border-[1px] w-fit hover:bg-orange-50'
-                    >
-                      <SVGIcon fileName={profile.fileName} alt={profile.alt} />
-                      <span className=' font-light text-gray-600 hover:text-gray-800 text-center text-xs md:text-sm leading-5'>
-                        {profile.name}
-                      </span>
-                    </Button>
-                  </div>
-                ))}
+    <section className='hero-section'>
+      <div className='wrapper h-[25rem]'>
+        <div className='wrapper-overlay'>
+          <div ref={heroRef} className=' container row-rep py-20 lg:py-12'>
+            <div className='pb-0'>
+              <div className='w-full flex flex-col justify-center items-center gap-2'>
+                <h1
+                  ref={titleRef}
+                  className='text-xl font-normal text-white md:text-3xl lg:text-5xl md:leading-[67.2px] mt-8'
+                >
+                  Cunningham Global Travel
+                </h1>
+                <h5
+                  ref={subtitleRef}
+                  className='text-base font-light md:text-xl text-gray-200 max-w-xl lg:max-w-2xl text-center'
+                >
+                  Lörem ipsum stenonat sprängbälte. Dampa olig. Kåsm ast, poktigt. Finanssmälta mir i kov trar. Preras
+                  resat innan esås.
+                </h5>
+                <div
+                  ref={buttonsRef}
+                  className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-8 '
+                >
+                  {heroProfileData.map((profile) => (
+                    <div key={profile.name} className='flex flex-col items-center gap-2 w-full'>
+                      <Button
+                        variant={'outline'}
+                        size={'lg'}
+                        className='shadow-2xl border-[1px] w-fit hover:bg-orange-50'
+                      >
+                        <SVGIcon fileName={profile.fileName} alt={profile.alt} />
+                        <span className=' font-light text-gray-600 hover:text-gray-800 text-center text-xs md:text-sm leading-5'>
+                          {profile.name}
+                        </span>
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

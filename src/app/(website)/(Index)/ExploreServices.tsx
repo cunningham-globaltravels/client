@@ -23,7 +23,8 @@ const ExploreServices = () => {
 
   const sliderRef = useRef<Slider>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  //const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardsRef = useRef(new Map());
 
   //const visibleCards = 3; // Total cards shown per view including extras
   const cardWidth = 300; // You can adjust this
@@ -53,7 +54,7 @@ const ExploreServices = () => {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 80%',
+              start: 'top 90%',
               toggleActions: 'play none none reverse',
             },
           }
@@ -61,6 +62,14 @@ const ExploreServices = () => {
       }
     });
   }, []);
+
+  const setRef = (el: unknown, index: number) => {
+    if (el) {
+      cardsRef.current.set(index, el);
+    } else {
+      cardsRef.current.delete(index);
+    }
+  };
 
   const settings = {
     slidesToShow: 3,
@@ -81,10 +90,15 @@ const ExploreServices = () => {
       <div className={`p-8 bg-white slide-container`}>
         <Slider ref={sliderRef} {...settings}>
           {cgtServiceList.map((card) => (
-            <div key={card.id} className='shrink-0 px-2' style={{ width: `${cardWidth}px` }}>
+            <div
+              ref={(el) => setRef(el, card.id)}
+              key={card.id}
+              className='shrink-0 px-2'
+              style={{ width: `${cardWidth}px` }}
+            >
               <Card className='h-full shadow-lg bg-gray-100 hover:bg-gray-200 transition-transform duration-300'>
                 <CardContent className='p-4'>
-                  <div className='flex flex-row'>
+                  <div ref={containerRef} className='flex flex-row'>
                     <div className='basis-1/3'>
                       <Image src={card.image_reference} alt={card.title} width={52} height={100} />
                     </div>

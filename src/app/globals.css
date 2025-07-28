@@ -203,6 +203,12 @@
   }
 }
 
+hr {
+  height: 1px; /* Set the thickness of the line */
+  background-color: #bdbdbd; /* Set the color (e.g., red) */
+  border: none; /* Remove default border if present */
+}
+
 figure {
   display: block;
   margin-block-start: 1em;
@@ -210,14 +216,36 @@ figure {
   unicode-bidi: isolate;
 }
 
-.bg-overlay {
+.hero-section .wrapper,
+.flight-wrapper .wrapper {
+  position: relative;
+  background-image: url('/images/logo/hero_banner.png');
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-size: cover;
+  /* background-position: center; */
+}
+
+/* .wrapper-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .bg-overlay {
   background: linear-gradient(rgba(217, 240, 246, 1));
   background-repeat: no-repeat;
   background-position: 100%;
   background-size: cover;
   color: rgba(0, 0, 0, 1);
-  min-height: 400px;
-}
+  height: 25rem;
+} */
 
 .container {
   padding: 12px;

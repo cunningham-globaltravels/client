@@ -2,7 +2,6 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Slider from 'react-slick';
 import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import SVGIcon from '@/components/defaults/SVGIcons';
@@ -11,8 +10,6 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import StarRating from '@/components/defaults/StarRating';
 import { TPropertyFeatureModel } from '@/types/home.type';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const featuredCities: string[] = ['Paris', 'Shanghai', 'Bangkok', 'Beijing', 'Manchester', 'Istanbul', 'Hong Kong'];
 
@@ -30,7 +27,7 @@ const FeatureProperty = () => {
   const [currentIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardsRef = useRef(new Map());
 
   const cardWidth = 300; // You can adjust this
 
@@ -38,7 +35,7 @@ const FeatureProperty = () => {
     const offset = i * cardWidth;
     containerRef.current?.scrollTo({
       left: offset,
-      behavior: 'smooth',
+      behavior: 'instant',
     });
   };
 
@@ -59,7 +56,7 @@ const FeatureProperty = () => {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 80%',
+              start: 'top 90%',
               toggleActions: 'play none none reverse',
             },
           }
@@ -67,6 +64,14 @@ const FeatureProperty = () => {
       }
     });
   }, []);
+
+  const setRef = (el: unknown, index: number) => {
+    if (el) {
+      cardsRef.current.set(index, el);
+    } else {
+      cardsRef.current.delete(index);
+    }
+  };
 
   const settings = {
     slidesToShow: 3,
@@ -123,10 +128,15 @@ const FeatureProperty = () => {
           </div>
         </CardTitle>
         <CardContent>
-          <div className={`px-8 pt-4 pb-12 bg-white slide-container`}>
+          <div ref={containerRef} className={`px-8 pt-4 pb-12 bg-white slide-container`}>
             <Slider ref={sliderRef} {...settings}>
               {propertyList.map((item) => (
-                <div key={item.id} className=' shrink-0 px-2' style={{ width: `${cardWidth}px` }}>
+                <div
+                  ref={(el) => setRef(el, item.id)}
+                  key={item.id}
+                  className=' shrink-0 px-2'
+                  style={{ width: `${cardWidth}px` }}
+                >
                   <PropertyItem {...item} />
                 </div>
               ))}

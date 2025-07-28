@@ -14,7 +14,7 @@ interface ILayoutProps {
 
 export default function WebsiteLayout({ children }: ILayoutProps) {
   return (
-    <main className='min-h-screen bg-gray-100'>
+    <main className=' bg-gray-100'>
       <TopNavigation />
       {children}
       <FooterSection />

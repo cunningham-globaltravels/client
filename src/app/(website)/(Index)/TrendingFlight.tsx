@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { IoMdAirplane } from 'react-icons/io';
 import { Button } from '@/components/ui/button';
 import { TSourceFlightProfile } from '@/types/home.type';
@@ -13,8 +12,6 @@ import Image from 'next/image';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import styles from '@/components/sample/group-card.module.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const countriesTrending: string[] = [
   'Lagos',
@@ -79,7 +76,7 @@ const TrendingFlight = () => {
   const [currentIndex] = useState(0);
   const sliderRef = useRef<Slider>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cardsRef = useRef<Array<HTMLDivElement | null>>([]);
+  const cardsRef = useRef(new Map());
 
   const cardWidth = 300; // You can adjust this
 
@@ -100,10 +97,10 @@ const TrendingFlight = () => {
       if (card) {
         gsap.fromTo(
           card,
-          { opacity: 0, x: 50 },
+          { opacity: 0, y: -50 },
           {
             opacity: 1,
-            x: 0,
+            y: 0,
             duration: 1.2,
             ease: 'power2.out',
             scrollTrigger: {
@@ -116,6 +113,14 @@ const TrendingFlight = () => {
       }
     });
   }, []);
+
+  const setRef = (el: unknown, index: number) => {
+    if (el) {
+      cardsRef.current.set(index, el);
+    } else {
+      cardsRef.current.delete(index);
+    }
+  };
 
   const settings = {
     slidesToShow: 3,
@@ -150,27 +155,16 @@ const TrendingFlight = () => {
         <div ref={containerRef} className='px-8 pt-4 pb-12 slide-container overflow-hidden scroll-smooth'>
           <Slider ref={sliderRef} {...settings}>
             {destinationList.map((item) => (
-              <div key={item.id} className=' shrink-0 px-2' style={{ width: `${cardWidth}px` }}>
+              <div
+                ref={(el) => setRef(el, item.id)}
+                key={item.id}
+                className=' shrink-0 px-2'
+                style={{ width: `${cardWidth}px` }}
+              >
                 <Card className='py-2 rounded-sm shadow-lg transition-transform duration-300 w-full shrink-0 card-mdf'>
                   <CardContent className='p-0'>
                     <div className={styles.cardWrapper}>
-                      <div
-                        onMouseEnter={() =>
-                          gsap.to(cardsRef.current[item.id], {
-                            scale: 1.05,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          })
-                        }
-                        onMouseLeave={() =>
-                          gsap.to(cardsRef.current[item.id], {
-                            scale: 1,
-                            duration: 0.3,
-                            ease: 'power2.out',
-                          })
-                        }
-                        className={styles.card}
-                      >
+                      <div className={styles.card}>
                         <div className={styles.imageWrapper}>
                           {item.imageSource ? (
                             <Image src={item.imageSource} alt={`Card ${item.id}`} fill className={styles.image} />

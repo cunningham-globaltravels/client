@@ -1,11 +1,11 @@
 'use client';
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Mail, Phone, MapPin, CreditCard, Shield, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 //import { footerNavLinks, socialLinks } from '@/lib/constants/data-layout.constant';
 import { footerNavLinks, socialLinks } from '@/lib/constants/default-layout.constant';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
