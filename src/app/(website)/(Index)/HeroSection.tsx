@@ -2,9 +2,9 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { Button } from '@/components/ui/button';
-import SVGIcon from '@/components/defaults/SVGIcons';
 import { heroProfileData } from '@/lib/constants/home.constant';
 import ServiceInstance from './custom/ServiceInstance';
+import { Separator } from '@/components/ui/separator';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -97,15 +97,15 @@ const HeroSection = () => {
                   ref={buttonsRef}
                   className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-8 '
                 >
-                  {heroProfileData.map((profile) => (
-                    <div key={profile.name} className='flex flex-col items-center gap-2 w-full'>
+                  {heroProfileData.map((profile, index) => (
+                    <div key={profile.name} className='flex items-center gap-2 w-full'>
+                      <Separator orientation='vertical' className={index === 0 ? ' hidden' : ''} />
                       <Button
-                        variant={'outline'}
+                        variant={'ghost'}
                         size={'lg'}
-                        className='shadow-2xl border-[1px] w-fit hover:bg-orange-50'
+                        className='w-fit hover:bg-transparent cursor-pointer hover:scale-110 px-2'
                       >
-                        <SVGIcon fileName={profile.fileName} alt={profile.alt} />
-                        <span className=' font-light text-gray-600 hover:text-gray-800 text-center text-xs md:text-sm leading-5'>
+                        <span className=' font-light text-gray-100 hover:text-gray-300 text-center text-sm md:text-base leading-5'>
                           {profile.name}
                         </span>
                       </Button>

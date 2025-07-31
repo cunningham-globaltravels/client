@@ -5,9 +5,9 @@ import { Mail, Phone, MapPin, CreditCard, Shield, ChevronRight } from 'lucide-re
 import Image from 'next/image';
 //import { footerNavLinks, socialLinks } from '@/lib/constants/data-layout.constant';
 import { footerNavLinks, socialLinks } from '@/lib/constants/default-layout.constant';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+//import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger);
 
 const FooterSection = () => {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -115,23 +115,23 @@ const FooterSection = () => {
       });
     });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    // return () => {
+    //   ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    // };
   }, []);
 
-  const addToRefs = (el: HTMLDivElement) => {
-    if (el && !sectionsRef.current.includes(el)) {
-      sectionsRef.current.push(el);
-    }
-  };
+  // const addToRefs = (el: HTMLDivElement) => {
+  //   if (el && !sectionsRef.current.includes(el)) {
+  //     sectionsRef.current.push(el);
+  //   }
+  // };
   return (
-    <footer ref={footerRef} className='bg-[#8A2316] text-white'>
+    <footer className='bg-[#8A2316] text-white'>
       {/* Main Footer Content */}
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8'>
           {/* Company Info */}
-          <div ref={addToRefs} className='lg:col-span-2'>
+          <div className='lg:col-span-2'>
             <div className='flex items-center space-x-2 mb-6'>
               <div className='flex items-center justify-center'>
                 <Image src={'/images/logo/brand_banner.png'} alt='Brand Banner' width={32} height={32} />
@@ -172,7 +172,7 @@ const FooterSection = () => {
             </div>
           </div>
           {/* Services Section */}
-          <div ref={addToRefs}>
+          <div>
             <h3 className='text-lg font-semibold mb-6 text-gray-50'>Services</h3>
             <ul className='space-y-3'>
               {footerNavLinks.services.map((link) => (
@@ -189,7 +189,7 @@ const FooterSection = () => {
             </ul>
           </div>
           {/* Company Section with Links */}
-          <div ref={addToRefs}>
+          <div>
             <h3 className='text-lg font-semibold mb-6 text-gray-50'>Company</h3>
             <ul className='space-y-3'>
               {footerNavLinks.company.map((link) => (
@@ -211,7 +211,7 @@ const FooterSection = () => {
               {/* Payment Methods */}
               <div className='flex flex-col space-y-6 lg:space-y-0'>
                 <h4 className='text-sm font-semibold text-gray-100 mb-4 text-center lg:text-left'>Payment Methods</h4>
-                <div ref={paymentMethodsRef} className='flex items-center justify-center lg:justify-start space-x-4'>
+                <div className='flex items-center justify-center lg:justify-start space-x-4'>
                   <div className='w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded flex items-center justify-center hover-animate'>
                     <CreditCard className='w-5 h-5 text-white' />
                   </div>
@@ -232,7 +232,7 @@ const FooterSection = () => {
               {/* Social Links */}
               <div className='flex flex-col space-y-6 lg:space-y-0'>
                 <h4 className='text-sm font-semibold text-gray-200 mb-4 text-center lg:text-left'>Our Partners</h4>
-                <div ref={socialLinksRef} className='flex space-x-4'>
+                <div className='flex space-x-4'>
                   <div className='w-16 h-8 bg-gradient-to-r from-orange-600 to-red-800 rounded flex items-center justify-center hover-animate'>
                     <span className='text-xs font-bold text-gray-50'>Amadeus</span>
                   </div>

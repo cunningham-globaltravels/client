@@ -33,7 +33,7 @@ const AuthenticationForm = ({ tabs }: IAuthTabProps) => {
             <TabsTrigger
               key={value}
               value={value}
-              className='data-[state=active]:border-b-2 data-[state=active]:border-b-[#E63A24] rounded-none justify-baseline flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none font-bold text-[#1A1A1A] text-lg md:text-xl leading-8 overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:text-[#E63A24]'
+              className=' cursor-pointer data-[state=active]:border-b-2 data-[state=active]:border-b-[#E63A24] rounded-none justify-baseline flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none font-bold text-[#1A1A1A] text-lg md:text-xl leading-8 overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:text-[#E63A24]'
             >
               <span>{label}</span>
             </TabsTrigger>

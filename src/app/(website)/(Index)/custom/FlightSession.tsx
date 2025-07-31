@@ -82,7 +82,7 @@ const FlightSession = () => {
                   />
                 </div>
 
-                <div className='absolute top-3 left-[12rem]'>
+                <div className='absolute top-3 left-[11.45rem]'>
                   <FaArrowRightArrowLeft className='text-[#3D3D3D]' size={13} />
                 </div>
                 <div className=' absolute border-gray-300 border-1 h-4 right-0 top-2 -ml-[3px]'></div>

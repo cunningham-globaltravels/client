@@ -216,36 +216,73 @@ figure {
   unicode-bidi: isolate;
 }
 
+.auth-wrapper {
+  @apply min-h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-2;
+}
+.auth-content {
+  @apply flex justify-center items-center my-4;
+}
+
 .hero-section .wrapper,
 .flight-wrapper .wrapper {
   position: relative;
-  background-image: url('/images/logo/hero_banner.png');
+  background-image: url('/images/logo/hero-banner.png');
   background-repeat: no-repeat;
-  background-position: 100%;
+  /* background-position: 100%; */
   background-size: cover;
-  /* background-position: center; */
+  background-position: center;
 }
 
-/* .wrapper-overlay {
+.flight-wrapper {
+  @apply max-w-7xl mx-auto;
+}
+
+.hero-section .wrapper-overlay,
+.flight-wrapper .wrapper-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
+  background: rgba(0, 0, 0, 0.65);
+}
 
-/* .bg-overlay {
-  background: linear-gradient(rgba(217, 240, 246, 1));
-  background-repeat: no-repeat;
-  background-position: 100%;
-  background-size: cover;
-  color: rgba(0, 0, 0, 1);
-  height: 25rem;
-} */
+.price-range .bg-primary {
+  @apply !bg-[#E63A24];
+}
+
+.display-progress::before {
+  @apply content-[""] block absolute w-full h-[2px] bg-[#DADFE6] -translate-y-2/4 left-0 top-[4px] z-1;
+}
+
+.static-options {
+  @apply my-4 font-normal text-xs leading-4;
+}
+.static-display {
+  -webkit-box-align: center;
+  @apply flex items-center my-2 mx-0 whitespace-nowrap;
+}
+.static-display::before {
+  @apply content-[''] block w-full h-[1px] bg-[#E1E6EF] mr-4;
+}
+.static-display::after {
+  @apply content-[''] block w-full h-[1px] bg-[#E1E6EF] ml-4;
+}
+.login-options {
+  @apply block mb-3;
+}
+.login-option-wrapper {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-box-lines: multiple;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  @apply flex justify-between gap-4;
+}
 
 .container {
   padding: 12px;

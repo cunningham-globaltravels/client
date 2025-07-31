@@ -1,5 +1,5 @@
 import React from 'react';
-import './auth-style.css';
+//import './auth-style.css';
 import WelcomeContent from './WelcomeSection';
 import { ITabItem } from '@/types/default.type';
 import AuthenticationForm from './AuthenticationForm';
@@ -20,7 +20,7 @@ const Authentication = () => {
     },
   ];
   return (
-    <div className='wrapper'>
+    <div className='auth-wrapper'>
       <div className='auth-content'>
         <AuthenticationForm tabs={authTabs} />
       </div>

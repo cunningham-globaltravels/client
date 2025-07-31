@@ -1,11 +1,27 @@
-import '@/app/globals.css';
+import React from 'react';
 import type { Metadata } from 'next';
+import { Mulish } from 'next/font/google';
+import '../globals.css';
+
+const mulish = Mulish({
+  subsets: ['latin', 'cyrillic'],
+});
 
 export const metadata: Metadata = {
   title: 'Login and Register',
   description: 'Cunningham Authentication page',
 };
 
-export default function AuthenticationLayout({ children }: { children: React.ReactNode }) {
-  return <main className='min-h-screen'>{children}</main>;
+interface ILayoutProps {
+  children: React.ReactNode;
+}
+
+export default function AuthenticationLayout({ children }: ILayoutProps) {
+  return (
+    <html lang='en'>
+      <body className={`${mulish.className} antialiased`}>
+        <main className='min-h-screen'>{children}</main>
+      </body>
+    </html>
+  );
 }

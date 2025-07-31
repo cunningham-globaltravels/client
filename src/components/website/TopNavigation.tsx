@@ -161,8 +161,8 @@ const TopNavigation = () => {
   };
 
   return (
-    <header className={` w-full bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50 ${stickyClass}`}>
-      <div className='px-4 sm:px-6 lg:px-8'>
+    <header className={`w-full bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50 ${stickyClass}`}>
+      <div className='px-4 sm:px-6 lg:px-8 w-full lg:max-w-[1440px] mx-auto'>
         <div className='flex justify-between items-center h-16'>
           {/* Company Brand Here */}
           <div

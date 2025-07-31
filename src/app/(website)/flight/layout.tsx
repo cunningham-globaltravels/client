@@ -1,9 +1,9 @@
 import React from 'react';
-import './flight-profile.css';
+//import './flight-profile.css';
 import FlightSideSection from './FlightSideSection';
 import { heroProfileData } from '@/lib/constants/home.constant';
 import { Button } from '@/components/ui/button';
-import SVGIcon from '@/components/defaults/SVGIcons';
+import { Separator } from '@/components/ui/separator';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -19,15 +19,15 @@ const FlightLayout = ({ children }: ILayoutProps) => {
               <div className='pb-0'>
                 <div className='w-full flex flex-col justify-center items-center gap-2'>
                   <div className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-16 '>
-                    {heroProfileData.map((profile) => (
-                      <div key={profile.name} className='flex flex-col items-center gap-2 w-full'>
+                    {heroProfileData.map((profile, index) => (
+                      <div key={profile.name} className='flex items-center gap-2 w-full'>
+                        <Separator orientation='vertical' className={index === 0 ? ' hidden' : ''} />
                         <Button
-                          variant={'outline'}
+                          variant={'ghost'}
                           size={'lg'}
-                          className='shadow-2xl border-[1px] w-fit hover:bg-orange-50'
+                          className='w-fit hover:bg-transparent cursor-pointer hover:scale-110 px-2'
                         >
-                          <SVGIcon fileName={profile.fileName} alt={profile.alt} />
-                          <span className=' font-light text-gray-600 hover:text-gray-800 text-center text-xs md:text-sm leading-5'>
+                          <span className=' font-light text-gray-100 hover:text-gray-300 text-center text-sm md:text-base leading-5'>
                             {profile.name}
                           </span>
                         </Button>
@@ -39,7 +39,7 @@ const FlightLayout = ({ children }: ILayoutProps) => {
             </div>
           </div>
         </div>
-        <div className='max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <div className='max-w-[1440px] px-4 sm:px-6 lg:px-8 min-h-screen'>
           <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
             <div className='w-full'>
               <FlightSideSection />

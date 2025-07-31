@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -25,6 +26,7 @@ const signupSchema = z
 type SignupFormValues = z.infer<typeof signupSchema>;
 
 const RegistrationForm = () => {
+  const cardRef = useRef(null);
   const {
     register,
     handleSubmit,
@@ -37,9 +39,14 @@ const RegistrationForm = () => {
     console.log(`Signup was successful with data: ${data}`);
     // Handle the login logic here (e.g., API call to authenticate)
   };
+
+  useEffect(() => {
+    gsap.fromTo(cardRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' });
+  }, []);
+
   return (
     <div className='max-w-md py-1'>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form ref={cardRef} onSubmit={handleSubmit(onSubmit)}>
         {/* First Name Input */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
           {/* First Name Input */}

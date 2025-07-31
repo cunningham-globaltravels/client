@@ -2,14 +2,9 @@ import { THeroProfileProps } from '@/types/home.type';
 
 export const heroProfileData: THeroProfileProps[] = [
   {
-    name: 'Visa',
+    name: 'Visa Assistance',
     fileName: 'icon-umbrella.svg',
     alt: 'Visa Icon',
-  },
-  {
-    name: 'Immigration',
-    fileName: 'icon-plane-fly.svg',
-    alt: 'Immigration Icon',
   },
   {
     name: 'Property Listing',
@@ -17,8 +12,18 @@ export const heroProfileData: THeroProfileProps[] = [
     alt: 'Property Icon',
   },
   {
+    name: 'Immigration',
+    fileName: 'icon-plane-fly.svg',
+    alt: 'Immigration Icon',
+  },
+  {
     name: 'Training Serviices',
     fileName: 'icon-lecture.svg',
     alt: 'Training Icon',
+  },
+  {
+    name: 'Travel Insurance',
+    fileName: 'icon-lecture.svg',
+    alt: 'Travel Icon',
   },
 ];

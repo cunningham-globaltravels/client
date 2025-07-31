@@ -23,16 +23,18 @@ const InstructionsFlightProfile = () => {
           {` flights `}
         </h6>
       </div>
-      <ScrollArea className='h-screen w-full border-none'>
-        <RecommendedInstruction />
-        <AllianceInstruction />
-        <StopInstruction />
-        <AirlineInstruction />
-        <TimesInstruction />
-        <DurationInstruction />
-        <PriceInstruction />
-        <CabinInstruction />
-        <StopoverInstruction />
+      <ScrollArea className='w-full h-screen overflow-y-hidden'>
+        <div className='flex flex-col gap-0'>
+          <RecommendedInstruction />
+          <AllianceInstruction />
+          <StopInstruction />
+          <AirlineInstruction />
+          <TimesInstruction />
+          <DurationInstruction />
+          <PriceInstruction />
+          <CabinInstruction />
+          <StopoverInstruction />
+        </div>
       </ScrollArea>
     </div>
   );
