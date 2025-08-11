@@ -47,7 +47,7 @@ const HeroTabPanel: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
       </TabsList>
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
-          <Card className='destination-card absolute top-[35px] left-1/2 transform -translate-x-1/2 -translate-y-[0%] w-[110%] bg-white rounded-lg backdrop-blur-md border-white/20 text-gray-700 pointer-events-auto hover:bg-white/80 transition-all cursor-pointer group'>
+          <Card className='destination-card absolute top-[35px] left-1/2 transform -translate-x-1/2 -translate-y-[0%] w-[130%] bg-white rounded-lg backdrop-blur-md border-white/20 text-gray-700 pointer-events-auto hover:bg-white/80 transition-all cursor-pointer group'>
             <CardContent className='px-4'>{tab.content}</CardContent>
           </Card>
         </TabsContent>

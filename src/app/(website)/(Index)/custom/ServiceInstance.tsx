@@ -3,6 +3,8 @@ import { FaPlaneDeparture, FaHome, FaTrain, FaCar } from 'react-icons/fa';
 import { TbSocial } from 'react-icons/tb';
 import FlightSession from './FlightSession';
 import HeroTabPanel from './HeroTabPanel';
+import HotelHomes from './HotelHomes';
+//import BookingForm from '@/components/sample/BookingForm';
 
 const ServiceInstance = () => {
   const tabs = [
@@ -16,7 +18,7 @@ const ServiceInstance = () => {
       value: 'hotel_home',
       label: 'Hotels & Homes',
       icon: FaHome,
-      content: <p>Check for the best Hotels and Launge here.</p>,
+      content: <HotelHomes />,
     },
     {
       value: 'train',

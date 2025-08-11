@@ -60,3 +60,5 @@ export const socialLinks: TNavigationLinkProps[] = [
     icon: Youtube,
   },
 ];
+
+export const FlightTypeConstant: string[] = ['Economy', 'Premium Economy', 'Business Class', 'First Class'];

@@ -336,7 +336,8 @@ figure {
   z-index: -1;
 }
 
-.flight-content {
+.flight-content,
+.booking-content {
   position: relative;
   box-sizing: border-box;
 }
@@ -365,6 +366,32 @@ figure {
 .slick-prev:before,
 .slick-next:before {
   color: #e63a24 !important;
+}
+
+.lang-img-wrapper {
+  box-sizing: content-box;
+  height: 20px;
+  position: relative;
+  width: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: initial;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.lang-img-wrapper i {
+  background-image: url('/images/main/popular_flags.png');
+  background-repeat: no-repeat;
+  background-size: 60px;
+  display: inline-block;
+  height: 20px;
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+  vertical-align: middle;
+  width: 30px;
 }
 
 @media (max-width: 991.9px) {

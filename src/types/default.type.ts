@@ -25,3 +25,16 @@ export type TStarRatingProps = {
   rating: number;
   maxStars?: number;
 };
+
+export type TLanguageProps = {
+  name: string;
+  value: string;
+  position?: string;
+  transform?: string;
+};
+
+export type TCountrySelectProps = {
+  categoryId: number;
+  category: string;
+  countryName: string;
+};

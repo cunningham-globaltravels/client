@@ -7,16 +7,8 @@ import { Search, Menu, X, UserPlus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { navLinks } from '@/lib/constants/default-layout.constant';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
-import { Globe } from 'lucide-react';
-
-const languages = [
-  { code: 'en', label: 'English' },
-  { code: 'es', label: 'Español' },
-  { code: 'fr', label: 'Français' },
-  // Add more as needed
-];
+import { LanguagesConstants as languages } from '@/lib/constants/language.constant';
+import LanguageSelection from './custom/LanguageSelection';
 
 const TopNavigation = () => {
   const [stickyClass, setStickyClass] = useState<string>('relative');
@@ -225,20 +217,7 @@ const TopNavigation = () => {
             {/* Auth Buttons */}
             <div ref={authRef} className='flex items-center ml-8 space-x-8'>
               {/* Language Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant='ghost' className='flex items-center gap-2'>
-                    <Globe className='h-4 w-4' /> Language
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {languages.map((item) => (
-                    <React.Fragment key={item.code}>
-                      <DropdownMenuItem>{item.label}</DropdownMenuItem>
-                    </React.Fragment>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <LanguageSelection languages={languages} />
               <button className='flex items-center space-x-2 px-3 py-2  text-gray-800 text-base hover:text-[#E63A24] transition-all duration-300 font-medium transform hover:scale-105'>
                 <span className=' text-[14px]'>Manage Bookings</span>
               </button>
@@ -294,20 +273,7 @@ const TopNavigation = () => {
                 </a>
               ))}
               {/* Language Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant='ghost' className='flex items-center gap-2'>
-                    <Globe className='h-4 w-4' /> Language
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  {languages.map((item) => (
-                    <React.Fragment key={item.code}>
-                      <DropdownMenuItem>{item.label}</DropdownMenuItem>
-                    </React.Fragment>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <LanguageSelection languages={languages} />
               <button className='flex items-center space-x-2 px-3 py-2  text-gray-800 text-base hover:text-[#E63A24] transition-all duration-300 font-medium transform hover:scale-105'>
                 <span className=' text-[14px]'>Manage Bookings</span>
               </button>
