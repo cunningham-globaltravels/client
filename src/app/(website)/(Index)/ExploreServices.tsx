@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
+import { ConstantExploreService as services } from '@/lib/constants/website/index/expolore-service.constant';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -10,13 +11,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const cgtServiceList = Array.from({ length: 4 }, (_, i) => ({
-  id: i,
-  title: `Visa Assistance ${i + 1}`,
-  content: `All-inclusive visa assistance in a timely, and secure manner. ${i + 1}`,
-  image_reference: '/images/main/visa_assistance.png',
-}));
 
 const ExploreServices = () => {
   const [currentIndex] = useState(0);
@@ -89,10 +83,10 @@ const ExploreServices = () => {
     <section className='w-full max-w-[62rem] mx-auto overflow-hidden mt-48 mb-12'>
       <div className={`p-8 bg-white slide-container`}>
         <Slider ref={sliderRef} {...settings}>
-          {cgtServiceList.map((card) => (
+          {services.map((service) => (
             <div
-              ref={(el) => setRef(el, card.id)}
-              key={card.id}
+              ref={(el) => setRef(el, service.id)}
+              key={service.id}
               className='shrink-0 px-2'
               style={{ width: `${cardWidth}px` }}
             >
@@ -100,11 +94,16 @@ const ExploreServices = () => {
                 <CardContent className='p-4'>
                   <div ref={containerRef} className='flex flex-row'>
                     <div className='basis-1/3'>
-                      <Image src={card.image_reference} alt={card.title} width={52} height={100} />
+                      <Image
+                        src={'/images/main/visa_assistance.png'}
+                        alt={'Service Assistance'}
+                        width={52}
+                        height={100}
+                      />
                     </div>
                     <div className='basis-2/3 flex flex-col items-start'>
-                      <h3 className='text-base md:text-lg font-semibold'>{card.title}</h3>
-                      <p className='text-sm md:text-base mt-2 text-muted-foreground'>{card.content}</p>
+                      <h3 className='text-base md:text-lg font-semibold'>{service.title}</h3>
+                      <p className='text-sm md:text-base mt-2 text-muted-foreground'>{service.description}</p>
                     </div>
                   </div>
                 </CardContent>

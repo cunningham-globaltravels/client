@@ -56,3 +56,9 @@ export interface ISelectOption {
   label: string;
   value: string;
 }
+
+export interface IContextType {
+  id: number;
+  title: string;
+  description: string;
+}
