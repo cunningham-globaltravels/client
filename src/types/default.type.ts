@@ -1,5 +1,12 @@
-import React from 'react';
+import { ComponentType, SVGProps } from 'react';
 import { IconType } from 'react-icons';
+
+export type TDefaultData = {
+  id?: number;
+  label: string;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  color?: string;
+};
 
 export type TSVGIconProps = {
   fileName: string; // file name without path, e.g., "my-icon.svg"
@@ -21,6 +28,12 @@ export interface ICategoryTabItem extends ITabItem {
   timeline?: string;
 }
 
+export interface IControlItem {
+  value: number;
+  name: string;
+  component?: React.ReactNode;
+}
+
 export type TStarRatingProps = {
   rating: number;
   maxStars?: number;
@@ -38,3 +51,8 @@ export type TCountrySelectProps = {
   category: string;
   countryName: string;
 };
+
+export interface ISelectOption {
+  label: string;
+  value: string;
+}

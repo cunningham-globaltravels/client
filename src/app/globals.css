@@ -223,22 +223,27 @@ figure {
   @apply flex justify-center items-center my-4;
 }
 
-.hero-section .wrapper,
-.flight-wrapper .wrapper {
-  position: relative;
+.hero-section .wrapper-content,
+.flight-wrapper .wrapper-content {
   background-image: url('/images/logo/hero-banner.png');
+}
+
+.hotel-wrapper .wrapper-content {
+  background-image: url('/images/logo/hotel-banner.png');
+}
+
+.hero-section .wrapper-content,
+.flight-wrapper .wrapper-content,
+.hotel-wrapper .wrapper-content {
+  position: relative;
   background-repeat: no-repeat;
-  /* background-position: 100%; */
   background-size: cover;
   background-position: center;
 }
 
-.flight-wrapper {
-  @apply max-w-7xl mx-auto;
-}
-
 .hero-section .wrapper-overlay,
-.flight-wrapper .wrapper-overlay {
+.flight-wrapper .wrapper-overlay,
+.hotel-wrapper .wrapper-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -420,13 +425,13 @@ figure {
     max-width: 960px;
   }
   .row-rep {
-    padding: 1rem 0 !important;
+    padding: 0.5rem 0 !important;
   }
   .bg-overlay {
     padding: 4rem 0;
   }
   .call-action-index {
-    margin-top: -5rem;
+    margin-top: -8rem;
   }
 }
 

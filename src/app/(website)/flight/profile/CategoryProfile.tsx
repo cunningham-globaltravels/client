@@ -49,7 +49,7 @@ const CategoryProfile = ({ tabs }: ICategoryTabProps) => {
             </TabsTrigger>
           ))}
         </TabsList>
-        <div className='flex flex-col gap-8 pt-12 items-start'>
+        <div className='flex flex-col gap-8 pt-4 items-start'>
           <h3 className='max-w-[80%] font-bold text-sm leading-[21px] text-gray-900'>
             Prices may change based on availability and are not final until you complete your purchase. Certain payment
             methods may carry an additional <span className=' underline text-blue-500'>fee.</span>

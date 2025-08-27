@@ -28,6 +28,12 @@
   padding-bottom: 75%;
 }
 
+.imageWrap {
+  position: relative;
+  height: 0;
+  padding-bottom: 100%;
+}
+
 .image {
   object-fit: cover;
 }

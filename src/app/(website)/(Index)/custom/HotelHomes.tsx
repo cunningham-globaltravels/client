@@ -1,75 +1,84 @@
-import React from 'react';
+'client';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
 import { Card } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { zodResolver } from '@hookform/resolvers/zod';
-//import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
-import { Calendar1Icon, MapPin, ChevronDown, Minus, Plus } from 'lucide-react';
+import { MapPin, ChevronDown, Minus, Plus, X, Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
+import { ConstantCountries as countries } from '@/lib/constants/continental.constant';
+import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { differenceInCalendarDays } from 'date-fns';
+import DatePickerField from '@/components/defaults/DatePickerField';
 
 const bookingFormSchema = z.object({
   destinationSearch: z.string(),
-  checkInDate: z.date(),
-  checkOutDate: z.date(),
+  dateProfile: z.object({
+    checkIn: z.date(),
+    checkout: z.date(),
+  }),
   guestNumbers: z.object({
     adult: z.number(),
     child: z.number(),
     room: z.number(),
-    isPet: z.boolean(),
   }),
 });
 
-type BookingFormValues = z.infer<typeof bookingFormSchema>;
+type TBookingFormSchema = z.infer<typeof bookingFormSchema>;
 
 const HotelHomes = () => {
+  const [openDestination, setOpenDestination] = useState(false);
   const router = useRouter();
 
-  const bookingForm = useForm<BookingFormValues>({
+  const grouped = countries.reduce((acc: Record<string, string[]>, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
+    }
+    acc[item.category].push(item.countryName);
+    return acc;
+  }, {});
+
+  const continents = Object.keys(grouped);
+
+  const bookingForm = useForm<TBookingFormSchema>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
       destinationSearch: '',
-      checkInDate: undefined,
-      checkOutDate: undefined,
-      guestNumbers: { adult: 0, child: 0, room: 0, isPet: false },
+      dateProfile: { checkIn: undefined, checkout: undefined },
+      guestNumbers: { adult: 0, child: 0, room: 0 },
     },
   });
 
-  const { handleSubmit, control, setValue, getValues } = bookingForm;
+  const { handleSubmit, control, setValue, watch } = bookingForm;
 
-  const handleHotelHomeInit = (data: BookingFormValues) => {
-    localStorage.setItem('serviceprofile', JSON.stringify(data));
-    router.push('/hotelhome/profile');
-  };
+  const adultNumber = watch('guestNumbers.adult');
+  const childNumber = watch('guestNumbers.child');
+  const roomNumber = watch('guestNumbers.room');
+  const checkInDate = watch('dateProfile.checkIn');
+  const checkoutDate = watch('dateProfile.checkout');
 
   const handleAdultUpdate = (isAddition: boolean) => {
-    const current = getValues('guestNumbers.adult');
-    if (isAddition) {
-      setValue('guestNumbers.adult', current + 1);
-    } else {
-      setValue('guestNumbers.adult', current - 1);
-    }
+    if (isAddition) setValue('guestNumbers.adult', adultNumber + 1);
+    else setValue('guestNumbers.adult', adultNumber - 1);
   };
+
   const handleChildUpdate = (isAddition: boolean) => {
-    const current = getValues('guestNumbers.child');
-    if (isAddition) {
-      setValue('guestNumbers.child', current + 1);
-    } else {
-      setValue('guestNumbers.child', current - 1);
-    }
+    if (isAddition) setValue('guestNumbers.child', childNumber + 1);
+    else setValue('guestNumbers.child', childNumber - 1);
   };
   const handleRoomUpdate = (isAddition: boolean) => {
-    const current = getValues('guestNumbers.room');
-    if (isAddition) {
-      setValue('guestNumbers.room', current + 1);
-    } else {
-      setValue('guestNumbers.room', current - 1);
-    }
+    if (isAddition) setValue('guestNumbers.room', roomNumber + 1);
+    else setValue('guestNumbers.room', roomNumber - 1);
   };
+
+  const handleHotelHomeInit = (data: TBookingFormSchema) => {
+    localStorage.setItem('serviceprofile', JSON.stringify(data));
+    router.push('/hotels/profile');
+  };
+
   return (
     <div className='booking-content'>
       <Card className='w-full p-0 shadow-lg'>
@@ -82,122 +91,201 @@ const HotelHomes = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <div className='flex-1 relative w-full max-w-sm'>
-                        <MapPin className='absolute left-3 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground' />
-                        <Input
-                          {...field}
-                          placeholder='Where are you going?'
-                          className='pl-10 w-full border-0 shadow-none rounded-none focus-visible:ring-0 focus-visible:border-none text-sm'
-                        />
-                      </div>
-                    </FormControl>
-                  </FormItem>
-                )}
-              ></FormField>
-              <FormField
-                control={control}
-                name='checkInDate'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
                       <Popover>
                         <PopoverTrigger asChild>
-                          <div className='px-6'>
-                            <Button
-                              variant={'ghost'}
-                              className='w-[100px] justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
-                            >
-                              <div className='flex flex-col'>
-                                <span className='text-xs font-medium text-gray-500 uppercase'>Check In</span>
-                                <span className='text-sm'>
-                                  {field.value
-                                    ? field.value.toLocaleDateString('en-US', {
-                                        month: 'short',
-                                        day: 'numeric',
-                                        year: '2-digit',
-                                      })
-                                    : 'Check In'}
-                                </span>
+                          <Button
+                            role='combobox'
+                            aria-expanded={openDestination}
+                            variant='ghost'
+                            className='w-full lg:w-[220px] justify-start text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer'
+                          >
+                            <div className='flex flex-col'>
+                              <div className='flex items-center gap-2 box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>
+                                <MapPin className=' size-5' />
+                                {countries && field.value ? (
+                                  <div className='flex items-start justify-between gap-4 text-ellipsis bg-gray-100 px-4 w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37]'>
+                                    {countries.find((country) => country.countryName === field.value)?.countryName}
+                                    <div
+                                      onClick={() => setValue('destinationSearch', '')}
+                                      className='mt-2 rounded-full p-1 bg-gray-300 cursor-pointer hover:bg-gray-400'
+                                    >
+                                      <X />
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <span className='font-medium text-gray-400 text-xs'>Where are you going?</span>
+                                )}
                               </div>
-                              <Calendar1Icon className='ml-2 h-4 w-4' />
-                            </Button>
-                          </div>
+                            </div>
+                          </Button>
                         </PopoverTrigger>
-                        <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                          <Calendar
-                            mode='single'
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) => date < new Date()}
-                          />
+                        <PopoverContent className='w-full p-0 overflow-hidden'>
+                          <Command>
+                            <CommandInput placeholder='Select Location...' className='h-9' />
+                            <CommandList>
+                              {continents.map((continent, index) => (
+                                <CommandGroup className='px-4 py-2' key={index} heading={continent}>
+                                  <div className=' box-border w-full pt-2 rounded-br-lg rounded-bl-lg'>
+                                    <div className='box-border h-full overflow-x-hidden overflow-y-auto pt-0 pb-4 px-4'>
+                                      <div className='grid grid-cols-[repeat(3,150px)]'>
+                                        {grouped[continent].map((country, index) => (
+                                          <CommandItem
+                                            key={index}
+                                            value={country}
+                                            onSelect={(currentValue) => {
+                                              setValue(
+                                                'destinationSearch',
+                                                currentValue === field.value ? '' : currentValue
+                                              );
+                                              setOpenDestination(false);
+                                            }}
+                                          >
+                                            {country}
+                                          </CommandItem>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </CommandGroup>
+                              ))}
+                            </CommandList>
+                          </Command>
                         </PopoverContent>
                       </Popover>
                     </FormControl>
                   </FormItem>
                 )}
               ></FormField>
-              <FormField
-                control={control}
-                name='checkOutDate'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <div className='px-6'>
-                            <Button
-                              variant={'ghost'}
-                              className='w-[100px] justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
-                            >
-                              <div className='flex flex-col'>
-                                <span className='text-xs font-medium text-gray-500 uppercase'>Check Out</span>
-                                <span className='text-sm'>
-                                  {field.value
-                                    ? field.value.toLocaleDateString('en-US', {
-                                        month: 'short',
-                                        day: 'numeric',
-                                        year: '2-digit',
-                                      })
-                                    : 'Check Out'}
-                                </span>
-                              </div>
-                              <Calendar1Icon className='ml-2 h-4 w-4' />
-                            </Button>
-                          </div>
-                        </PopoverTrigger>
-                        <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                          <Calendar
-                            mode='single'
-                            selected={field.value}
-                            onSelect={field.onChange}
-                            disabled={(date) => date < new Date()}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                    </FormControl>
-                  </FormItem>
-                )}
-              ></FormField>
+              <div className='flex items-center justify-between gap-1 w-full'>
+                {/* <FormField
+                  control={control}
+                  name='dateProfile.checkIn'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <div className='px-2'>
+                              <Button
+                                type='button'
+                                variant={'ghost'}
+                                className='w-full px-12 justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
+                              >
+                                <Calendar1Icon className='mr-2 h-2 w-2' />
+                                <div className='flex flex-col'>
+                                  <span className='text-xs font-medium text-gray-500 uppercase'>Check In</span>
+                                  <span className='text-sm'>
+                                    {field.value
+                                      ? field.value.toLocaleDateString('en-US', {
+                                          month: 'short',
+                                          day: 'numeric',
+                                          year: '2-digit',
+                                        })
+                                      : 'Check In'}
+                                  </span>
+                                </div>
+                              </Button>
+                            </div>
+                          </PopoverTrigger>
+                          <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
+                            <Calendar
+                              mode='single'
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              disabled={(date) => date < new Date()}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                ></FormField> */}
+                {/* Result */}
+                <DatePickerField<TBookingFormSchema>
+                  name='dateProfile.checkIn'
+                  label='Check In'
+                  control={control}
+                  placeholder='Select Date...'
+                />
+                <div className='text-sm font-normal italic text-center'>
+                  {checkInDate && checkoutDate
+                    ? `${differenceInCalendarDays(checkInDate, checkoutDate)} night(s)-`
+                    : 'Select dates'}
+                </div>
+                <DatePickerField<TBookingFormSchema>
+                  name='dateProfile.checkout'
+                  label='Check Out'
+                  control={control}
+                  placeholder='Select Date...'
+                />
+                {/* <FormField
+                  control={control}
+                  name='dateProfile.checkout'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <div className='px-2'>
+                              <Button
+                                type='button'
+                                variant={'ghost'}
+                                className='w-full justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
+                              >
+                                <Calendar1Icon className='mr-2 h-4 w-4' />
+                                <div className='flex flex-col'>
+                                  <span className='text-xs font-medium text-gray-500 uppercase'>Check Out</span>
+                                  <span className='text-sm'>
+                                    {field.value
+                                      ? field.value.toLocaleDateString('en-US', {
+                                          month: 'short',
+                                          day: 'numeric',
+                                          year: '2-digit',
+                                        })
+                                      : 'Check Out'}
+                                  </span>
+                                </div>
+                              </Button>
+                            </div>
+                          </PopoverTrigger>
+                          <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
+                            <Calendar
+                              mode='single'
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              disabled={(date) => date < new Date()}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                ></FormField> */}
+              </div>
               <FormField
                 control={control}
                 name='guestNumbers'
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <div className='px-6'>
+                      <div className='px-4'>
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
                               variant={'ghost'}
-                              className='w-full overflow-x-hidden justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
+                              className='w-full lg:w-[220px] flex overflow-x-hidden justify-between text-left font-normal p-0 h-auto shadow-none hover:bg-gray-50'
                             >
                               <div className='flex flex-col'>
-                                <span className='text-xs font-medium text-gray-500 uppercase'>Guest Profile</span>
-                                <span className='text-sm'>
-                                  {field
-                                    ? `${field.value.adult} adults . ${field.value.child} children. ${field.value.room} room`
-                                    : `Select Guest Profile`}
-                                </span>
+                                <span className='mx-1 text-xs font-medium text-gray-500 uppercase'>Guest Profile</span>
+                                <div className='flex items-center box-border cursor-pointer text-sm h-12 leading-10 rounded px-0 py-0'>
+                                  {field.value.adult > 0 || field.value.child > 0 || field.value.room > 0 ? (
+                                    <span className='w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37] text-[10px]'>
+                                      {`${field.value.adult} adults . ${field.value.child} children. ${field.value.room} room`}
+                                    </span>
+                                  ) : (
+                                    <span className='font-medium text-gray-600 text-xs'>Select Profile...</span>
+                                  )}
+                                </div>
                               </div>
                               <ChevronDown className='ml-2 h-4 w-4' />
                             </Button>
@@ -213,14 +301,16 @@ const HotelHomes = () => {
                                   size='icon'
                                   className='h-8 w-8 shrink-0 rounded-full text-gray-600 disabled:text-gray-400 cursor-pointer disabled:cursor-default'
                                   onClick={() => handleAdultUpdate(false)}
-                                  disabled={field.value.adult <= 0}
+                                  disabled={adultNumber <= 0}
                                 >
                                   <Minus />
                                   <span className='sr-only'>Reduce Adult</span>
                                 </Button>
                                 <div className='flex-1 text-center'>
-                                  <div className='text-xl font-bold tracking-tighter'>{field.value.adult}</div>
-                                  <div className='text-gray-500 text-xs uppercase'>Adults</div>
+                                  <div className='text-xl font-bold tracking-tighter'>{adultNumber}</div>
+                                  <div className='text-gray-500 text-xs uppercase'>
+                                    {field.value.adult > 1 ? 'Adults' : 'Adult'}
+                                  </div>
                                 </div>
                                 <Button
                                   variant='outline'
@@ -230,7 +320,7 @@ const HotelHomes = () => {
                                   //   setValue('guestNumbers.adult', alert(""), { shouldValidate: true })
                                   // }
                                   onClick={() => handleAdultUpdate(true)}
-                                  disabled={field.value.adult >= 50}
+                                  disabled={adultNumber >= 50}
                                 >
                                   <Plus />
                                   <span className='sr-only'>Increase Adult</span>
@@ -242,13 +332,13 @@ const HotelHomes = () => {
                                   size='icon'
                                   className='h-8 w-8 shrink-0 rounded-full text-gray-600 disabled:text-gray-400 cursor-pointer disabled:cursor-default'
                                   onClick={() => handleChildUpdate(false)}
-                                  disabled={field.value.child <= 0}
+                                  disabled={childNumber <= 0}
                                 >
                                   <Minus />
                                   <span className='sr-only'>Reduce Child</span>
                                 </Button>
                                 <div className='flex-1 text-center'>
-                                  <div className='text-xl font-bold tracking-tighter'>{field.value.child}</div>
+                                  <div className='text-xl font-bold tracking-tighter'>{childNumber}</div>
                                   <div className='text-gray-500 text-xs uppercase'>
                                     {field.value.child > 1 ? 'Children' : 'Child'}
                                   </div>
@@ -258,7 +348,7 @@ const HotelHomes = () => {
                                   size='icon'
                                   className='h-8 w-8 shrink-0 rounded-full text-gray-600 disabled:text-gray-300 cursor-pointer disabled:cursor-default'
                                   onClick={() => handleChildUpdate(true)}
-                                  disabled={field.value.child >= 50}
+                                  disabled={childNumber >= 50}
                                 >
                                   <Plus />
                                   <span className='sr-only'>Increase Child</span>
@@ -270,13 +360,13 @@ const HotelHomes = () => {
                                   size='icon'
                                   className='h-8 w-8 shrink-0 rounded-full text-gray-600 disabled:text-gray-400 cursor-pointer disabled:cursor-default'
                                   onClick={() => handleRoomUpdate(false)}
-                                  disabled={field.value.room <= 0}
+                                  disabled={roomNumber <= 0}
                                 >
                                   <Minus />
                                   <span className='sr-only'>Reduce Room</span>
                                 </Button>
                                 <div className='flex-1 text-center'>
-                                  <div className='text-xl font-bold tracking-tighter'>{field.value.room}</div>
+                                  <div className='text-xl font-bold tracking-tighter'>{roomNumber}</div>
                                   <div className='text-gray-500 text-xs uppercase'>
                                     {field.value.room > 1 ? 'Rooms' : 'Room'}
                                   </div>
@@ -286,7 +376,7 @@ const HotelHomes = () => {
                                   size='icon'
                                   className='h-8 w-8 shrink-0 rounded-full text-gray-600 disabled:text-gray-300 cursor-pointer disabled:cursor-default'
                                   onClick={() => handleRoomUpdate(true)}
-                                  disabled={field.value.room >= 50}
+                                  disabled={roomNumber >= 50}
                                 >
                                   <Plus />
                                   <span className='sr-only'>Increase Room</span>
@@ -300,6 +390,13 @@ const HotelHomes = () => {
                   </FormItem>
                 )}
               ></FormField>
+              <Button
+                size='sm'
+                className='mx-4 bg-[#E63A24] h-[2.3rem] hover:bg-red-700 text-gray-100 rounded-[4px] shadow-lg transform transition-all hover:scale-105'
+                type='submit'
+              >
+                <Search className='w-5 h-5' />
+              </Button>
             </div>
           </form>
         </Form>

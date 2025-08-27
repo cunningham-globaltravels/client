@@ -25,7 +25,7 @@ export default function WebsiteLayout({ children }: ILayoutProps) {
       <body className={`${mulish.className} antialiased`}>
         <StoreProvider>
           <TopNavigation />
-          <main className='bg-gray-100'>{children}</main>
+          <main className='bg-gray-100 text-[#191E3B]'>{children}</main>
           <FooterSection />
         </StoreProvider>
       </body>

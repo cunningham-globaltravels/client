@@ -12,7 +12,7 @@ import StopoverInstruction from './instructions/StopoverInstruction';
 
 const InstructionsFlightProfile = () => {
   return (
-    <div className='space-y-0 py-2 px-1'>
+    <div className='space-y-0 py-2 px-1 w-full'>
       <div className='flex flex-row gap-1 mb-2'>
         <h6 className=' font-sans leading-5 text-[13.78px]'>
           <span className='font-semibold'>2</span>

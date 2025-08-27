@@ -75,14 +75,14 @@ const HeroSection = () => {
   }, []);
   return (
     <section className='hero-section'>
-      <div className='wrapper h-[25rem]'>
+      <div className='wrapper-content h-[25rem]'>
         <div className='wrapper-overlay'>
           <div ref={heroRef} className=' container row-rep py-20 lg:py-12'>
             <div className='pb-0'>
               <div className='w-full flex flex-col justify-center items-center gap-2'>
                 <div
                   ref={buttonsRef}
-                  className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-12 '
+                  className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-10 mt-8 '
                 >
                   {heroProfileData.map((profile, index) => (
                     <div key={profile.name} className='flex items-center gap-2 w-full'>
@@ -99,16 +99,10 @@ const HeroSection = () => {
                 </div>
                 <h1
                   ref={titleRef}
-                  className='mt-8 text-xl font-bold text-white md:text-3xl lg:text-5xl md:leading-[62px]'
+                  className='mt-8 max-w-3xl lg:max-w-5xl text-xl font-bold text-center text-white md:text-3xl lg:text-5xl md:leading-[62px]'
                 >
-                  Rest easy, wherever you go
+                  Empowering Global Mobility Through Trusted Travel and Immigration Solutions
                 </h1>
-                <h5
-                  ref={subtitleRef}
-                  className='text-base font-bold md:text-xl text-gray-200 max-w-xl lg:max-w-2xl text-center leading-7'
-                >
-                  Stay Anywhere, Feel at Home, Your Perfect Stay Starts Here.
-                </h5>
               </div>
             </div>
           </div>

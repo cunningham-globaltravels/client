@@ -2,11 +2,10 @@
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar1Icon, ChevronDown, Minus, Plus, Search } from 'lucide-react';
+import { ChevronDown, Minus, Plus, Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -15,12 +14,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Separator } from '@/components/ui/separator';
 import { X } from 'lucide-react';
-import { Calendar } from '@/components/ui/calendar';
 import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select';
 import { FlightTypeConstant as typeConst } from '@/lib/constants/default-layout.constant';
 import { Switch } from '@/components/ui/switch';
+import DatePickerField from '@/components/defaults/DatePickerField';
+import RadioGroupField from '@/components/defaults/RadioGroupField';
+
+const flightTypeData = ['Return', 'One Way', 'Multi City'];
 
 const flightFormSchema = z.object({
+  flightType: z.string(),
   leavingFrom: z.string().min(2),
   goingTo: z.string().min(2),
   departureDate: z.date(),
@@ -33,16 +36,17 @@ const flightFormSchema = z.object({
     totalGuest: z.number(),
   }),
 });
-type TFlightFormValues = z.infer<typeof flightFormSchema>;
+type TFlightFormSchema = z.infer<typeof flightFormSchema>;
 
 const FlightSession = () => {
   const router = useRouter();
   const [openLeavingFrom, setOpenLeavingFrom] = useState(false);
   const [openGoingTo, setOpenGoingTo] = useState(false);
 
-  const flightForm = useForm<TFlightFormValues>({
+  const flightForm = useForm<TFlightFormSchema>({
     resolver: zodResolver(flightFormSchema),
     defaultValues: {
+      flightType: '',
       leavingFrom: '',
       goingTo: '',
       departureDate: undefined,
@@ -95,32 +99,20 @@ const FlightSession = () => {
     }
   };
 
-  const handleFlightInit = (data: TFlightFormValues) => {
+  const handleFlightInit = (data: TFlightFormSchema) => {
+    //console.log(data);
     localStorage.setItem('serviceprofile', JSON.stringify(data));
     router.push('/flight/profile');
-    //router.push('/flight', { state: { profile: data } });
-    //console.log(`Destination Profile recorded: ${JSON.stringify(data)}`);
-    // Handle the login logic here (e.g., API call to authenticate)
   };
 
   return (
-    <div className='flex flex-col gap-4 items-start'>
-      <div className='flight-select'>
-        <RadioGroup defaultValue='option-one' className='flex items-center justify-center'>
-          <div className='flex items-center space-x-2'>
-            <RadioGroupItem value='return' id='return' checked />
-            <Label htmlFor='return'>Return</Label>
-          </div>
-          <div className='flex items-center space-x-2'>
-            <RadioGroupItem value='one_way' id='one_way' />
-            <Label htmlFor='one_way'>One Way</Label>
-          </div>
-          <div className='flex items-center space-x-2'>
-            <RadioGroupItem value='multi_city' id='multi_city' />
-            <Label htmlFor='multi_city'>Multi City</Label>
-          </div>
-        </RadioGroup>
-      </div>
+    <div className='flex flex-col gap-1 items-start'>
+      <RadioGroupField<TFlightFormSchema>
+        name='flightType'
+        control={control}
+        options={flightTypeData}
+        orientation='horizontal'
+      />
       <div className='flight-content'>
         <Card className='w-full p-0 shadow-lg'>
           <Form {...flightForm}>
@@ -138,11 +130,11 @@ const FlightSession = () => {
                               role='combobox'
                               aria-expanded={openLeavingFrom}
                               variant='ghost'
-                              className='w-full lg:w-[200px] justify-start text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer'
+                              className='w-full lg:w-[200px] justify-start text-left p-0 shadow-none hover:bg-gray-50 cursor-pointer'
                             >
-                              <div className='flex flex-col'>
-                                <span className='text-xs font-medium text-gray-500 uppercase mx-2'>Leaving From</span>
-                                <div className='flex items-center box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>
+                              <div>
+                                <span className='text-xs font-medium text-gray-500 mx-2'>Leaving From</span>
+                                <div className='flex items-center box-border cursor-pointer text-sm h-auto leading-10 rounded px-4 py-2'>
                                   {countries && field.value ? (
                                     <div className='flex items-start justify-between gap-4 text-ellipsis bg-gray-100 px-4 w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37]'>
                                       {countries.find((country) => country.countryName === field.value)?.countryName}
@@ -166,8 +158,8 @@ const FlightSession = () => {
                               <CommandList>
                                 {continents.map((continent, index) => (
                                   <CommandGroup className='px-4 py-2' key={index} heading={continent}>
-                                    <div className=' box-border w-full pt-4 rounded-br-lg rounded-bl-lg'>
-                                      <div className='box-border h-full overflow-x-hidden overflow-y-auto pt-0 pb-6 px-4'>
+                                    <div className=' box-border w-full pt-2 rounded-br-lg rounded-bl-lg'>
+                                      <div className='box-border h-auto overflow-x-hidden overflow-y-auto pt-0 pb-4 px-4'>
                                         <div className='grid grid-cols-[repeat(3,150px)]'>
                                           {grouped[continent].sort().map((country, index) => (
                                             <CommandItem
@@ -209,13 +201,13 @@ const FlightSession = () => {
                           <PopoverTrigger asChild>
                             <Button
                               variant='ghost'
-                              className='w-full lg:w-[200px] justify-start text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer'
+                              className='w-full lg:w-[200px] justify-start text-left p-0 shadow-none hover:bg-gray-50 cursor-pointer'
                               role='combobox'
                               aria-expanded={openGoingTo}
                             >
                               <div className='flex flex-col'>
-                                <span className='text-xs font-medium text-gray-500 uppercase mx-2'>Destination</span>
-                                <div className='flex items-center box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>
+                                <span className='text-xs font-medium text-gray-500 mx-2'>Destination</span>
+                                <div className='flex items-center box-border cursor-pointer text-sm h-auto leading-10 rounded px-4 py-2'>
                                   {countries && field.value ? (
                                     <div className='flex items-start justify-between gap-4 text-ellipsis bg-gray-100 px-4 w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37]'>
                                       {countries.find((country) => country.countryName === field.value)?.countryName}
@@ -269,96 +261,20 @@ const FlightSession = () => {
                     </FormItem>
                   )}
                 ></FormField>
-                <FormField
-                  control={control}
-                  name='departureDate'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant={'ghost'}
-                              className='w-full justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer'
-                            >
-                              <div className='flex flex-col'>
-                                <span className=' mx-2 text-xs font-medium text-gray-500 uppercase'>
-                                  Departure Date
-                                </span>
-                                <div className='flex items-center box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>
-                                  {field.value ? (
-                                    <span className='w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37]'>
-                                      {field.value.toLocaleDateString('en-US', {
-                                        month: 'short',
-                                        day: 'numeric',
-                                        year: '2-digit',
-                                      })}
-                                    </span>
-                                  ) : (
-                                    <span className='font-medium text-gray-600 text-xs'>Select Date...</span>
-                                  )}
-                                  <Calendar1Icon className='ml-2 h-4 w-4' />
-                                </div>
-                              </div>
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                            <Calendar
-                              mode='single'
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date()}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                ></FormField>
-                <FormField
-                  control={control}
-                  name='returnDate'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant={'ghost'}
-                              className='w-full justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer'
-                            >
-                              <div className='flex flex-col'>
-                                <span className=' mx-2 text-xs font-medium text-gray-500 uppercase'>Return Date</span>
-                                <div className='flex items-center box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>
-                                  {field.value ? (
-                                    <span className='w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37]'>
-                                      {field.value.toLocaleDateString('en-US', {
-                                        month: 'short',
-                                        day: 'numeric',
-                                        year: '2-digit',
-                                      })}
-                                    </span>
-                                  ) : (
-                                    <span className='font-medium text-gray-600 text-xs'>Select Date...</span>
-                                  )}
-                                  <Calendar1Icon className='ml-2 h-4 w-4' />
-                                </div>
-                              </div>
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                            <Calendar
-                              mode='single'
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date()}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                ></FormField>
+                <div className='flex items-start gap-0'>
+                  <DatePickerField<TFlightFormSchema>
+                    name='departureDate'
+                    label='Departure Date'
+                    control={control}
+                    placeholder='Select Date...'
+                  />
+                  <DatePickerField<TFlightFormSchema>
+                    name='returnDate'
+                    label='Return Date'
+                    control={control}
+                    placeholder='Select Date...'
+                  />
+                </div>
                 <FormField
                   control={control}
                   name='guestNumber'
@@ -372,8 +288,8 @@ const FlightSession = () => {
                               className='w-full overflow-x-hidden justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-gray-50'
                             >
                               <div className='flex flex-col'>
-                                <span className='mx-1 text-xs font-medium text-gray-500 uppercase'>Guest Profile</span>
-                                <div className='flex items-center box-border cursor-pointer text-sm h-12 leading-10 rounded px-0 py-0'>
+                                <span className='mx-1 text-xs font-medium text-gray-500'>Guest Profile</span>
+                                <div className='flex items-center box-border cursor-pointer text-sm h-auto leading-10 rounded px-0 py-0'>
                                   {field.value.totalGuest > 0 ? (
                                     <span className='w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37] text-[9px]'>
                                       {`${field.value.totalGuest} Guest expected, ${field.value.type}`}
@@ -427,7 +343,9 @@ const FlightSession = () => {
                                 </Button>
                                 <div className='flex-1 text-center'>
                                   <div className='text-lg font-bold tracking-tighter'>{childNumber}</div>
-                                  <div className='text-gray-500 text-[10px] uppercase'>Children</div>
+                                  <div className='text-gray-500 text-[10px] uppercase'>
+                                    {childNumber > 1 ? 'Children' : 'Child'}
+                                  </div>
                                 </div>
                                 <Button
                                   variant='outline'
@@ -503,67 +421,6 @@ const FlightSession = () => {
           </Form>
         </Card>
       </div>
-      {/* <div className=' my-4 box-border'>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Card className='p-0 border-white border-0 rounded-none'>
-            <CardContent className='p-0 border shadow-none flex items-start'>
-              <div className=' relative flex gap-0 w-full'>
-                <div className='flex flex-col gap-0'>
-                  <Input
-                    type='text'
-                    {...register('comingFrom')}
-                    className={`px-4 w-full rounded-none focus-visible:ring-0 focus-visible:ring-white focus-visible:bg-white focus-visible:border-none ${
-                      errors.comingFrom ? 'border-red-500' : 'border-white'
-                    }`}
-                    placeholder='Coming from?'
-                  />
-                </div>
-                <div className='flex flex-col gap-1'>
-                  <Input
-                    type='text'
-                    {...register('goingTo')}
-                    className={`px-4 w-full rounded-none focus-visible:ring-0 focus-visible:ring-white focus-visible:bg-white focus-visible:border-none ${
-                      errors.goingTo ? 'border-red-500' : 'border-white'
-                    }`}
-                    placeholder='Going to?'
-                  />
-                </div>
-
-                <div className='absolute top-3 left-[11.45rem]'>
-                  <FaArrowRightArrowLeft className='text-[#3D3D3D]' size={13} />
-                </div>
-                <div className=' absolute border-gray-300 border-1 h-4 right-0 top-2 -ml-[3px]'></div>
-              </div>
-              <div className='relative flex gap-0 w-full'>
-                <Input
-                  type='text'
-                  {...register('destination')}
-                  className={`px-4 w-full rounded-none focus-visible:ring-0 focus-visible:ring-white focus-visible:bg-white focus-visible:border-none ${
-                    errors.destination ? 'border-red-500' : 'border-white'
-                  }`}
-                  placeholder='Departure'
-                />
-                <Input
-                  type='text'
-                  {...register('return')}
-                  className={`px-4 w-full rounded-none focus-visible:ring-0 focus-visible:ring-white focus-visible:bg-white focus-visible:border-none ${
-                    errors.return ? 'border-red-500' : 'border-white'
-                  }`}
-                  placeholder='Return'
-                />
-                <div className=' absolute border-gray-300 border-1 h-4 left-[12.1rem] top-2 -ml-[3px]'></div>
-              </div>
-              <Button
-                size='sm'
-                className='bg-[#E63A24] h-[2.3rem] hover:bg-red-700 text-gray-100 rounded-[4px] shadow-lg transform transition-all hover:scale-105'
-                type='submit'
-              >
-                <Search className='w-5 h-5' />
-              </Button>
-            </CardContent>
-          </Card>
-        </form>
-      </div> */}
     </div>
   );
 };

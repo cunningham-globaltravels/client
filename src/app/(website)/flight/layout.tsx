@@ -1,9 +1,9 @@
 import React from 'react';
-//import './flight-profile.css';
-import FlightSideSection from './FlightSideSection';
 import { heroProfileData } from '@/lib/constants/home.constant';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import HeroMenuContent from '@/components/website/HeroMenuContent';
+import FlightSubMenu from './custom/FlightSubMenu';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -12,13 +12,13 @@ interface ILayoutProps {
 const FlightLayout = ({ children }: ILayoutProps) => {
   return (
     <section className='flight-wrapper'>
-      <div className='flex flex-col gap-8'>
-        <div className='wrapper h-[12rem]'>
+      <div className='flex flex-col gap-16'>
+        <div className='wrapper-content h-[15rem]'>
           <div className='wrapper-overlay'>
-            <div className=' container row-rep py-20 lg:py-12'>
+            <div className='container row-rep py-20 lg:py-12'>
               <div className='pb-0'>
-                <div className='w-full flex flex-col justify-center items-center gap-2'>
-                  <div className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-16 '>
+                <div className='relative w-full flex flex-col justify-center items-center gap-2'>
+                  <div className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-12 mt-4 '>
                     {heroProfileData.map((profile, index) => (
                       <div key={profile.name} className='flex items-center gap-2 w-full'>
                         <Separator orientation='vertical' className={index === 0 ? ' hidden' : ''} />
@@ -34,19 +34,27 @@ const FlightLayout = ({ children }: ILayoutProps) => {
                       </div>
                     ))}
                   </div>
+                  <div className='flex justify-center items-center overflow-hidden'>
+                    <HeroMenuContent serviceType={1} />
+                  </div>
+                  <div className='absolute top-[140px] left-1/2 transform -translate-x-1/2 w-full max-w-[95%]'>
+                    <FlightSubMenu />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='max-w-[1440px] px-4 sm:px-6 lg:px-8 min-h-screen'>
-          <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
+        <main className='mt-20 w-full max-w-[1080px] mx-auto min-h-screen'>{children}</main>
+        {/* <main className='mt-20 w-full max-w-[1070px] mx-auto px-4 sm:px-6 lg:px-8'>{children}</main>
+        {/* <div className='max-w-[1070px] px-4 sm:px-6 lg:px-8 min-h-screen mt-16'>
+          <div className='grid grid-cols-1 md:grid-cols-4 gap-8 '>
             <div className='w-full'>
               <FlightSideSection />
             </div>
             <main className='col-span-3'>{children}</main>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
