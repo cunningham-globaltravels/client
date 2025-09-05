@@ -23,16 +23,15 @@ const tabs = [
     // content: <HotelHomes />,
   },
   {
+    value: 'car',
+    label: 'Cars',
+    icon: FaCar,
+  },
+  {
     value: 'train',
     label: 'Trains',
     icon: FaTrain,
     content: <p>Book your Train ticket with us.</p>,
-  },
-  {
-    value: 'car',
-    label: 'Cars',
-    icon: FaCar,
-    content: <p>Board a Bus to your destination.</p>,
   },
   {
     value: 'attention',

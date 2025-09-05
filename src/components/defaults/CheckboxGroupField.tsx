@@ -8,6 +8,8 @@ interface CheckboxGroupFieldProps<T extends FieldValues> {
   label?: string;
   control: Control<T>;
   options: string[];
+  description?: string[];
+  showMoreStatus?: boolean;
 }
 
 export default function CheckboxGroupField<T extends FieldValues>({
@@ -15,10 +17,12 @@ export default function CheckboxGroupField<T extends FieldValues>({
   label,
   control,
   options,
+  description,
+  showMoreStatus = false,
 }: CheckboxGroupFieldProps<T>) {
   return (
     <div className='mb-6'>
-      {label ? <Label className='font-normal text-sm mb-2'>{label}</Label> : null}
+      {label ? <Label className='font-semibold text-sm mb-2'>{label}</Label> : null}
       <Controller
         name={name}
         control={control}
@@ -34,8 +38,8 @@ export default function CheckboxGroupField<T extends FieldValues>({
           };
 
           return (
-            <div className='space-y-2'>
-              {options.map((opt) => (
+            <div className='flex flex-col gap-4'>
+              {options.map((opt, index) => (
                 <div key={opt} className='flex items-center space-x-2'>
                   <Checkbox
                     id={`${name}-${opt}`}
@@ -43,15 +47,23 @@ export default function CheckboxGroupField<T extends FieldValues>({
                     onCheckedChange={() => handleToggle(opt)}
                     className='border-gray-400 hover:bg-gray-100 data-[state=checked]:bg-[#c42c18] data-[state=checked]:text-white'
                   />
-                  <Label className='text-[13.78px] leading-[18px] font-normal' htmlFor={`${name}-${opt}`}>
-                    {opt}
-                  </Label>
+                  <div className='flex flex-col gap-1'>
+                    <Label className='text-sm leading-4 font-normal' htmlFor={`${name}-${opt}`}>
+                      {opt}
+                    </Label>
+                    {description && (
+                      <span className='w-full max-w-[200px] text-xs font-normal text-gray-600'>
+                        {description[index]}
+                      </span>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
           );
         }}
       />
+      {showMoreStatus && <div className='mt-4 text-[#0D5AB9] font-normal text-sm'>Show more</div>}
     </div>
   );
 }

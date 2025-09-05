@@ -1,3 +1,4 @@
+import { ISelectOption } from '@/types/default.type';
 import { TNavigationLinkProps, TFooterNavLinkProps } from '@/types/website-layout.type';
 import { Briefcase, BookOpen, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
 
@@ -62,3 +63,22 @@ export const socialLinks: TNavigationLinkProps[] = [
 ];
 
 export const FlightTypeConstant: string[] = ['Economy', 'Premium Economy', 'Business Class', 'First Class'];
+
+export const SortOrderBy: ISelectOption[] = [
+  {
+    value: 'Generalized',
+    label: 'Generalized',
+  },
+  {
+    value: 'Recommended',
+    label: 'Recommended',
+  },
+  {
+    value: 'Business',
+    label: 'Business',
+  },
+  {
+    value: 'Luxury',
+    label: 'Luxury',
+  },
+] as const;

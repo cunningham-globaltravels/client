@@ -232,9 +232,14 @@ figure {
   background-image: url('/images/logo/hotel-banner.png');
 }
 
+.carrentals-wrapper .wrapper-content {
+  background-image: url('/images/logo/car-banner.png');
+}
+
 .hero-section .wrapper-content,
 .flight-wrapper .wrapper-content,
-.hotel-wrapper .wrapper-content {
+.hotel-wrapper .wrapper-content,
+.carrentals-wrapper .wrapper-content {
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -243,7 +248,8 @@ figure {
 
 .hero-section .wrapper-overlay,
 .flight-wrapper .wrapper-overlay,
-.hotel-wrapper .wrapper-overlay {
+.hotel-wrapper .wrapper-overlay,
+.carrentals-wrapper .wrapper-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -397,6 +403,17 @@ figure {
   transform: translateX(-50%);
   vertical-align: middle;
   width: 30px;
+}
+.menu-content--link {
+  @apply z-1 flex w-full items-center justify-center px-3 py-3 text-base leading-5 text-[#1A1A1A] hover:text-[#e63a24] transition;
+}
+.menu-content--link-active {
+  @apply text-white hover:text-gray-100;
+}
+
+.nav-activelink {
+  @apply bg-[#623e044c] rounded-full absolute inset-0 -z-10 dark:bg-gray-700 dark:hover:bg-gray-500;
+  /* background-color: #623e044c; */
 }
 
 @media (max-width: 991.9px) {

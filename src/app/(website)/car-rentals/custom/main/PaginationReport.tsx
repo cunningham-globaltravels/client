@@ -5,21 +5,13 @@ import { useSortByForm } from '@/lib/hooks/default.hook';
 import { TSortByFormSchema } from '@/lib/schemas/default.schema';
 import { SortOrderBy as sortings } from '@/lib/constants/default-layout.constant';
 
-const PropertySorting = ({ propertyNumbers }: { propertyNumbers: number }) => {
+const PaginationReport = () => {
   const { sortByFormHook, onSubmit } = useSortByForm();
   const { control, handleSubmit } = sortByFormHook;
-
   return (
     <div className='w-full flex items-start justify-between'>
-      <div className='flex-[1_1_auto] inline space-x-1 text-sm md:text-base leading-4'>
-        <span>London:</span>
-        {propertyNumbers > 1 ? (
-          <span>{`${propertyNumbers} properties`}</span>
-        ) : propertyNumbers === 1 ? (
-          <span>{`${propertyNumbers} properties`}</span>
-        ) : (
-          <span>{`No property found`}</span>
-        )}
+      <div className='mt-6 flex-[1_1_auto] flex items-start space-x-1'>
+        <span className='text-sm leading-[18px]'>302 Cars • Total includes taxes and fees</span>
       </div>
       <div className='flex gap-2 items-end justify-end'>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -36,4 +28,4 @@ const PropertySorting = ({ propertyNumbers }: { propertyNumbers: number }) => {
   );
 };
 
-export default PropertySorting;
+export default PaginationReport;

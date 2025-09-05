@@ -19,8 +19,6 @@ interface IHotelLocationProps {
 export default async function HotelProfileLocation({ params }: IHotelLocationProps) {
   const { location, id } = await params;
 
-  //console.log(id);
-
   return (
     <div key={id} className='flex flex-col gap-4 my-4'>
       <PropertyCard />

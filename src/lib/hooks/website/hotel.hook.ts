@@ -1,12 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  hotelMenuFormSchema,
-  HotelMenuFormSchema,
-  hotelSortByFormSchema,
-  HotelSortByFormSchema,
-} from '@/lib/schemas/website/hotel-page.schema';
-import { useSortByFormStore } from '@/store/website/hotel/sortingControl.store';
+import { hotelMenuFormSchema, HotelMenuFormSchema } from '@/lib/schemas/website/hotel-page.schema';
 import { useHotelMenuFormStore } from '@/store/website/hotel.store';
 
 export const useHotelForm = () => {
@@ -24,21 +18,4 @@ export const useHotelForm = () => {
   };
 
   return { hotelFormHook, onSubmit };
-};
-
-export const useSortByForm = () => {
-  const { data, setFormData } = useSortByFormStore();
-
-  const sortByFormHook = useForm<HotelSortByFormSchema>({
-    resolver: zodResolver(hotelSortByFormSchema),
-    defaultValues: data,
-    mode: 'onChange',
-  });
-
-  const onSubmit = (values: HotelSortByFormSchema) => {
-    setFormData(values);
-    console.log('Final Submit', values);
-  };
-
-  return { sortByFormHook, onSubmit };
 };

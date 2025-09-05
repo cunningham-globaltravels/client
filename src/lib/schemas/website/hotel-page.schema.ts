@@ -16,10 +16,6 @@ export const hotelMenuFormSchema = z.object({
   amenitiesFilters: z.array(z.string()),
 });
 
-export const hotelSortByFormSchema = z.object({
-  sortOrderBy: z.enum(['Generalized', 'Recommended', 'Business', 'Luxury']),
-});
-
 export const roomSelectionFormSchema = z
   .object({
     lodgingStartDate: z.date(),
@@ -35,5 +31,4 @@ export const roomSelectionFormSchema = z
   });
 
 export type HotelMenuFormSchema = z.infer<typeof hotelMenuFormSchema>;
-export type HotelSortByFormSchema = z.infer<typeof hotelSortByFormSchema>;
 export type RoomSelectionFormSchema = z.infer<typeof roomSelectionFormSchema>;

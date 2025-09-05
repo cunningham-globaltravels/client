@@ -4,10 +4,12 @@ import { TbSocial } from 'react-icons/tb';
 import FlightSession from './FlightSession';
 import HeroTabPanel from './HeroTabPanel';
 import HotelHomes from './HotelHomes';
+import CarRentals from './CarRentals';
+import { ITabItem } from '@/types/default.type';
 //import BookingForm from '@/components/sample/BookingForm';
 
 const ServiceInstance = () => {
-  const tabs = [
+  const tabs: ITabItem[] = [
     {
       value: 'flight',
       label: 'Flight',
@@ -21,16 +23,16 @@ const ServiceInstance = () => {
       content: <HotelHomes />,
     },
     {
+      value: 'car',
+      label: 'Cars',
+      icon: FaCar,
+      content: <CarRentals />,
+    },
+    {
       value: 'train',
       label: 'Trains',
       icon: FaTrain,
       content: <p>Book your Train ticket with us.</p>,
-    },
-    {
-      value: 'car',
-      label: 'Cars',
-      icon: FaCar,
-      content: <p>Board a Bus to your destination.</p>,
     },
     {
       value: 'attention',

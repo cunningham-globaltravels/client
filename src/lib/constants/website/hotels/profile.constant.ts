@@ -7,7 +7,6 @@ import { MdOutlineFreeBreakfast } from 'react-icons/md';
 import { IoWifiSharp } from 'react-icons/io5';
 import { MdOutlineLocationOn } from 'react-icons/md';
 import { GiCommercialAirplane } from 'react-icons/gi';
-import { ISelectOption } from '@/types/default.type';
 
 export const MainHotelProfileConstant: THotelHomeProfile[] = [
   {
@@ -71,25 +70,6 @@ export const MainHotelProfileConstant: THotelHomeProfile[] = [
     unitCost: 370,
     numberOfRoomsLeft: 5,
     amenities: ['Pool', 'Hot tub', 'Kitchen'],
-  },
-] as const;
-
-export const SortOrderBy: ISelectOption[] = [
-  {
-    value: 'Generalized',
-    label: 'Generalized',
-  },
-  {
-    value: 'Recommended',
-    label: 'Recommended',
-  },
-  {
-    value: 'Business',
-    label: 'Business',
-  },
-  {
-    value: 'Luxury',
-    label: 'Luxury',
   },
 ] as const;
 

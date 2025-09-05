@@ -1,3 +1,4 @@
+import { CarRentalProfileLinks } from '@/lib/constants/website/carrentals/cars-main-content.constant';
 import { ComponentType, SVGProps } from 'react';
 import { IconType } from 'react-icons';
 
@@ -62,3 +63,14 @@ export interface IContextType {
   title: string;
   description: string;
 }
+
+export type TNavigationLinkModel = {
+  name: string;
+  hash: string;
+};
+
+export interface IAnchorNavigationProps {
+  items: TNavigationLinkModel[];
+}
+
+export type TSectionName = (typeof CarRentalProfileLinks)[number]['name'];

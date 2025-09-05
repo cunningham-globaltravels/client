@@ -1,13 +1,13 @@
 import { create } from 'zustand';
-import { HotelSortByFormSchema } from '@/lib/schemas/website/hotel-page.schema';
+import { TSortByFormSchema } from '@/lib/schemas/default.schema';
 
 interface SortByFormState {
-  data: Partial<HotelSortByFormSchema>;
-  setFormData: (values: Partial<HotelSortByFormSchema>) => void;
+  data: Partial<TSortByFormSchema>;
+  setFormData: (values: Partial<TSortByFormSchema>) => void;
   resetForm: () => void;
 
   // generic setter for any field
-  setField: <K extends keyof HotelSortByFormSchema>(field: K, value: HotelSortByFormSchema[K]) => void;
+  setField: <K extends keyof TSortByFormSchema>(field: K, value: TSortByFormSchema[K]) => void;
 }
 
 export const useSortByFormStore = create<SortByFormState>((set) => ({
