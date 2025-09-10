@@ -79,7 +79,7 @@ const HeroSection = () => {
         <div className='wrapper-overlay'>
           <div ref={heroRef} className=' container row-rep py-20 lg:py-12'>
             <div className='pb-0'>
-              <div className='w-full flex flex-col justify-center items-center gap-2'>
+              <div className='w-full flex flex-col justify-center items-center gap-1'>
                 <div
                   ref={buttonsRef}
                   className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-10 mt-8 '
@@ -99,7 +99,7 @@ const HeroSection = () => {
                 </div>
                 <h1
                   ref={titleRef}
-                  className='mt-8 max-w-3xl lg:max-w-5xl text-xl font-bold text-center text-white md:text-3xl lg:text-5xl md:leading-[62px]'
+                  className='mt-4 max-w-3xl lg:max-w-5xl text-xl font-bold text-center text-white md:text-3xl lg:text-5xl md:leading-[62px]'
                 >
                   Empowering Global Mobility Through Trusted Travel and Immigration Solutions
                 </h1>

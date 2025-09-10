@@ -157,49 +157,6 @@ const HotelHomes = () => {
                 )}
               ></FormField>
               <div className='flex items-center justify-between gap-1 w-full'>
-                {/* <FormField
-                  control={control}
-                  name='dateProfile.checkIn'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <div className='px-2'>
-                              <Button
-                                type='button'
-                                variant={'ghost'}
-                                className='w-full px-12 justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
-                              >
-                                <Calendar1Icon className='mr-2 h-2 w-2' />
-                                <div className='flex flex-col'>
-                                  <span className='text-xs font-medium text-gray-500 uppercase'>Check In</span>
-                                  <span className='text-sm'>
-                                    {field.value
-                                      ? field.value.toLocaleDateString('en-US', {
-                                          month: 'short',
-                                          day: 'numeric',
-                                          year: '2-digit',
-                                        })
-                                      : 'Check In'}
-                                  </span>
-                                </div>
-                              </Button>
-                            </div>
-                          </PopoverTrigger>
-                          <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                            <Calendar
-                              mode='single'
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date()}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                ></FormField> */}
                 {/* Result */}
                 <DatePickerField<TBookingFormSchema>
                   name='dateProfile.checkIn'
@@ -218,49 +175,6 @@ const HotelHomes = () => {
                   control={control}
                   placeholder='Select Date...'
                 />
-                {/* <FormField
-                  control={control}
-                  name='dateProfile.checkout'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <div className='px-2'>
-                              <Button
-                                type='button'
-                                variant={'ghost'}
-                                className='w-full justify-start text-left font-normal p-0 h-auto shadow-none hover:bg-transparent'
-                              >
-                                <Calendar1Icon className='mr-2 h-4 w-4' />
-                                <div className='flex flex-col'>
-                                  <span className='text-xs font-medium text-gray-500 uppercase'>Check Out</span>
-                                  <span className='text-sm'>
-                                    {field.value
-                                      ? field.value.toLocaleDateString('en-US', {
-                                          month: 'short',
-                                          day: 'numeric',
-                                          year: '2-digit',
-                                        })
-                                      : 'Check Out'}
-                                  </span>
-                                </div>
-                              </Button>
-                            </div>
-                          </PopoverTrigger>
-                          <PopoverContent className='w-auto overflow-hidden p-0' align='start'>
-                            <Calendar
-                              mode='single'
-                              selected={field.value}
-                              onSelect={field.onChange}
-                              disabled={(date) => date < new Date()}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                ></FormField> */}
               </div>
               <FormField
                 control={control}

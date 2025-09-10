@@ -1,4 +1,4 @@
-import { TNavigationLinkModel } from '@/types/default.type';
+import { TNavigationLinkModel, TSVGIconProps } from '@/types/default.type';
 import { ICarProfile } from '@/types/website/carrentals.type';
 import { FiUser } from 'react-icons/fi';
 import { GiCarDoor } from 'react-icons/gi';
@@ -1153,3 +1153,49 @@ export const CarRentalProfileLinks: TNavigationLinkModel[] = [
     hash: 'extras',
   },
 ] as const;
+
+export const ConstDriverBookingOption: string[] = ['Damage Protection', 'No Protection'] as const;
+
+export const ConstCarProtectionExtras: string[] = [
+  'Coverage up to $75,000 for theft, vandalism, and collision damage',
+  '$0 deductible on claims',
+  'Free protection plan cancellation up to your pick-up time',
+];
+export const ConstCarNoProtection: string[] = [
+  'Repairs and replacement expenses up to the entire cost of your rental car',
+  'Deductible costs',
+];
+
+export const ConstCarPaymentExtras: string[] = [
+  '$0.00 due today',
+  ' Insurance will be charged on your card six hours before the car pick-up time',
+  'Payment for the car due at the rental counter',
+];
+export const ConstPaymentImageLink2: string[] = ['', '', '', '', ''];
+
+export const ConstPaymentImageLink: TSVGIconProps[] = [
+  {
+    fileName: '/images/main/payment/img-mastercard-small.png',
+    alt: 'Master Card',
+  },
+  {
+    fileName: '/images/main/payment/img-americanexpress-small.png',
+    alt: 'America Express',
+  },
+  {
+    fileName: '/images/main/payment/img-chinaunionpay-small.png',
+    alt: 'China Union',
+  },
+  {
+    fileName: '/images/main/payment/img-dinersclub-small.png',
+    alt: 'Diners Card',
+  },
+  {
+    fileName: '/images/main/payment/img-discover-small.png',
+    alt: 'Discover Card',
+  },
+  {
+    fileName: '/images/main/payment/img-visa-small.png',
+    alt: 'Visa Card',
+  },
+];

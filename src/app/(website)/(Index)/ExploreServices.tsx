@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import { ConstantExploreService as services } from '@/lib/constants/website/index/expolore-service.constant';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Slider from 'react-slick';
@@ -80,7 +80,7 @@ const ExploreServices = () => {
   };
 
   return (
-    <section className='w-full max-w-[62rem] mx-auto overflow-hidden mt-48 mb-12'>
+    <section className='w-full max-w-[62rem] mx-auto overflow-hidden mt-[350px] mb-12'>
       <div className={`p-8 bg-white slide-container`}>
         <Slider ref={sliderRef} {...settings}>
           {services.map((service) => (

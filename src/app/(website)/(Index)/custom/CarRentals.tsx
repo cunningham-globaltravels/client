@@ -2,6 +2,7 @@ import TabPanelControl from '@/components/defaults/TabPanelControl';
 import { ITabItem } from '@/types/default.type';
 import React from 'react';
 import CarTabSection from './TabContent/CarTabSection';
+import AirportTabSection from './TabContent/AirportTabSection';
 
 const CarsTab: ITabItem[] = [
   {
@@ -12,7 +13,7 @@ const CarsTab: ITabItem[] = [
   {
     value: 'airport_transfer',
     label: 'Airport Transfer',
-    content: <h3>Airport Transfer Section Here</h3>,
+    content: <AirportTabSection />,
   },
 ];
 

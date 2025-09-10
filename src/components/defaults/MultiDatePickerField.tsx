@@ -11,17 +11,18 @@ interface MultiDatePickerFieldProps<T extends FieldValues> {
   control: Control<T>;
   label?: string;
   placeholder?: string;
-  width?: number;
+  className?: string;
 }
 export default function MultiDatePickerField<T extends FieldValues>({
   name,
   control,
   label,
   placeholder = 'Pick dates',
-  width,
+  className,
 }: MultiDatePickerFieldProps<T>) {
   return (
-    <div className={`flex flex-col gap-2 ${width ? `w-[${width}px]` : ''}`}>
+    // <div className='flex flex-col gap-2 w-[180px]'>
+    <div className={'flex flex-col gap-2 w-full'}>
       <Controller
         control={control}
         name={name}
@@ -34,7 +35,7 @@ export default function MultiDatePickerField<T extends FieldValues>({
                 <Button
                   role='combobox'
                   variant='ghost'
-                  className={`w-full px-6 border cursor-pointer border-none justify-start text-left font-normal shadow-none bg-transparent hover:bg-transparent ${
+                  className={`w-full px-6 border cursor-pointer border-none justify-start text-left font-normal shadow-none bg-transparent hover:bg-transparent ${className} ${
                     !value ? 'text-muted-foreground' : ''
                   }`}
                 >

@@ -9,6 +9,7 @@ type TimePickerFieldProps<T extends FieldValues> = {
   label?: string;
   placeholder?: string;
   interval?: number; // minute step (default: 30)
+  className?: string;
 };
 
 export function TimePickerField<T extends FieldValues>({
@@ -17,6 +18,7 @@ export function TimePickerField<T extends FieldValues>({
   label,
   placeholder = 'Pick a time',
   interval = 30,
+  className,
 }: TimePickerFieldProps<T>) {
   // Generate time options (HH:mm)
   const times: string[] = [];
@@ -27,7 +29,7 @@ export function TimePickerField<T extends FieldValues>({
   }
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 w-full'>
       <Controller
         control={control}
         name={name}
@@ -37,7 +39,7 @@ export function TimePickerField<T extends FieldValues>({
               <Button
                 role='combobox'
                 variant='ghost'
-                className='w-full px-6 border cursor-pointer border-none justify-start text-left font-normal shadow-none bg-transparent hover:bg-transparent'
+                className={`w-full px-6 border cursor-pointer border-none justify-start text-left font-normal shadow-none bg-transparent hover:bg-transparent ${className}`}
               >
                 <div className='flex flex-col gap-0'>
                   {label && <span className='text-xs font-medium text-gray-500'>{label}</span>}

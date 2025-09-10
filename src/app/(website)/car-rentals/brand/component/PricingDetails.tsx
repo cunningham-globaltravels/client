@@ -1,13 +1,19 @@
+import React from 'react';
 import SVGIcon from '@/components/defaults/SVGIcons';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import useCarRentalProfileStore from '@/store/website/carrentals/carprofile.store';
-import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 
-const PricingDetails = () => {
+const PricingDetails = ({ name, id }: { name: string; id: string }) => {
+  const router = useRouter();
   const { rental_per_day, total_amount, amenities } = useCarRentalProfileStore();
+
+  const handleReserveCar = () => {
+    router.push(`/car-rentals/reserve/${name}/${id}`);
+  };
   return (
     <div className='flex flex-col gap-4 w-full text-[#1A1A1A]'>
       <Card>
@@ -97,7 +103,7 @@ const PricingDetails = () => {
         <Button
           className='w-full bg-transparent border-[#E63A24] text-[#E63A24] font-bold text-base hover:bg-[#E63A24] hover:text-white cursor-pointer'
           variant={'outline'}
-          onClick={() => alert('Cannot proceed from here. Still in development phase.')}
+          onClick={handleReserveCar}
         >
           Reserve
         </Button>

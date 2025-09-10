@@ -63,7 +63,6 @@ const CarTabSection = () => {
                 control={control}
                 name='rentalDate'
                 placeholder='Select Date...'
-                width={180}
               />
 
               <div className='flex items-start gap-4'>

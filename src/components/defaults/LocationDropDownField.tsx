@@ -11,6 +11,7 @@ interface ToggleGroup2FieldProps<T extends FieldValues> {
   label?: string;
   locations: TCountrySelectProps[];
   control: Control<T>;
+  className?: string;
 }
 
 export default function LocationDropDownField<T extends FieldValues>({
@@ -18,6 +19,7 @@ export default function LocationDropDownField<T extends FieldValues>({
   label,
   locations,
   control,
+  className,
 }: ToggleGroup2FieldProps<T>) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -42,7 +44,7 @@ export default function LocationDropDownField<T extends FieldValues>({
               <Button
                 role='combobox'
                 variant='ghost'
-                className='w-full lg:w-[220px] justify-start text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer'
+                className={`w-full lg:w-[220px] justify-start text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer ${className}`}
               >
                 <div className='flex flex-col'>
                   <div className='flex items-center gap-2 box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>

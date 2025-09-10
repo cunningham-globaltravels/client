@@ -27,4 +27,37 @@ export const carTabSchema = z
     path: ['range.rentalTime.dropoffT'], // attach error to the "to" field
   });
 
+export const airportTabSchema = z.object({
+  locations: z.object({
+    airport: z.string().nonempty('Input field required'),
+    hotel: z.string().nonempty('Input field required'),
+  }),
+  travellers: z.object({
+    adult: z.number(),
+    children: z.number(),
+    infant: z.number(),
+    totalTravelers: z.number(),
+  }),
+  flightDepartureDate: z.array(z.date()).length(2, 'Please pick only two dates'),
+  flightDepartureTime: z.string(),
+});
+
+export const roundTripTabSchema = z.object({
+  locations: z.object({
+    airport: z.string(),
+    hotel: z.string(),
+  }),
+  travellers: z.object({
+    adult: z.number(),
+    children: z.number(),
+    infant: z.number(),
+    totalTravelers: z.number(),
+  }),
+  flightDepartureDate: z.array(z.date()).length(2, 'Please pick only two dates'),
+  flightDepartureTime: z.string(),
+  flightArrivalTime: z.string(),
+});
+
 export type TCarTabSchema = z.infer<typeof carTabSchema>;
+export type TAirportTabSchema = z.infer<typeof airportTabSchema>;
+export type TRoundTripTabSchema = z.infer<typeof roundTripTabSchema>;

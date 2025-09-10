@@ -1,14 +1,14 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 import { ITabItem } from '@/types/default.type';
+import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-interface ICustomTabPanelProps {
+interface IAiportTabPanelProps {
   tabs: ITabItem[];
 }
 
-const TabPanelControl: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
+const AirportTabPanel: React.FC<IAiportTabPanelProps> = ({ tabs }) => {
   const firstTabValue = tabs[0]?.value;
   const [activeTab, setActiveTab] = useState<string>(firstTabValue);
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -27,14 +27,14 @@ const TabPanelControl: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
   return (
     <div className='w-full'>
       <Tabs value={activeTab} defaultValue={firstTabValue} onValueChange={setActiveTab} className='relative w-full'>
-        <TabsList className='flex space-x-8 w-full items-start justify-start gap-2 overflow-x-auto rounded-none shadow-none bg-transparent hover:bg-transparent'>
+        <TabsList className='px-4 flex space-x-8 w-full items-start justify-start gap-2 overflow-x-auto rounded-none shadow-none bg-transparent hover:bg-transparent'>
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.value}
               value={tab.value}
-              className='items-start justify-start pr-6 data-[state=active]:border-b-4 data-[state=active]:border-b-[#E63A24] rounded-none flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent cursor-pointer'
+              className='items-center justify-center border border-[#1A1A1A] rounded-md py-2 px-3.5 mr-6 text-[#192024] bg-transparent data-[state=active]:bg-[#E6F5F9] flex-none focus-visible:border focus-visible:ring-ring/1 focus-visible:outline-none overflow-hidden data-[state=active]:shadow-md cursor-pointer'
             >
-              <h3 className='text-[#192024] font-semibold  text-base leading-5'>{tab.label}</h3>
+              <h6 className='font-semibold  text-sm leading-5 text-center'>{tab.label}</h6>
             </TabsTrigger>
           ))}
         </TabsList>
@@ -50,4 +50,4 @@ const TabPanelControl: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
   );
 };
 
-export default TabPanelControl;
+export default AirportTabPanel;

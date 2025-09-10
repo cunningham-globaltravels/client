@@ -7,11 +7,6 @@ export const heroProfileData: THeroProfileProps[] = [
     alt: 'Visa Icon',
   },
   {
-    name: 'Property Listing',
-    fileName: 'icon-pentagon-search.svg',
-    alt: 'Property Icon',
-  },
-  {
     name: 'Immigration',
     fileName: 'icon-plane-fly.svg',
     alt: 'Immigration Icon',
@@ -21,9 +16,14 @@ export const heroProfileData: THeroProfileProps[] = [
     fileName: 'icon-lecture.svg',
     alt: 'Training Icon',
   },
-  {
-    name: 'Travel Insurance',
-    fileName: 'icon-lecture.svg',
-    alt: 'Travel Icon',
-  },
+  // {
+  //   name: 'Property Listing',
+  //   fileName: 'icon-pentagon-search.svg',
+  //   alt: 'Property Icon',
+  // },
+  // {
+  //   name: 'Travel Insurance',
+  //   fileName: 'icon-lecture.svg',
+  //   alt: 'Travel Icon',
+  // },
 ];

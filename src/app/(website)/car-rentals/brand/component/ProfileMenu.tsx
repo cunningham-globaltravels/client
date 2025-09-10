@@ -8,9 +8,6 @@ import CarRentalPolicy from './menucontent/CarRentalPolicy';
 import CarExtras from './menucontent/CarExtras';
 
 const ProfileMenu = ({ name, id }: { name: string; id: string }) => {
-  console.log(name);
-  console.log(id);
-
   return (
     <div className='flex flex-col gap-8 w-full my-40'>
       <div className='px-20 grid grid-cols-1 md:grid-cols-3 gap-8'>
@@ -32,7 +29,7 @@ const ProfileMenu = ({ name, id }: { name: string; id: string }) => {
           </section>
         </div>
         <div className='col-span-1'>
-          <PricingDetails />
+          <PricingDetails name={name} id={id} />
         </div>
       </div>
     </div>

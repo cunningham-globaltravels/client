@@ -1,7 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { carRentalMenuFormSchema, TCarRentalMenuFormSchema } from '@/lib/schemas/website/carrental.shema';
+import {
+  carRentalMenuFormSchema,
+  driverProfileFormSchema,
+  TCarRentalMenuFormSchema,
+  TDriverProfileFormSchema,
+} from '@/lib/schemas/website/carrental.shema';
 import { useCarRentalMenuFormStore } from '@/store/website/carrentals.store';
+import { useDriverProfileFormStore } from '@/store/website/carrentals/driverprofile.store';
 
 export const useCarRentalForm = () => {
   const { data, setFormData } = useCarRentalMenuFormStore();
@@ -18,4 +24,21 @@ export const useCarRentalForm = () => {
   };
 
   return { carRentalFormHook, onSubmit };
+};
+
+export const useDriverProfileForm = () => {
+  const { data, setFormData } = useDriverProfileFormStore();
+
+  const driverProfileFormHook = useForm<TDriverProfileFormSchema>({
+    resolver: zodResolver(driverProfileFormSchema),
+    defaultValues: data,
+    mode: 'onChange',
+  });
+
+  const onSubmit = (values: TDriverProfileFormSchema) => {
+    setFormData(values);
+    console.log('Final Submit', values);
+  };
+
+  return { driverProfileFormHook, onSubmit };
 };

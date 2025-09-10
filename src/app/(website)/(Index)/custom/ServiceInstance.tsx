@@ -40,12 +40,12 @@ const ServiceInstance = () => {
       icon: TbSocial,
       content: <p>Attention and Tours here.</p>,
     },
-    {
-      value: 'travel',
-      label: 'Travel Extra',
-      icon: TbSocial,
-      content: <p>Travel extra here.</p>,
-    },
+    // {
+    //   value: 'travel',
+    //   label: 'Travel Extra',
+    //   icon: TbSocial,
+    //   content: <p>Travel extra here.</p>,
+    // },
   ];
   return (
     <div className='container call-action-index flex justify-center items-center'>
