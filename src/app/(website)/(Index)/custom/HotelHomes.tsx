@@ -80,7 +80,7 @@ const HotelHomes = () => {
   };
 
   return (
-    <div className='booking-content'>
+    <div className='booking-content py-6'>
       <Card className='w-full p-0 shadow-lg'>
         <Form {...bookingForm}>
           <form onSubmit={handleSubmit(handleHotelHomeInit)}>

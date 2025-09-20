@@ -80,7 +80,7 @@ const ExploreServices = () => {
   };
 
   return (
-    <section className='w-full max-w-[62rem] mx-auto overflow-hidden mt-[350px] mb-12'>
+    <section className='w-full max-w-[62rem] mx-auto overflow-hidden mt-[230px] mb-12'>
       <div className={`p-8 bg-white slide-container`}>
         <Slider ref={sliderRef} {...settings}>
           {services.map((service) => (

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import LocationDropDownField from '@/components/defaults/LocationDropDownField';
 import { Card } from '@/components/ui/card';
@@ -15,9 +15,10 @@ import MultiDatePickerField from '@/components/defaults/MultiDatePickerField';
 import { TimePickerField } from '@/components/defaults/TimePickerField';
 import { useAirportTabStore } from '@/store/website/airports/airportuser.store';
 
-const AirportTransitionForm = ({ isAirportFirst }: { isAirportFirst: boolean }) => {
+const TransferContentForm = ({ isAirportFirst }: { isAirportFirst: boolean }) => {
   const router = useRouter();
-  const { data, setField, reset } = useAirportTabStore();
+  const data = useAirportTabStore((state) => state.data);
+
   const airportHotelTabForm = useForm<TAirportTabSchema>({
     resolver: zodResolver(airportTabSchema),
     defaultValues: {
@@ -41,11 +42,6 @@ const AirportTransitionForm = ({ isAirportFirst }: { isAirportFirst: boolean }) 
   const childNumber = watch('travellers.children');
   const infantNumber = watch('travellers.infant');
   const totalTravelers = watch('travellers.totalTravelers');
-
-  useEffect(() => {
-    localStorage.removeItem('airport-tab-storage');
-    reset();
-  }, [reset]);
 
   const handleAdultUpdate = (isAddition: boolean) => {
     if (isAddition) {
@@ -79,10 +75,10 @@ const AirportTransitionForm = ({ isAirportFirst }: { isAirportFirst: boolean }) 
 
   const handleAirportInit = (data: TAirportTabSchema) => {
     console.log(data);
-    setField('locations', data.locations);
-    setField('travellers', data.travellers);
-    setField('flightDepartureDate', data.flightDepartureDate);
-    setField('flightDepartureTime', data.flightDepartureTime);
+    // setField('locations', data.locations);
+    // setField('travellers', data.travellers);
+    // setField('flightDepartureDate', data.flightDepartureDate);
+    // setField('flightDepartureTime', data.flightDepartureTime);
     router.push('/airport-transfer/profile');
   };
   return (
@@ -273,4 +269,4 @@ const AirportTransitionForm = ({ isAirportFirst }: { isAirportFirst: boolean }) 
   );
 };
 
-export default AirportTransitionForm;
+export default TransferContentForm;

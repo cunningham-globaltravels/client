@@ -34,10 +34,10 @@ export default async function HotelProfileLocation({ params }: IHotelLocationPro
   );
 }
 
-export async function generateStaticParams() {
-  return [
-    { location: 'London', id: '1' },
-    { location: 'London', id: '2' },
-    { location: 'Canary%20Wharf%20London', id: '3' },
-  ];
-}
+// export async function generateStaticParams() {
+//   return [
+//     { location: 'London', id: '1' },
+//     { location: 'London', id: '2' },
+//     { location: 'Canary%20Wharf%20London', id: '3' },
+//   ];
+// }

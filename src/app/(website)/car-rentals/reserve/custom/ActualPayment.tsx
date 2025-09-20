@@ -7,7 +7,7 @@ import {
   ConstPaymentImageLink as links,
   ConstCarPaymentExtras as extras,
 } from '@/lib/constants/website/carrentals/cars-main-content.constant';
-import { rentalsPaymentFormSchema, TRentalsPaymentFormSchema } from '@/lib/schemas/website/carrental.shema';
+import { rentalsPaymentFormSchema, TRentalsPaymentFormSchema } from '@/lib/schemas/website/carrental.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check } from 'lucide-react';
 import Image from 'next/image';

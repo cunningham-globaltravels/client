@@ -1,4 +1,4 @@
-import { TRentalsPaymentFormSchema } from '@/lib/schemas/website/carrental.shema';
+import { TRentalsPaymentFormSchema } from '@/lib/schemas/website/carrental.schema';
 import { create } from 'zustand';
 
 interface RentalPaymentFormState {

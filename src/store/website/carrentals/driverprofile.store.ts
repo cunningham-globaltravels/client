@@ -1,4 +1,4 @@
-import { TDriverProfileFormSchema } from '@/lib/schemas/website/carrental.shema';
+import { TDriverProfileFormSchema } from '@/lib/schemas/website/carrental.schema';
 import { create } from 'zustand';
 
 interface DriverProfileFormState {

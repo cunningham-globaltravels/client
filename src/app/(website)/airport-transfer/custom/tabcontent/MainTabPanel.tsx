@@ -1,15 +1,11 @@
 'use client';
-import { ITabItem } from '@/types/default.type';
+import { ITabPanelProps } from '@/types/default.type';
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-interface IAiportTabPanelProps {
-  tabs: ITabItem[];
-}
-
-const AirportTabPanel: React.FC<IAiportTabPanelProps> = ({ tabs }) => {
-  const firstTabValue = tabs[0]?.value;
+const MainTabPanel: React.FC<ITabPanelProps> = ({ tabs, index }) => {
+  const firstTabValue = index ? tabs[index]?.value : tabs[0]?.value;
   const [activeTab, setActiveTab] = useState<string>(firstTabValue);
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
@@ -23,7 +19,6 @@ const AirportTabPanel: React.FC<IAiportTabPanelProps> = ({ tabs }) => {
   useEffect(() => {
     animateIn(activeTab);
   }, [activeTab]);
-
   return (
     <div className='w-full'>
       <Tabs value={activeTab} defaultValue={firstTabValue} onValueChange={setActiveTab} className='relative w-full'>
@@ -40,7 +35,7 @@ const AirportTabPanel: React.FC<IAiportTabPanelProps> = ({ tabs }) => {
         </TabsList>
         <div className='w-full mt-4'>
           {tabs.map((tab) => (
-            <TabsContent className='w-full' key={tab.value} value={tab.value}>
+            <TabsContent key={tab.value} value={tab.value}>
               {tab.content}
             </TabsContent>
           ))}
@@ -50,4 +45,4 @@ const AirportTabPanel: React.FC<IAiportTabPanelProps> = ({ tabs }) => {
   );
 };
 
-export default AirportTabPanel;
+export default MainTabPanel;

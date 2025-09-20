@@ -14,7 +14,7 @@ import {
   ConstExclusiveOffersFilters as offers,
 } from '@/lib/constants/website/carrentals/cars-sidemenu.constant';
 import { useCarRentalForm } from '@/lib/hooks/website/carrentals.hook';
-import { TCarRentalMenuFormSchema } from '@/lib/schemas/website/carrental.shema';
+import { TCarRentalMenuFormSchema } from '@/lib/schemas/website/carrental.schema';
 import React from 'react';
 
 const CarFilters = () => {

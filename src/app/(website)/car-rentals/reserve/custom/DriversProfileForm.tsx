@@ -1,6 +1,6 @@
 import InputField from '@/components/defaults/InputField';
 import { Form } from '@/components/ui/form';
-import { driverProfileFormSchema, TDriverProfileFormSchema } from '@/lib/schemas/website/carrental.shema';
+import { driverProfileFormSchema, TDriverProfileFormSchema } from '@/lib/schemas/website/carrental.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';

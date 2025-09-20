@@ -74,3 +74,12 @@ export interface IAnchorNavigationProps {
 }
 
 export type TSectionName = (typeof CarRentalProfileLinks)[number]['name'];
+
+export interface ILayoutProps {
+  children: React.ReactNode;
+}
+
+export interface ITabPanelProps {
+  tabs: ITabItem[];
+  index?: number;
+}

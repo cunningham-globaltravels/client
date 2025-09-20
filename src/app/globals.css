@@ -239,7 +239,8 @@ figure {
 .hero-section .wrapper-content,
 .flight-wrapper .wrapper-content,
 .hotel-wrapper .wrapper-content,
-.carrentals-wrapper .wrapper-content {
+.carrentals-wrapper .wrapper-content,
+.airporttransfer-wrapper .wrapper-content {
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -256,6 +257,14 @@ figure {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.65);
+}
+.airporttransfer-wrapper .wrapper-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #d9f0f6;
 }
 
 .price-range .bg-primary {

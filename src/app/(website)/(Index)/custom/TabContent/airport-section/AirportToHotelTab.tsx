@@ -3,7 +3,7 @@ import AirportTransitionForm from '../../AirportTransitionForm';
 
 const AirportToHotelTab = () => {
   return (
-    <div className='booking-content'>
+    <div className=''>
       <AirportTransitionForm isAirportFirst={true} />
     </div>
   );

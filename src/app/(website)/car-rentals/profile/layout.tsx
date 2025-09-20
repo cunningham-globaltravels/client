@@ -4,10 +4,8 @@ import HeroMenuContent from '@/components/website/HeroMenuContent';
 import { heroProfileData } from '@/lib/constants/home.constant';
 import React from 'react';
 import CarSubMenu from '../custom/CarSubMenu';
+import { ILayoutProps } from '@/types/default.type';
 
-interface ILayoutProps {
-  children: React.ReactNode;
-}
 const CarRentalsLayout = ({ children }: ILayoutProps) => {
   return (
     <section className='carrentals-wrapper'>

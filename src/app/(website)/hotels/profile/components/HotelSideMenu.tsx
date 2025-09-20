@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import MapDisplay from '../custom/sidemenu/MapDisplay';
 import { Separator } from '@/components/ui/separator';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import HotelFiltersSelect from '../custom/sidemenu/HotelFiltersSelect';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import MapDisplay from '../../custom/sidemenu/MapDisplay';
+import HotelFiltersSelect from '../../custom/sidemenu/HotelFiltersSelect';
 
 const HotelSideMenu = () => {
   const [searchFilters, setSearchFilter] = useState<string>('');

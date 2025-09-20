@@ -5,7 +5,7 @@ import {
   driverProfileFormSchema,
   TCarRentalMenuFormSchema,
   TDriverProfileFormSchema,
-} from '@/lib/schemas/website/carrental.shema';
+} from '@/lib/schemas/website/carrental.schema';
 import { useCarRentalMenuFormStore } from '@/store/website/carrentals.store';
 import { useDriverProfileFormStore } from '@/store/website/carrentals/driverprofile.store';
 

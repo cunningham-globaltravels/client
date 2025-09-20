@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 import { ITabItem } from '@/types/default.type';
 import gsap from 'gsap';
 import { Card, CardContent } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ICustomTabPanelProps {
   tabs: ITabItem[];
@@ -46,8 +47,10 @@ const HeroTabPanel: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
       </TabsList>
       {tabs.map((tab) => (
         <TabsContent key={tab.value} value={tab.value}>
-          <Card className='destination-card h-[350px] absolute top-[35px] left-1/2 transform -translate-x-1/2 -translate-y-[0%] w-[160%] bg-white rounded-lg backdrop-blur-md border-white/20 text-gray-700 pointer-events-auto hover:bg-white/98 transition-all cursor-default group'>
-            <CardContent className='px-4 flex justify-center items-center h-full'>{tab.content}</CardContent>
+          <Card className='destination-card h-auto absolute top-[35px] left-1/2 transform -translate-x-1/2 -translate-y-[0%] w-[160%] bg-white rounded-lg backdrop-blur-md border-white/20 text-gray-700 pointer-events-auto hover:bg-white/98 transition-all cursor-default group'>
+            <CardContent className='px-4 flex justify-center items-center h-auto'>
+              <ScrollArea className='h-[150px] w-full'>{tab.content}</ScrollArea>
+            </CardContent>
           </Card>
         </TabsContent>
       ))}

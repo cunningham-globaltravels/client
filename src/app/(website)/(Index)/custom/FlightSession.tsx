@@ -106,7 +106,7 @@ const FlightSession = () => {
   };
 
   return (
-    <div className='flex flex-col gap-1 items-start'>
+    <div className='py-2 flex flex-col gap-1 items-start'>
       <RadioGroupField<TFlightFormSchema>
         name='flightType'
         control={control}
