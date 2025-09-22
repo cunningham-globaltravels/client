@@ -336,6 +336,9 @@ figure {
   align-self: stretch;
   justify-self: stretch;
 }
+.rotated {
+  transform: rotate(180deg);
+}
 
 .trending-overlay {
   background: none;
