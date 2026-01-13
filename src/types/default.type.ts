@@ -24,6 +24,12 @@ export interface ITabItem {
   content?: React.ReactNode;
 }
 
+export interface ITabItemMB {
+  value: string;
+  icon: React.ReactNode;
+  content: React.ReactNode;
+}
+
 export interface ICategoryTabItem extends ITabItem {
   amount?: string;
   timeline?: string;
@@ -57,6 +63,11 @@ export interface ISelectOption {
   label: string;
   value: string;
 }
+export interface ISelectOption2 {
+  label: string;
+  value: string;
+  embed?: string;
+}
 
 export interface IContextType {
   id: number;
@@ -82,4 +93,20 @@ export interface ILayoutProps {
 export interface ITabPanelProps {
   tabs: ITabItem[];
   index?: number;
+}
+
+export interface ILinkerProps {
+  data: string;
+  href: string;
+}
+
+export interface IExpandableProps {
+  label: string;
+  value: string;
+  subs: string[];
+  count: number;
+}
+
+export interface ICustomTabPanelProps {
+  tabs: ITabItem[];
 }

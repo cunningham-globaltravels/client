@@ -224,7 +224,8 @@ figure {
 }
 
 .hero-section .wrapper-content,
-.flight-wrapper .wrapper-content {
+.flight-wrapper .wrapper-content,
+.visa-section .wrapper-content {
   background-image: url('/images/logo/hero-banner.png');
 }
 
@@ -236,11 +237,18 @@ figure {
   background-image: url('/images/logo/car-banner.png');
 }
 
+.attractions-wrapper .wrapper-content {
+  background-image: url('/images/logo/attraction-banner.png');
+}
+
 .hero-section .wrapper-content,
 .flight-wrapper .wrapper-content,
 .hotel-wrapper .wrapper-content,
 .carrentals-wrapper .wrapper-content,
-.airporttransfer-wrapper .wrapper-content {
+.airporttransfer-wrapper .wrapper-content,
+.attractions-wrapper .wrapper-content,
+.attractions-details-wrapper .wrapper-content,
+.visa-section .wrapper-content {
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
@@ -250,7 +258,9 @@ figure {
 .hero-section .wrapper-overlay,
 .flight-wrapper .wrapper-overlay,
 .hotel-wrapper .wrapper-overlay,
-.carrentals-wrapper .wrapper-overlay {
+.carrentals-wrapper .wrapper-overlay,
+.attractions-wrapper .wrapper-overlay,
+.visa-section .wrapper-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -258,13 +268,23 @@ figure {
   bottom: 0;
   background: rgba(0, 0, 0, 0.65);
 }
-.airporttransfer-wrapper .wrapper-overlay {
+.airporttransfer-wrapper .wrapper-overlay,
+.attractions-details-wrapper .wrapper-overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: #d9f0f6;
+}
+
+.filters-header {
+  -webkit-box-align: center;
+  -webkit-box-pack: justify;
+}
+
+.active-button {
+  background: linear-gradient(135deg, #ff690f 0%, #ff4538 100%);
 }
 
 .price-range .bg-primary {
@@ -426,6 +446,30 @@ figure {
 .nav-activelink {
   @apply bg-[#623e044c] rounded-full absolute inset-0 -z-10 dark:bg-gray-700 dark:hover:bg-gray-500;
   /* background-color: #623e044c; */
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  font-size: 24px;
+  padding: 10px;
+}
+.swiper-custom-pagination {
+  position: relative;
+  bottom: auto;
+  top: auto;
+  margin-top: 10px;
+}
+.swiper-bullet-custom {
+  width: 10px;
+  height: 10px;
+  background: #ccc;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.swiper-bullet-custom-active {
+  background: #007aff;
 }
 
 @media (max-width: 991.9px) {

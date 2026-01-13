@@ -1,0 +1,48 @@
+import { TAttractionProfileProps } from '@/types/website/attractions.type';
+
+export const ConstAttractionProfileList: TAttractionProfileProps[] = [
+  {
+    id: 1,
+    city_name: 'Bayeux',
+    full_city_name: 'Normandy U.S. D-Day Sites Half Day Tour From Bayeux',
+    description: 'Visit the most emblematic D-DAY sites with a professional English speaking driver guide. Departin...',
+    early_booking: 'Early booking recommended',
+    best_seller: '#2 Best seller',
+    duration: '4 hours',
+    star_rating: '4.8 · Exceptional',
+    reviews: '221',
+    amount: '€ 80',
+    availability: 'August 31st',
+    image_names: [
+      'img-normandy-attr1.png',
+      'img-normandy-attr2.png',
+      'img-normandy-attr3.png',
+      'img-normandy-attr4.png',
+    ],
+  },
+  {
+    id: 2,
+    city_name: 'Caen',
+    full_city_name: 'Arromanches 360 Circular Cinema Admission',
+    description: "An immersive screening of 'Normandy's 100 Days'",
+    best_seller: '#3 Best seller',
+    duration: '20 minutes',
+    star_rating: '4.4 · Exceptional',
+    reviews: '99',
+    amount: '€ 7',
+    availability: 'September 22nd',
+    image_names: ['img-arromanches-attr1.png', 'img-arromanches-attr2.png'],
+  },
+  {
+    id: 3,
+    city_name: 'Mery Corbon',
+    full_city_name: 'Private tours of the Berjou Battlefield',
+    description: 'Our guide, passionate about history, will take you on a journey through different sectors of D-Da...',
+    early_booking: 'Early booking recommended',
+    duration: '3 hours',
+    amenities: 'Free cancellation available',
+    amount: '€ 7',
+    availability: 'October 30th',
+    image_names: ['img-berjou-attr1.png', 'img-berjou-attr2.png'],
+  },
+];

@@ -10,7 +10,9 @@ const FeatureDeals = () => {
         <CardContent>
           <div className='grid grid-cols-1 md:grid-cols-3 overflow-hidden scroll-smooth px-4 '>
             <GreatDeal />
-            <ThumbnailDisplay />
+            <div className='hidden lg:flex flex-col items-center justify-center'>
+              <ThumbnailDisplay />
+            </div>
           </div>
         </CardContent>
       </Card>

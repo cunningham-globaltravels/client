@@ -47,7 +47,8 @@ const tabs = [
   },
 ];
 
-const HeroMenuContent = ({ serviceType }: { serviceType: number }) => {
+const HeroMenuContent = ({ serviceType, isImage }: { serviceType: number; isImage?: boolean }) => {
+  console.log('HeroMenuContent component', isImage);
   const firstTabValue = tabs[serviceType - 1]?.value || '';
   const [activeTab, setActiveTab] = useState<string>(firstTabValue);
   const contentRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -71,7 +72,7 @@ const HeroMenuContent = ({ serviceType }: { serviceType: number }) => {
               <TabsTrigger
                 key={value}
                 value={value}
-                className='text-base cursor-default data-[state=active]:border-b-2 data-[state=active]:border-b-white rounded-none justify-baseline flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none  text-[#666666] data-[state=active]:text-white overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent'
+                className='text-base cursor-default disabled data-[state=active]:border-b-2 data-[state=active]:border-b-[#1A1A1A] rounded-none justify-baseline flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none  text-[#666666] data-[state=active]:text-[#1A1A1A] overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent'
               >
                 <div className='flex gap-2 items-center justify-center w-full'>
                   {Icon ? <Icon className=' h-4 w-4' /> : ''}

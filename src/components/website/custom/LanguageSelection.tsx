@@ -5,14 +5,14 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 
-const LanguageSelection = ({ languages }: { languages: TLanguageProps[] }) => {
+const LanguageSelection = ({ languages, className }: { languages: TLanguageProps[]; className?: string }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant='ghost' role='combobox' aria-expanded={open} className='w-[200px] justify-between'>
+        <Button variant='ghost' role='combobox' aria-expanded={open} className={`justify-between ${className}`}>
           {/* {value ? languages.find((lang) => lang.value === value)?.name : languages[0].name} */}
           {value ? (
             <div className='flex items-center box-border text-[#051a37] cursor-pointer text-sm h-12 leading-10 rounded px-2 py-0'>

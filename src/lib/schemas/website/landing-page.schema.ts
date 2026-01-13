@@ -1,5 +1,20 @@
 import { z } from 'zod';
 
+export const flightFormSchema = z.object({
+  flightType: z.string(),
+  leavingFrom: z.string().min(2),
+  goingTo: z.string().min(2),
+  departureDate: z.date(),
+  returnDate: z.date(),
+  guestNumber: z.object({
+    adult: z.number(),
+    child: z.number(),
+    isInfant: z.boolean(),
+    type: z.string(),
+    totalGuest: z.number(),
+  }),
+});
+
 export const carTabSchema = z
   .object({
     location: z.object({
@@ -58,6 +73,12 @@ export const roundTripTabSchema = z.object({
   flightArrivalTime: z.string(),
 });
 
+export const attractionTabSchema = z.object({
+  destination: z.string(),
+  travelDate: z.array(z.date()).length(2, 'Please pick only two dates'),
+});
+
 export type TCarTabSchema = z.infer<typeof carTabSchema>;
 export type TAirportTabSchema = z.infer<typeof airportTabSchema>;
 export type TRoundTripTabSchema = z.infer<typeof roundTripTabSchema>;
+export type TAttractionTabSchema = z.infer<typeof attractionTabSchema>;

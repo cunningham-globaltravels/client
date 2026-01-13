@@ -37,18 +37,18 @@ export default function LocationDropDownField<T extends FieldValues>({
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState }) => {
+      render={({ field }) => {
         return (
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 role='combobox'
                 variant='ghost'
-                className={`w-full lg:w-[220px] justify-start text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer ${className}`}
+                className={`flex-initial flex w-full lg:w-[220px] justify-start border-0 border-b-2 rounded-none lg:border-b-0  text-left p-0 h-auto shadow-none hover:bg-gray-50 cursor-pointer ${className}`}
               >
-                <div className='flex flex-col'>
+                <div className='flex-1 flex flex-col'>
                   <div className='flex items-center gap-2 box-border cursor-pointer text-sm h-12 leading-10 rounded px-4 py-0'>
-                    <MapPin className=' size-5' />
+                    <MapPin className='hidden lg:flex lg:mr-2 size-5' />
                     {locations && field.value ? (
                       <div className='flex items-start justify-between gap-4 text-ellipsis bg-gray-100 px-4 w-full overflow-hidden whitespace-nowrap font-normal text-[#051a37]'>
                         {locations.find((country) => country.countryName === field.value)?.countryName}
@@ -60,7 +60,7 @@ export default function LocationDropDownField<T extends FieldValues>({
                         </div>
                       </div>
                     ) : (
-                      <span className='font-medium text-gray-400 text-xs'>{label}</span>
+                      <span className='font-medium text-gray-400 text-sm lg:text-xs'>{label}</span>
                     )}
                   </div>
                 </div>
@@ -74,7 +74,7 @@ export default function LocationDropDownField<T extends FieldValues>({
                     <CommandGroup className='px-4 py-2' key={index} heading={continent}>
                       <div className=' box-border w-full rounded-br-lg rounded-bl-lg'>
                         <div className='box-border h-full overflow-x-hidden overflow-y-auto pt-0 pb-2 px-4'>
-                          <div className='grid grid-cols-[repeat(3,120px)]'>
+                          <div className='grid grid-cols-[repeat(1,120px)] lg:grid-cols-[repeat(3,150px)]'>
                             {grouped[continent].map((country, index) => (
                               <CommandItem
                                 key={index}
@@ -94,7 +94,7 @@ export default function LocationDropDownField<T extends FieldValues>({
                 </CommandList>
               </Command>
             </PopoverContent>
-            {fieldState.error && <p className='text-sm text-red-500 mt-1'>{fieldState.error.message}</p>}
+            {/* {fieldState.error && <p className='text-sm text-red-500 mt-1'>{fieldState.error.message}</p>} */}
           </Popover>
         );
       }}

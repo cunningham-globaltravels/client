@@ -76,7 +76,7 @@ const RecomendedCars = () => {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 90%',
+              start: 'top 100%',
               toggleActions: 'play none none reverse',
             },
           }

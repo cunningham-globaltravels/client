@@ -2,6 +2,7 @@ import { TSVGIconProps } from './default.type';
 
 export type THeroProfileProps = TSVGIconProps & {
   name: string;
+  link?: string;
 };
 
 export type TSourceFlightProfile = {

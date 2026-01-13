@@ -5,6 +5,7 @@ export const heroProfileData: THeroProfileProps[] = [
     name: 'Visa Assistance',
     fileName: 'icon-umbrella.svg',
     alt: 'Visa Icon',
+    link: '/visa-assistance',
   },
   {
     name: 'Immigration',

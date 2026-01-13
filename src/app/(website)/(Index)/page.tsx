@@ -12,22 +12,29 @@ import FeatureProperty from './FeatureProperty';
 import FeatureDealsBottom from './FeatureDealsBottom';
 import SuspenseFallback from '@/components/defaults/SuspenseFallback';
 import TrendingFlight2 from './TrendingFlight2';
+import HeroSectionMobile from './(mobile)/_component/HeroSectionMobile';
 
 const page = () => {
   return (
-    <main className=' flex p-0 max-w-full transition min-h-screen'>
-      <div className=' relative flex-[1_1_auto] max-w-full'>
-        <HeroSection />
+    <main className='p-0 w-full transition min-h-screen'>
+      <div className='relative flex-[1_1_auto] max-w-full'>
+        <div className='hidden lg:block'>
+          <HeroSection />
+        </div>
+        <div className='flex lg:hidden max-w-full'>
+          <HeroSectionMobile />
+        </div>
         <ExploreServices />
         <Suspense fallback={<SuspenseFallback title='trending flights' />}>
           <TrendingFlight2 />
         </Suspense>
-        {/* <TrendingFlight /> */}
         <FeatureDeals />
         <RecomendedCars />
         <FeatureProperty />
         <PopularAttraction />
-        <FeatureDealsBottom />
+        <div className='hidden lg:block'>
+          <FeatureDealsBottom />
+        </div>
       </div>
     </main>
   );

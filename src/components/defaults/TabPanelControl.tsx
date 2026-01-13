@@ -27,14 +27,14 @@ const TabPanelControl: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
   return (
     <div className='w-full'>
       <Tabs value={activeTab} defaultValue={firstTabValue} onValueChange={setActiveTab} className='relative w-full'>
-        <TabsList className='flex space-x-8 w-full items-start justify-start gap-2 overflow-x-auto rounded-none shadow-none bg-transparent hover:bg-transparent'>
+        <TabsList className='flex space-x-4 lg:space-x-8 w-full items-start justify-start gap-2 overflow-x-auto rounded-none shadow-none bg-transparent hover:bg-transparent'>
           {tabs.map((tab) => (
             <TabsTrigger
               key={tab.value}
               value={tab.value}
               className='items-start justify-start pr-6 data-[state=active]:border-b-4 data-[state=active]:border-b-[#E63A24] rounded-none flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent cursor-pointer'
             >
-              <h3 className='text-[#192024] font-semibold  text-base leading-5'>{tab.label}</h3>
+              <h3 className='text-[#192024] font-semibold text-sm lg:text-base leading-5'>{tab.label}</h3>
             </TabsTrigger>
           ))}
         </TabsList>

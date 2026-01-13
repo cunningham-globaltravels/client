@@ -29,7 +29,7 @@ export function TimePickerField<T extends FieldValues>({
   }
 
   return (
-    <div className='flex flex-col gap-2 w-full'>
+    <div className='w-full lg:w-fit'>
       <Controller
         control={control}
         name={name}
@@ -39,11 +39,11 @@ export function TimePickerField<T extends FieldValues>({
               <Button
                 role='combobox'
                 variant='ghost'
-                className={`w-full px-6 border cursor-pointer border-none justify-start text-left font-normal shadow-none bg-transparent hover:bg-transparent ${className}`}
+                className={`w-full lg:px-6 cursor-pointer border-0 border-b-2 rounded-none lg:border-b-0 justify-start text-left font-normal shadow-none bg-transparent hover:bg-transparent ${className}`}
               >
                 <div className='flex flex-col gap-0'>
-                  {label && <span className='text-xs font-medium text-gray-500'>{label}</span>}
-                  <div className='text-sm p-1 h-auto'>
+                  {label && <span className='text-sm lg:text-xs font-medium text-gray-500'>{label}</span>}
+                  <div className='text-sm lg:px-2 py-2 h-auto'>
                     {field.value ? (
                       <span className='text-sm text-gray-700 font-semibold'>
                         {format(new Date(`1970-01-01T${field.value}:00`), 'hh:mm a')}

@@ -1,10 +1,10 @@
 'use client';
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { Button } from '@/components/ui/button';
 import { heroProfileData } from '@/lib/constants/home.constant';
 import ServiceInstance from './custom/ServiceInstance';
 import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
 
 const HeroSection = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -82,18 +82,17 @@ const HeroSection = () => {
               <div className='w-full flex flex-col justify-center items-center gap-1'>
                 <div
                   ref={buttonsRef}
-                  className='flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-10 mt-8 '
+                  className='w-full max-w-xl flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-10 mt-8 '
                 >
                   {heroProfileData.map((profile, index) => (
                     <div key={profile.name} className='flex items-center gap-2 w-full'>
                       <Separator orientation='vertical' className={index === 0 ? ' hidden' : ''} />
-                      <Button
-                        variant={'ghost'}
-                        size={'lg'}
+                      <Link
+                        href={profile.link ? profile.link : '#'}
                         className='w-fit hover:bg-transparent cursor-pointer hover:scale-110 px-2 text-gray-100 hover:text-[#E63A24]'
                       >
                         <span className=' font-light  text-center text-sm md:text-base leading-5'>{profile.name}</span>
-                      </Button>
+                      </Link>
                     </div>
                   ))}
                 </div>

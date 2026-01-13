@@ -40,11 +40,11 @@ const CarTabSection = () => {
   };
   return (
     <div className='booking-content'>
-      <Card className='w-full p-0 shadow-lg'>
+      <Card className='w-full p-0 border-none rounded-none shadow-none lg:border lg:rounded-[8px] lg:shadow-lg'>
         <Form {...carTabForm}>
           <form onSubmit={handleSubmit(handleCarRentalInit)}>
-            <div className='flex items-center h-auto divide-x divide-gray-300'>
-              <div className='flex items-start gap-1'>
+            <div className='flex flex-col items-start lg:flex-row lg:items-center gap-6 lg:h-24 lg:divide-x lg:divide-gray-300 w-full'>
+              <div className='flex flex-col lg:flex-row items-start gap-1 w-full'>
                 <LocationDropDownField<TCarTabSchema>
                   label='Pick up'
                   control={control}
@@ -65,7 +65,7 @@ const CarTabSection = () => {
                 placeholder='Select Date...'
               />
 
-              <div className='flex items-start gap-4'>
+              <div className='flex flex-col items-start lg:flex-row gap-8 w-full lg:w-fit'>
                 <TimePickerField<TCarTabSchema>
                   control={control}
                   name='rentalTime.pickupT'
@@ -79,13 +79,13 @@ const CarTabSection = () => {
                   label='Drop-off time'
                 />
               </div>
-
               <Button
                 size='sm'
-                className='bg-[#E63A24] h-[2.3rem] hover:bg-red-700 text-gray-100 rounded-[4px] shadow-lg transform transition-all hover:scale-105'
+                className='mx-4 bg-[#E63A24] h-[2.3rem] hover:bg-red-700 text-gray-100 rounded-[4px] shadow-lg transform transition-all hover:scale-105 w-[80%] lg:w-fit'
                 type='submit'
               >
                 <Search className='w-5 h-5' />
+                <span className='block lg:hidden'>Search</span>
               </Button>
             </div>
           </form>

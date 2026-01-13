@@ -36,17 +36,6 @@ export default function SelectField<T extends FieldValues>({
               >
                 {label}
               </Label>
-              {/* <select {...field} className='rounded border px-2 py-1' value={field.value ?? ''}>
-                <option value='' disabled>
-                  {placeholder}
-                </option>
-                {options.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select> */}
-
               <Select>
                 <SelectTrigger
                   {...field}
