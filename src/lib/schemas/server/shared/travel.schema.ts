@@ -1,10 +1,17 @@
 import { z } from 'zod';
 
-export const IATACodeSchema = z
+export const IATACityCodeSchema = z
   .string()
   .trim()
-  .length(3, 'IATA code must be exactly 3 characters')
-  .regex(/^[A-Z]{3}$/, 'IATA code must be A–Z letters only')
+  .length(3, 'IATA city code must be exactly 3 characters')
+  .regex(/^[A-Z]{3}$/, 'IATA city code must be A–Z letters only')
+  .transform((v) => v.toUpperCase());
+
+export const IATACountryCodeSchema = z
+  .string()
+  .trim()
+  .length(2, 'IATA country code must be exactly 3 characters')
+  .regex(/^[A-Z]{2}$/, 'IATA country code must be A–Z letters only')
   .transform((v) => v.toUpperCase());
 
 /**
@@ -17,6 +24,7 @@ export const DateStringSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date mu
  */
 export const ISODateTimeSchema = z.string().datetime({ offset: true });
 
-export type TIATACode = z.infer<typeof IATACodeSchema>;
+export type TIATACityCode = z.infer<typeof IATACityCodeSchema>;
+export type TIATACountryCode = z.infer<typeof IATACountryCodeSchema>;
 export type TDateString = z.infer<typeof DateStringSchema>;
 export type TISODateTime = z.infer<typeof ISODateTimeSchema>;

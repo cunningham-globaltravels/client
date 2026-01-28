@@ -1,10 +1,10 @@
 import { z } from 'zod';
-import { DateStringSchema, IATACodeSchema, ISODateTimeSchema } from '../../shared/travel.schema';
-import { CabinClassSchema } from '@/lib/schemas/enums/cabin-class.enum';
+import { DateStringSchema, IATACityCodeSchema, ISODateTimeSchema } from '../../shared/travel.schema';
+import { CabinClassSchema } from '@/lib/schemas/enums/flight-types.enum';
 
 export const TiqwaFlightSearchQuerySchema = z.object({
-  origin: IATACodeSchema,
-  destination: IATACodeSchema,
+  origin: IATACityCodeSchema,
+  destination: IATACityCodeSchema,
   departureDate: DateStringSchema,
   returnDate: DateStringSchema.optional(),
 
@@ -17,8 +17,8 @@ export const TiqwaFlightSearchQuerySchema = z.object({
 });
 
 export const TiqwaFlightSegmentSchema = z.object({
-  from: IATACodeSchema,
-  to: IATACodeSchema,
+  from: IATACityCodeSchema,
+  to: IATACityCodeSchema,
   departure: ISODateTimeSchema, // ISO timestamp
   arrival: ISODateTimeSchema, // ISO timestamp
   airline: z.string(),

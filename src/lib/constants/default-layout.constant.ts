@@ -1,17 +1,20 @@
 import { ISelectOption } from '@/types/default.type';
 import { TNavigationLinkProps, TFooterNavLinkProps } from '@/types/website-layout.type';
 import { Briefcase, BookOpen, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { CabinClassEnum, FlightTypeEnum } from '../schemas/enums/flight-types.enum';
 
 export const navLinks: TNavigationLinkProps[] = [
   {
     name: 'Blog',
     icon: BookOpen,
     href: '#blog',
+    key: 'blog',
   },
   {
     name: 'Support',
     icon: Briefcase,
     href: '#support',
+    key: 'support',
   },
 ];
 
@@ -82,3 +85,21 @@ export const SortOrderBy: ISelectOption[] = [
     label: 'Luxury',
   },
 ] as const;
+
+export const FLIGHT_TYPE_LABELS: Record<FlightTypeEnum, string> = {
+  one_way: 'One way',
+  round_trip: 'Round trip',
+  multi_city: 'Multi city',
+};
+
+export const CABIN_CLASS_LABELS: Record<CabinClassEnum, string> = {
+  economy: 'Economy',
+  premium_economy: 'Premium Economy',
+  business: 'Business Class',
+  first: 'First Class',
+};
+
+export const FLIGHT_TYPE_OPTIONS = Object.entries(FLIGHT_TYPE_LABELS).map(([value, label]) => ({
+  value,
+  label,
+}));

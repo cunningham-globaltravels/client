@@ -24,7 +24,7 @@ export default function DatePickerField<T extends FieldValues>({
       <Controller
         name={name}
         control={control}
-        render={({ field, fieldState }) => {
+        render={({ field }) => {
           const value: Date = (field.value as Date) || undefined;
 
           const handleChange = (date: Date | undefined) => {
@@ -62,8 +62,6 @@ export default function DatePickerField<T extends FieldValues>({
                   <Calendar mode='single' selected={value} onSelect={handleChange} />
                 </PopoverContent>
               </Popover>
-
-              {fieldState.error && <p className='text-sm text-red-500 mt-1'>{fieldState.error.message}</p>}
             </div>
           );
         }}

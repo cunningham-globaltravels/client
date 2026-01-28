@@ -1,19 +1,54 @@
 import { z } from 'zod';
+import { CabinClassSchema, FlightTypeSchema } from '../enums/flight-types.enum';
+import { TiqwaAirportLocationValueSchema } from '../server/tiqwa/utilities/airport-utility.schema';
 
-export const flightFormSchema = z.object({
-  flightType: z.string(),
-  leavingFrom: z.string().min(2),
-  goingTo: z.string().min(2),
-  departureDate: z.date(),
-  returnDate: z.date(),
-  guestNumber: z.object({
-    adult: z.number(),
-    child: z.number(),
-    isInfant: z.boolean(),
-    type: z.string(),
-    totalGuest: z.number(),
-  }),
+export const flightGuestSchema = z.object({
+  adult: z.number().min(1),
+  child: z.number().min(0),
+  isInfant: z.boolean(),
+  type: CabinClassSchema,
+  totalGuest: z.number().min(1),
 });
+
+export const flightFormSchema = z
+  .object({
+    flightType: FlightTypeSchema,
+
+    leavingFrom: TiqwaAirportLocationValueSchema,
+    goingTo: TiqwaAirportLocationValueSchema,
+
+    departureDate: z.date(),
+    returnDate: z.date().optional(),
+
+    guestNumber: flightGuestSchema,
+  })
+  .superRefine((data, ctx) => {
+    if (data.leavingFrom.city_code === data.goingTo.city_code) {
+      ctx.addIssue({
+        path: ['goingTo'],
+        message: 'Destination must be different',
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    if (data.flightType === 'round_trip' && !data.returnDate) {
+      ctx.addIssue({
+        path: ['returnDate'],
+        message: 'Return date is required for round trip flights',
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    const calculatedTotal = data.guestNumber.adult + data.guestNumber.child;
+
+    if (data.guestNumber.totalGuest !== calculatedTotal) {
+      ctx.addIssue({
+        path: ['guestNumber', 'totalGuest'],
+        message: 'Total guest count does not match',
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
 
 export const carTabSchema = z
   .object({
@@ -35,7 +70,7 @@ export const carTabSchema = z
     {
       message: 'The first date cannot be after the second date',
       path: ['eventDates'], // points error to the array
-    }
+    },
   )
   .refine((range) => range.rentalTime.pickupT < range.rentalTime.dropoffT, {
     message: 'Rental Time Pickup Time must be before Dropoff Time',

@@ -28,33 +28,141 @@ export const PopularConstantFilters: string[] = [
   'Air conditioned',
 ] as const;
 
-export const StayOptionConstant: string[] = ['Any', 'Hotels', 'Homes'] as const;
-export const Neighbourhood: string[] = [
-  'London (and vicinity)',
-  'The City of London',
-  'Kensington',
-  'Soho',
-  'Covent Garden',
-  'Paddington',
-  'Kings Cross St. Pancras',
-  'Mayfair',
-  'Shoreditch',
-  'Victoria',
-  'Canary Wharf',
-  'Stratford',
-  'London (LHR-Heathrow)',
-  'Wembley',
-  'Camden Town',
-  'Greenwich',
-  'London Victoria Station',
-  'Knightsbridge',
-  'London',
+//export const StayOptionConstant: string[] = ['Any', 'Hotels', 'Homes'] as const;
+export const StayOptionConstant = [
+  {
+    value: 'any',
+    label: 'Any',
+  },
+  {
+    value: 'hotels',
+    label: 'Hotels',
+  },
+  {
+    value: 'homes',
+    label: 'Homes',
+  },
+];
+
+// export const Neighbourhood: string[] = [
+//   'London (and vicinity)',
+//   'The City of London',
+//   'Kensington',
+//   'Soho',
+//   'Covent Garden',
+//   'Paddington',
+//   'Kings Cross St. Pancras',
+//   'Mayfair',
+//   'Shoreditch',
+//   'Victoria',
+//   'Canary Wharf',
+//   'Stratford',
+//   'London (LHR-Heathrow)',
+//   'Wembley',
+//   'Camden Town',
+//   'Greenwich',
+//   'London Victoria Station',
+//   'Knightsbridge',
+//   'London',
+// ];
+export const Neighbourhood = [
+  {
+    value: 'london',
+    label: 'London (and vicinity)',
+  },
+  {
+    value: 'london_city',
+    label: 'The City of London',
+  },
+  {
+    value: 'kensington',
+    label: 'Kensington',
+  },
+  {
+    value: 'soho',
+    label: 'Soho',
+  },
+  {
+    value: 'covent_garden',
+    label: 'Covent Garden',
+  },
+  {
+    value: 'paddington',
+    label: 'Paddington',
+  },
+  {
+    value: 'Kings_Cross_st_Pancras',
+    label: 'Kings Cross St. Pancras',
+  },
+  {
+    value: 'mayfair',
+    label: 'Mayfair',
+  },
+  {
+    value: 'shoreditch',
+    label: 'Shoreditch',
+  },
+
+  {
+    value: 'victoria',
+    label: 'Victoria',
+  },
+  {
+    value: 'canary_wharf',
+    label: 'Canary Wharf',
+  },
+  {
+    value: 'stratford',
+    label: 'Stratford',
+  },
+  {
+    value: 'London_LHR_Heathrow)',
+    label: 'London (LHR-Heathrow)',
+  },
+  {
+    value: 'wembley',
+    label: 'Wembley',
+  },
+  {
+    value: 'camden_town',
+    label: 'Camden Town',
+  },
+  {
+    value: 'greenwich',
+    label: 'Greenwich',
+  },
+  {
+    value: 'london_victoria_station',
+    label: 'London Victoria Station',
+  },
+  {
+    value: 'knightsbridge',
+    label: 'Knightsbridge',
+  },
 ];
 export const PaymentTypeConstant: string[] = ['Reserve now, pay later'];
 export const PropertyOptionsConstant: string[] = ['Fully refundable property'];
 export const PropertyTypeConstant: string[] = ['Hotel', 'Aparthotel', 'Apartment'];
 export const PropertyBrandConstant: string[] = ['Imperial London Hotels', 'Montcalm', 'Holiday Inn Express Hotel'];
-export const GuestRatingConstant: string[] = ['Any', 'Wonderful 9+', 'Very good 8+', 'Good 7+'];
+// export const GuestRatingConstant: string[] = ['Any', 'Wonderful 9+', 'Very good 8+', 'Good 7+'];
+export const GuestRatingConstant = [
+  {
+    value: 'Any',
+    label: 'Any',
+  },
+  {
+    value: 'wonderful',
+    label: 'Wonderful 9+',
+  },
+  {
+    value: 'very_good',
+    label: 'Very good 8+',
+  },
+  {
+    value: 'good',
+    label: 'Good 7+',
+  },
+];
 export const AmenitiesConstant: TDefaultData[] = [
   {
     id: 1,

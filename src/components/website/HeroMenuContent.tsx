@@ -5,6 +5,7 @@ import { FaBriefcase, FaCar, FaHome, FaPlaneDeparture, FaTrain } from 'react-ico
 import { TbSocial } from 'react-icons/tb';
 import { gsap } from 'gsap';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
+import FlightSession from '@/app/[locale]/(website)/(Index)/custom/FlightSession';
 
 // interface ICustomTabPanelProps {
 //   tabs: ITabItem[];
@@ -14,7 +15,7 @@ const tabs = [
     value: 'flight',
     label: 'Flight',
     icon: FaPlaneDeparture,
-    // content: <FlightSession />,
+    content: <FlightSession />,
   },
   {
     value: 'hotel_home',
@@ -35,7 +36,7 @@ const tabs = [
   },
   {
     value: 'attention',
-    label: 'Attentions & Tours',
+    label: 'Attractions & Tours',
     icon: TbSocial,
     content: <p>Attention and Tours here.</p>,
   },
@@ -65,14 +66,14 @@ const HeroMenuContent = ({ serviceType, isImage }: { serviceType: number; isImag
 
   return (
     <div className='container flex justify-center items-center'>
-      <div className='row mt-4'>
+      <div className='row'>
         <Tabs value={activeTab} defaultValue={firstTabValue} onValueChange={setActiveTab} className='relative w-full'>
           <TabsList className='flex space-x-4 w-full justify-start gap-2 overflow-x-auto rounded-none bg-transparent'>
             {tabs.map(({ value, label, icon: Icon }) => (
               <TabsTrigger
                 key={value}
                 value={value}
-                className='text-base cursor-default disabled data-[state=active]:border-b-2 data-[state=active]:border-b-[#1A1A1A] rounded-none justify-baseline flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none  text-[#666666] data-[state=active]:text-[#1A1A1A] overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent'
+                className='text-base cursor-default disabled data-[state=active]:border-b-2 data-[state=active]:border-b-white rounded-none justify-baseline flex-none focus-visible:border-none focus-visible:ring-ring/0 focus-visible:outline-none  text-[#666666] data-[state=active]:text-white overflow-hidden data-[state=active]:shadow-none data-[state=active]:bg-transparent'
               >
                 <div className='flex gap-2 items-center justify-center w-full'>
                   {Icon ? <Icon className=' h-4 w-4' /> : ''}

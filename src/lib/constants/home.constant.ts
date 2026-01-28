@@ -2,18 +2,21 @@ import { THeroProfileProps } from '@/types/home.type';
 
 export const heroProfileData: THeroProfileProps[] = [
   {
+    key: 'visa',
     name: 'Visa Assistance',
     fileName: 'icon-umbrella.svg',
     alt: 'Visa Icon',
     link: '/visa-assistance',
   },
   {
+    key: 'immigration',
     name: 'Immigration',
     fileName: 'icon-plane-fly.svg',
     alt: 'Immigration Icon',
   },
   {
-    name: 'Training Serviices',
+    key: 'services',
+    name: 'Training Services',
     fileName: 'icon-lecture.svg',
     alt: 'Training Icon',
   },

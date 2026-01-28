@@ -25,6 +25,7 @@ export interface ITabItem {
 }
 
 export interface ITabItemMB {
+  label: string;
   value: string;
   icon: React.ReactNode;
   content: React.ReactNode;
@@ -71,6 +72,7 @@ export interface ISelectOption2 {
 
 export interface IContextType {
   id: number;
+  key?: string;
   title: string;
   description: string;
 }

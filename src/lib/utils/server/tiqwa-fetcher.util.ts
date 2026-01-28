@@ -15,7 +15,7 @@ interface ITiqwaFetchOptions<TBody, TError> {
 
 export async function TiqwaFetcherUtil<TResponse, TBody extends RequestBody | undefined = undefined, TError = unknown>(
   endpoint: string,
-  options?: ITiqwaFetchOptions<TBody, TError>
+  options?: ITiqwaFetchOptions<TBody, TError>,
 ): Promise<TResponse> {
   const { method = 'GET', query, body, headers, parseError } = options || {};
   const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
@@ -29,14 +29,14 @@ export async function TiqwaFetcherUtil<TResponse, TBody extends RequestBody | un
         .join('&')
     : '';
 
-  const url = `${process.env.TIQWA_API_BASE_URL}${endpoint}${queryString}`;
+  const url = `${process.env.TIQWA_BASE_URL_SB}${endpoint}${queryString}`;
 
   const tiqwa_response = await fetch(url, {
     method,
     body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
     headers: {
       ...(isFormData ? {} : body ? { 'Content-Type': 'application/json' } : {}),
-      Authorization: `Bearer ${process.env.TIQWA_API_KEY}`,
+      Authorization: `Bearer ${process.env.TIQWA_API_KEY_SB}`,
       ...headers,
     },
     cache: 'no-store', // change if you want caching
@@ -49,5 +49,6 @@ export async function TiqwaFetcherUtil<TResponse, TBody extends RequestBody | un
     const parsedError = parseError ? parseError(rawData) : (rawData as TError);
     throw new TiqwaApiErrorUtil<TError>(tiqwa_response.status, 'Tiqwa API request failed', parsedError);
   }
+
   return rawData as TResponse;
 }

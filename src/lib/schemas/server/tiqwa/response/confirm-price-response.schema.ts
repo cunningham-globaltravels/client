@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { DateStringSchema, IATACodeSchema, ISODateTimeSchema } from '../../shared/travel.schema';
+import { DateStringSchema, IATACityCodeSchema, ISODateTimeSchema } from '../../shared/travel.schema';
 
 /**
  * ---- Traveler Price ----
@@ -14,8 +14,8 @@ export const ConfirmPriceTravelerSchema = z.union([
  * ---- Flight Segment ----
  */
 export const ConfirmPriceSegmentSchema = z.object({
-  airport_from: IATACodeSchema,
-  airport_to: IATACodeSchema,
+  airport_from: IATACityCodeSchema,
+  airport_to: IATACityCodeSchema,
 
   departure_time: ISODateTimeSchema,
   arrival_time: ISODateTimeSchema,

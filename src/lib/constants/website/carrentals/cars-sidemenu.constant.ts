@@ -3,6 +3,7 @@ import { IContextType } from '@/types/default.type';
 export const ConstExclusiveOffersFilters: IContextType[] = [
   {
     id: 1,
+    key: 'great_deal',
     title: 'Great Deal',
     description: 'Great Deal shows you the lowest priced car on our website for each category',
   },

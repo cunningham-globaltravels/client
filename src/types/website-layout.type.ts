@@ -4,6 +4,7 @@ export type TNavigationLinkProps = {
   name: string;
   icon?: LucideIcon;
   href?: string;
+  key?: string;
 };
 
 export type TFooterNavLinkProps = {

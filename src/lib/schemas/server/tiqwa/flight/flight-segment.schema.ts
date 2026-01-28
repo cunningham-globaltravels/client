@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import { AirlineDetailsSchema } from './airline.schema';
-import { IATACodeSchema, ISODateTimeSchema } from '../../shared/travel.schema';
+import { IATACityCodeSchema, ISODateTimeSchema } from '../../shared/travel.schema';
 
 export const FlightSegmentSchema = z.object({
-  airport_from: IATACodeSchema,
-  airport_to: IATACodeSchema,
+  airport_from: IATACityCodeSchema,
+  airport_to: IATACityCodeSchema,
 
   departure_time: ISODateTimeSchema,
   arrival_time: ISODateTimeSchema,

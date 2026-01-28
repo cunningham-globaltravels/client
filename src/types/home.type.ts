@@ -1,6 +1,7 @@
 import { TSVGIconProps } from './default.type';
 
 export type THeroProfileProps = TSVGIconProps & {
+  key: string;
   name: string;
   link?: string;
 };
