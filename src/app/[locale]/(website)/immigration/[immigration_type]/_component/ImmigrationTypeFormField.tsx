@@ -1,46 +1,59 @@
+// src/app/[locale]/(website)/immigration/[immigration_type]/_component/ImmigrationTypeFormField.tsx
+
 import { Card } from '@/components/ui/card';
 import { Form } from '@/components/ui/form';
-import { TVisaMainFormSchema, visaMainFormSchema } from '@/lib/schemas/website/visa.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import VisaTypeDropDown from '../defaults/VisaTypeDropDown';
-import { ConstVisaTypes as types } from '@/lib/constants/website/visa-assistance/visa.constant';
-import LocationDropDownField from '@/components/defaults/LocationDropDownField';
-import { ConstantCountries as countries } from '@/lib/constants/continental.constant';
+//import VisaTypeDropDown from '../../_component/defaults/VisaTypeDropDown';
+import { ConstImmigrationTypes as types } from '@/lib/constants/website/visa-assistance/visa.constant';
 import { Button } from '@/components/ui/button';
 import { Loader2, Search } from 'lucide-react';
+import { immigrationMainFormSchema, TImmigrationMainForm } from '@/lib/schemas/website/immigration.schema';
+import { TCountryResponse } from '@/lib/hooks/defaults/countries.hook';
+import TravelTypeDropDown from '@/components/defaults/TravelTypeDropDown';
 import { RHFCountrySelect } from '@/components/defaults/RHFCountrySelect';
+import { buildImigrationSearchUrl } from '@/lib/types/country-search/immigration-search-url';
 
-const VisaFormField = () => {
+const ImmigrationTypeFormField = ({
+  type,
+  source,
+  destination,
+}: {
+  type: string;
+  source: TCountryResponse | undefined;
+  destination: TCountryResponse | undefined;
+}) => {
   const router = useRouter();
-  const visaMainForm = useForm<TVisaMainFormSchema>({
-    resolver: zodResolver(visaMainFormSchema),
+  const mainForm = useForm<TImmigrationMainForm>({
+    resolver: zodResolver(immigrationMainFormSchema),
     defaultValues: {
-      visa_type: '',
+      immigration_type: '',
       citizen: '',
       destination: '',
     },
   });
+
+  useEffect(() => {
+    mainForm.reset({
+      immigration_type: type,
+      citizen: source?.id,
+      destination: destination?.id,
+    });
+  }, [type, source, destination]);
+
   const {
     handleSubmit,
     control,
     formState: { isSubmitting },
-  } = visaMainForm;
-  const handleVisaMainInit = async (data: TVisaMainFormSchema) => {
+  } = mainForm;
+  const handleMainInit = async (data: TImmigrationMainForm) => {
     try {
       // Optional: simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      const { visa_type, citizen, destination } = data;
-      const encodedVisaType = encodeURIComponent(visa_type.toLowerCase().replace(/\s+/g, '-'));
-      const params = new URLSearchParams({
-        citizen: citizen,
-        destination,
-      }).toString();
-
-      router.push(`/visa-assistance/${encodedVisaType}?${params}`);
+      const immigration_search_url = buildImigrationSearchUrl(data.immigration_type, data);
+      router.push(immigration_search_url);
     } catch (error) {
       console.error('Error submitting form', error);
     }
@@ -48,18 +61,18 @@ const VisaFormField = () => {
   return (
     <div className='booking-content'>
       <Card className='w-full p-0 shadow-lg'>
-        <Form {...visaMainForm}>
-          <form onSubmit={handleSubmit(handleVisaMainInit)}>
+        <Form {...mainForm}>
+          <form onSubmit={handleSubmit(handleMainInit)}>
             <div className='w-full flex items-center h-auto divide-x divide-gray-300'>
-              <VisaTypeDropDown<TVisaMainFormSchema>
-                name={'visa_type'}
+              <TravelTypeDropDown<TImmigrationMainForm>
+                name={'immigration_type'}
                 control={control}
                 options={types}
-                placeholder='Choose your application visa type'
+                placeholder='Choose your application travel type'
                 className='border-none shadow-none focus-visible:border-none focus-visible:ring-ring/10 w-72.5'
               />
-              <RHFCountrySelect<TVisaMainFormSchema> control={control} name={'citizen'} label='Citizen of' />
-              <RHFCountrySelect<TVisaMainFormSchema> control={control} name={'destination'} label='Travelling to' />
+              <RHFCountrySelect<TImmigrationMainForm> control={control} name={'citizen'} label='Citizen of' />
+              <RHFCountrySelect<TImmigrationMainForm> control={control} name={'destination'} label='Travelling to' />
               <div className='w-full flex items-end justify-end gap-8 mx-2'>
                 <Button
                   type='submit'
@@ -89,4 +102,4 @@ const VisaFormField = () => {
   );
 };
 
-export default VisaFormField;
+export default ImmigrationTypeFormField;

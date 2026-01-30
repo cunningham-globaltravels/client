@@ -19,8 +19,8 @@ export async function fetchJSON<T>(url: string, options?: RequestInit): Promise<
 
   const json = await res.json();
 
-  if (!res.ok || json.ok === false) {
-    throw new Error(json.message || 'API request failed');
+  if (!res.ok) {
+    throw new Error(json?.message ?? res.statusText);
   }
 
   // ✅ Always return the `profile` field (your backend wraps actual data inside it)

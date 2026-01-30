@@ -449,7 +449,8 @@ figure {
 
   .hero-section .wrapper-content,
   .flight-wrapper .wrapper-content,
-  .visa-section .wrapper-content {
+  .visa-section .wrapper-content,
+  .immigration-section .wrapper-content {
     background-image: url('/images/logo/hero-banner.png');
   }
 
@@ -472,7 +473,8 @@ figure {
   .airporttransfer-wrapper .wrapper-content,
   .attractions-wrapper .wrapper-content,
   .attractions-details-wrapper .wrapper-content,
-  .visa-section .wrapper-content {
+  .visa-section .wrapper-content,
+  .immigration-section .wrapper-content {
     position: relative;
     background-repeat: no-repeat;
     background-size: cover;
@@ -484,7 +486,8 @@ figure {
   .hotel-wrapper .wrapper-overlay,
   .carrentals-wrapper .wrapper-overlay,
   .attractions-wrapper .wrapper-overlay,
-  .visa-section .wrapper-overlay {
+  .visa-section .wrapper-overlay,
+  .immigration-section .wrapper-overlay {
     position: absolute;
     top: 0;
     left: 0;

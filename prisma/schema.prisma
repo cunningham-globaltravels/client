@@ -12,3 +12,33 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Country {
+  id           String    @id @default(uuid())
+  name         String
+  iso2         String    @unique @db.Char(2)
+  iso3         String    @unique @db.Char(3)
+  numericCode  String?   @db.Char(3)
+  continent    Continent
+  currencyCode String?   @db.Char(3)
+  phoneCode    String
+  flagEmoji    String?
+  isActive     Boolean   @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([continent])
+  @@index([iso2])
+}
+
+enum Continent {
+  AFRICA
+  EUROPE
+  ASIA
+  NORTH_AMERICA
+  SOUTH_AMERICA
+  OCEANIA
+  ANTARCTICA
+}

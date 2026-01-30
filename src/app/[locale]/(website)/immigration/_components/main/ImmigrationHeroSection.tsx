@@ -7,7 +7,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import SearchPanel from './SearchPanel';
 
-const VAHeroSection = () => {
+const ImmigrationHeroSection = () => {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const linksRef = useRef<HTMLAnchorElement[]>([]);
@@ -26,7 +26,7 @@ const VAHeroSection = () => {
     return () => ctx.revert();
   }, []);
   return (
-    <section className='visa-section' ref={sectionRef}>
+    <section className='immigration-section' ref={sectionRef}>
       <div className='wrapper-content h-44'>
         <div className='wrapper-overlay'>
           <div className=' container row-rep py-20 lg:py-12'>
@@ -34,7 +34,7 @@ const VAHeroSection = () => {
               <div className='w-full flex flex-col justify-center items-center gap-1'>
                 <div className='w-full max-w-xl flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-10 mt-8 '>
                   {heroProfileData.map((profile, _idx) => (
-                    <div key={profile.name} className='flex items-center gap-2 w-full'>
+                    <div key={profile.name} className='flex items-end gap-2 w-full'>
                       <Separator orientation='vertical' className={`border-gray-200 ${_idx === 0 ? ' hidden' : ''}`} />
                       <Link
                         href={profile.link ? profile.link : '#'}
@@ -43,11 +43,11 @@ const VAHeroSection = () => {
                         }}
                         className={clsx(
                           'relative inline-block px-2 py-1 hover:bg-transparent cursor-pointer hover:scale-110 text-gray-100 hover:text-gray-300',
-                          _idx === 0 &&
+                          _idx === 1 &&
                             'after:content-[""] after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5 after:bg-gray-100 hover:after:bg-gray-300',
                         )}
                       >
-                        <span className='font-light text-center text-sm md:text-base leading-5'>{profile.name}</span>
+                        <span className='font-light text-right text-sm md:text-base leading-5'>{profile.name}</span>
                       </Link>
                     </div>
                   ))}
@@ -62,4 +62,4 @@ const VAHeroSection = () => {
   );
 };
 
-export default VAHeroSection;
+export default ImmigrationHeroSection;

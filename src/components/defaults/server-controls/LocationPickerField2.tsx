@@ -85,7 +85,7 @@ export function LocationPickerField2({ value, onChange }: LocationPickerProps) {
         <Button
           variant={'ghost'}
           role='combobox'
-          className='w-full lg:w-[200px] text-sm leading-[150%] text-gray-600 justify-start border-0 border-b-2 rounded-none lg:border-b-0 text-left p-0 shadow-none hover:bg-gray-50 cursor-pointer'
+          className='w-full lg:w-50 text-sm leading-[150%] text-gray-600 justify-start border-0 border-b-2 rounded-none lg:border-b-0 text-left p-0 shadow-none hover:bg-gray-50 cursor-pointer'
         >
           {value ? `${value.city} (${value.country})` : 'Select city'}
         </Button>

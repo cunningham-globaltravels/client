@@ -13,6 +13,7 @@ export const heroProfileData: THeroProfileProps[] = [
     name: 'Immigration',
     fileName: 'icon-plane-fly.svg',
     alt: 'Immigration Icon',
+    link: '/immigration',
   },
   {
     key: 'services',
