@@ -1,16 +1,13 @@
 'use client';
 import { heroProfileData } from '@/lib/constants/home.constant';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Card, CardContent } from '@/components/ui/card';
-import ImmigrationTypeSubMenu from './ImmigrationTypeSubMenu';
 import ImmigrationTypeFormField from './ImmigrationTypeFormField';
 import { TCountryResponse } from '@/lib/hooks/defaults/countries.hook';
-//import VisaTypeFormField from './VisaTypeFormField';
-//import SearchPanel from './SearchPanel';
 
 const ImmigrationTypeHeroSection = ({
   type,

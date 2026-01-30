@@ -26,7 +26,7 @@ const VisaTypeFormField = ({
     resolver: zodResolver(visaMainFormSchema),
     defaultValues: {
       visa_type: type,
-      citizen_name: source ? source : '',
+      citizen: source ? source : '',
       destination: destination ? destination : '',
     },
   });
@@ -41,10 +41,10 @@ const VisaTypeFormField = ({
       // Optional: simulate API delay
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const { visa_type, citizen_name, destination } = data;
+      const { visa_type, citizen, destination } = data;
       const encodedVisaType = encodeURIComponent(visa_type.toLowerCase().replace(/\s+/g, '-'));
       const params = new URLSearchParams({
-        citizen: citizen_name,
+        citizen,
         destination,
       }).toString();
 
@@ -77,13 +77,11 @@ const VisaTypeFormField = ({
                 <LocationDropDownField<TVisaMainFormSchema>
                   label='Citizen of'
                   control={control}
-                  name='citizen_name'
+                  name='citizen'
                   locations={countries}
                 />
-                {visaTypeMainForm.formState.errors.citizen_name && (
-                  <p className='text-red-500 text-sm mt-1 px-2'>
-                    {visaTypeMainForm.formState.errors.citizen_name.message}
-                  </p>
+                {visaTypeMainForm.formState.errors.citizen && (
+                  <p className='text-red-500 text-sm mt-1 px-2'>{visaTypeMainForm.formState.errors.citizen.message}</p>
                 )}
               </div>
 

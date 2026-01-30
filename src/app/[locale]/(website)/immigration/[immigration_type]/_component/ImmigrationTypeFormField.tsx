@@ -41,7 +41,7 @@ const ImmigrationTypeFormField = ({
       citizen: source?.id,
       destination: destination?.id,
     });
-  }, [type, source, destination]);
+  }, [type, source, destination, mainForm]);
 
   const {
     handleSubmit,

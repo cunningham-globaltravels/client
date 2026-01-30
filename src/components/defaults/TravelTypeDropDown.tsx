@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { Check, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';

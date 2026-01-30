@@ -36,7 +36,7 @@ export function CountrySelectField({
   const { data, isLoading } = useGetSelectCountries(debouncedQuery, undefined, 200, {
     enabled: open,
   });
-  const countries = data ?? [];
+  const countries = React.useMemo<TCountryResponse[]>(() => data ?? [], [data]);
 
   // Group by continent
   const grouped = React.useMemo(() => {

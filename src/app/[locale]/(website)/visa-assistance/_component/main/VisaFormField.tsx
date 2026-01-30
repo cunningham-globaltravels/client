@@ -7,8 +7,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import VisaTypeDropDown from '../defaults/VisaTypeDropDown';
 import { ConstVisaTypes as types } from '@/lib/constants/website/visa-assistance/visa.constant';
-import LocationDropDownField from '@/components/defaults/LocationDropDownField';
-import { ConstantCountries as countries } from '@/lib/constants/continental.constant';
 import { Button } from '@/components/ui/button';
 import { Loader2, Search } from 'lucide-react';
 import { RHFCountrySelect } from '@/components/defaults/RHFCountrySelect';
