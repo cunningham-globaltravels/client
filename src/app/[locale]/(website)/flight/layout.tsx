@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import HeroMenuContent from '@/components/website/HeroMenuContent';
 import FlightSubMenu from './custom/FlightSubMenu';
-import FlightSideSection from './FlightSideSection';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -50,13 +49,14 @@ const FlightLayout = ({ children }: ILayoutProps) => {
               </div>
             </div>
           </div>
-          <div className='w-full xl:max-w-[1070px] mx-auto px-4 sm:px-6 lg:px-8 min-h-screen lg:mt-20'>
-            <div className='grid grid-cols-1 lg:grid-cols-4 lg:gap-8 '>
+          <div className='w-full xl:max-w-267.5 mx-auto px-4 sm:px-6 lg:px-8 min-h-screen lg:mt-20'>
+            {children}
+            {/* <div className='grid grid-cols-1 lg:grid-cols-4 lg:gap-8 '>
               <div className='hidden lg:block w-full mx-auto'>
                 <FlightSideSection />
               </div>
               <main className='col-span-3'>{children}</main>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ type RequestBody = JsonValue | FormData;
 
 interface ITiqwaFetchOptions<TBody, TError> {
   method?: HttpMethod; // default: GET
-  query?: Record<string, string | number | boolean | undefined>;
+  query?: Record<string, string | number | boolean | null | undefined>;
   body?: TBody;
   headers?: Record<string, string>;
   parseError?: (raw: unknown) => TError;

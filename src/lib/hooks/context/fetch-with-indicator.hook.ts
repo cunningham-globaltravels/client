@@ -1,5 +1,6 @@
+// src/lib/hooks/context/fetch-with-indicator.hook.ts
+
 import { useServerIndicatorStore } from '@/store/server-indicator.store';
-//import { useAPICatcher } from "../server/useApiCatcher";
 
 export async function fetchWithIndicatorHook(input: RequestInfo, init?: RequestInit) {
   const { startRequest, endRequest } = useServerIndicatorStore.getState();

@@ -5,15 +5,15 @@ import { CabinClassSchema } from '@/lib/schemas/enums/flight-types.enum';
 export const TiqwaFlightSearchQuerySchema = z.object({
   origin: IATACityCodeSchema,
   destination: IATACityCodeSchema,
-  departureDate: DateStringSchema,
-  returnDate: DateStringSchema.optional(),
+  departure_date: DateStringSchema,
+  return_date: DateStringSchema.nullable().optional(),
 
   adults: z.number().int().min(1).max(9),
   children: z.number().int().min(0).max(9).optional(),
   infants: z.number().int().min(0).max(9).optional(),
 
   cabin: CabinClassSchema.optional(),
-  currency: z.string().length(3).optional(),
+  //currency: z.string().length(3).optional(),
 });
 
 export const TiqwaFlightSegmentSchema = z.object({

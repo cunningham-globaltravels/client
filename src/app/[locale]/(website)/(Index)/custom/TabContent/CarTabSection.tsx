@@ -40,7 +40,7 @@ const CarTabSection = () => {
   };
   return (
     <div className='booking-content'>
-      <Card className='w-full p-0 border-none rounded-none shadow-none lg:border lg:rounded-[8px] lg:shadow-lg'>
+      <Card className='w-full p-0 border-none rounded-none shadow-none lg:border lg:rounded-xl lg:shadow-lg'>
         <Form {...carTabForm}>
           <form onSubmit={handleSubmit(handleCarRentalInit)}>
             <div className='flex flex-col items-start lg:flex-row lg:items-center gap-6 lg:h-24 lg:divide-x lg:divide-gray-300 w-full'>

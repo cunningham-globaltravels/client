@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
 
+export interface ApiSuccessResponse<T> {
+  ok: boolean;
+  message: string;
+  profile: T;
+}
+
 export function success<T>(profile: T, message = 'Success', status = 200) {
   return NextResponse.json({ ok: true, message, profile }, { status });
 }

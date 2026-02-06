@@ -21,7 +21,7 @@ import { flightFormSchema } from '@/lib/schemas/website/landing-page.schema';
 import { CabinClassSchema } from '@/lib/schemas/enums/flight-types.enum';
 import { RHFLocationPicker } from './controls/location-picker-field';
 import { getFormErrorMessages } from '@/lib/helper/get-form-error.helper';
-import { buildFlightSearchUrl } from '@/lib/types/flight-search/flight-search-url';
+import { buildFlightSearchUrl, FlightSearchQuery } from '@/lib/types/flight-search/flight-search-url';
 import { parseFlightSearchParams } from '@/lib/types/flight-search/flight-search-parser';
 import { getErrorMessage } from '@/utils/errors';
 
@@ -56,7 +56,9 @@ const FlightSession = () => {
   } = flightForm;
 
   useEffect(() => {
-    const parsed = parseFlightSearchParams(watch('flightType'), Object.fromEntries(searchParams.entries()));
+    const searchParamsProfile = Object.fromEntries(searchParams.entries()) as FlightSearchQuery;
+    const parsed = parseFlightSearchParams(watch('flightType'), searchParamsProfile);
+    console.log('Flight Session flight type: ', parsed);
 
     if (Object.keys(parsed).length > 0) {
       flightForm.reset(parsed);
@@ -94,7 +96,7 @@ const FlightSession = () => {
 
   const handleFlightInit = async (data: TFlightFormSchema) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 4000));
+      //await new Promise((resolve) => setTimeout(resolve, 4000));
       const flight_search_url = buildFlightSearchUrl(data.flightType, data);
       router.push(flight_search_url);
     } catch (err) {
@@ -112,7 +114,7 @@ const FlightSession = () => {
         orientation='horizontal'
       />
       <div className='flight-content w-full'>
-        <Card className='w-full p-0 border-none rounded-none shadow-none lg:border lg:rounded-[8px] lg:shadow-lg'>
+        <Card className='w-full py-0 px-2 border-none rounded-none shadow-none lg:border lg:rounded-xl'>
           {errorMessages.length > 0 && (
             <div className='mb-4 rounded-md border border-red-200 bg-red-50 p-4'>
               <ul className='list-disc pl-5 space-y-1 text-sm text-red-700'>
@@ -133,6 +135,7 @@ const FlightSession = () => {
                     label='Departure Date'
                     control={control}
                     placeholder='Select Date...'
+                    disablePrevious
                   />
                   {flightType === 'round_trip' && (
                     <DatePickerField<TFlightFormSchema>
@@ -140,6 +143,7 @@ const FlightSession = () => {
                       label='Return Date'
                       control={control}
                       placeholder='Select Date...'
+                      disablePrevious
                     />
                   )}
                 </div>

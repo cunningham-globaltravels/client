@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
       return failure(JSON.stringify(parsed.error.flatten()), 400);
     }
 
-    const { search, continent, limit } = parsed.data;
+    const { search, continent } = parsed.data;
 
     const fetch_countries = await serviceLoadCountries();
 
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     }
 
     return Response.json(
-      { profile: filtered.slice(0, limit) },
+      { profile: filtered },
       {
         headers: {
           'Cache-Control': 'public, max-age=86400, stale-while-revalidate=604800',

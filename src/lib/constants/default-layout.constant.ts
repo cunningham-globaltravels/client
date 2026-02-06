@@ -1,15 +1,15 @@
 import { ISelectOption } from '@/types/default.type';
 import { TNavigationLinkProps, TFooterNavLinkProps } from '@/types/website-layout.type';
-import { Briefcase, BookOpen, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Briefcase, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { CabinClassEnum, FlightTypeEnum } from '../schemas/enums/flight-types.enum';
 
 export const navLinks: TNavigationLinkProps[] = [
-  {
-    name: 'Blog',
-    icon: BookOpen,
-    href: '#blog',
-    key: 'blog',
-  },
+  // {
+  //   name: 'Blog',
+  //   icon: BookOpen,
+  //   href: '#blog',
+  //   key: 'blog',
+  // },
   {
     name: 'Support',
     icon: Briefcase,

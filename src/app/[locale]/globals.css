@@ -427,6 +427,20 @@ figure {
   background: #007aff;
 }
 
+.flight-detail-wrap {
+  display: grid;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--gray);
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.grid-template {
+  gap: 10px;
+  grid-template-columns: calc(42% - 5px) calc(58% - 5px) !important;
+}
+
 @media (max-width: 991.9px) {
   .bg-overlay {
     padding: 0;

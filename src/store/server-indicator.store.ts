@@ -1,3 +1,5 @@
+// src/lib/store/server-indicator.store
+
 import { create } from 'zustand';
 
 interface IServerIndicatorState {

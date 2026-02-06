@@ -41,7 +41,7 @@ export default function MultiDatePickerField<T extends FieldValues>({
                     }`}
                   >
                     {/* <CalendarCheck className='mr-1 h-2 w-2' /> */}
-                    <RiCalendarEventFill className='hidden lg:flex lg:mr-2 h-[16px] w-[14px]' />
+                    <RiCalendarEventFill className='hidden lg:flex lg:mr-2 h-4 w-3.5' />
                     <div className='flex flex-col gap-0'>
                       {label && <span className='text-sm lg:text-xs font-medium text-gray-500'>{label}</span>}
                       <div className='text-sm lg:px-2 py-2 h-auto'>

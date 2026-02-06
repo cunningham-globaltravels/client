@@ -11,6 +11,7 @@ interface DatePickerFieldProps<T extends FieldValues> {
   label?: string;
   control: Control<T>;
   placeholder?: string;
+  disablePrevious?: boolean;
 }
 
 export default function DatePickerField<T extends FieldValues>({
@@ -18,6 +19,7 @@ export default function DatePickerField<T extends FieldValues>({
   label,
   control,
   placeholder,
+  disablePrevious = false,
 }: DatePickerFieldProps<T>) {
   return (
     <div className='mb-2 w-full'>
@@ -59,7 +61,12 @@ export default function DatePickerField<T extends FieldValues>({
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className='w-auto p-0'>
-                  <Calendar mode='single' selected={value} onSelect={handleChange} />
+                  <Calendar
+                    mode='single'
+                    selected={value}
+                    onSelect={handleChange}
+                    disabled={disablePrevious ? { before: new Date() } : false}
+                  />
                 </PopoverContent>
               </Popover>
             </div>

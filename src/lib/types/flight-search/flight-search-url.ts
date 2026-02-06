@@ -5,7 +5,9 @@ import { TFlightFormSchema } from '@/lib/hooks/website/landing-page.hook';
 
 export type FlightSearchQuery = {
   from: string;
+  origin_country: string;
   to: string;
+  destination_country: string;
   departure: string;
   return?: string;
   cabin: string;
@@ -25,6 +27,8 @@ export function buildFlightSearchUrl(flightType: FlightTypeEnum, data: TFlightFo
     child: String(data.guestNumber.child),
     from_code: data.leavingFrom.city_code,
     to_code: data.goingTo.city_code,
+    origin_country: data.leavingFrom.country,
+    destination_country: data.goingTo.country,
   };
 
   if (data.flightType === 'round_trip' && data.returnDate) {

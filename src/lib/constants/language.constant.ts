@@ -3,42 +3,43 @@ import type { TLanguageProps } from '@/types/default.type';
 export const LanguagesConstants: TLanguageProps[] = [
   {
     name: 'English',
-    value: 'english',
+    value: 'en',
     position: '0px -540px',
   },
   {
     name: 'Français',
-    value: 'french',
+    value: 'fr',
     position: '0px -140px',
   },
   {
     name: '繁體中文',
-    value: 'chinese',
+    value: 'zh',
     position: '-30px -220px',
   },
   {
     name: 'Deutsch',
-    value: 'germany',
+    value: 'de',
     position: '0px -160px',
   },
   {
     name: 'Nederlands',
-    value: 'netherland',
+    value: 'en',
     position: '0px -400px',
   },
+  { name: 'Español', value: 'es', position: '0px -180px' },
   {
     name: 'Русский',
-    value: 'russia',
+    value: 'de',
     position: '0px -200px',
   },
   {
     name: '한국어',
-    value: 'korea',
+    value: 'zh', //korea
     position: '0px -80px',
   },
   {
     name: 'Português (Brasil)',
-    value: 'portugal',
+    value: 'es',
     position: '0px -360px',
   },
   {

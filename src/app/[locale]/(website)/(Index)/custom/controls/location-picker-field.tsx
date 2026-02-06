@@ -28,7 +28,8 @@ export function RHFLocationPicker<T extends FieldValues>({
           <LocationPickerField2
             value={field.value}
             onChange={(location) => {
-              field.onChange(location); // ✅ string
+              console.log('RHF Location Picker', location);
+              field.onChange(location);
             }}
           />
 
