@@ -36,10 +36,10 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
       whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 300 }}
     >
-      <Card className='overflow-hidden hover:shadow-lg transition-shadow py-0'>
+      <Card className='overflow-hidden hover:shadow-lg transition-shadow max-w-sm lg:max-w-full'>
         <CardHeader>
-          <div className='p-5'>
-            <div className='flight-detail-wrap grid-template'>
+          <div className='p-2 lg:p-5'>
+            <div className='flight-detail-wrap grid-template justify-between lg:justify-baseline'>
               {uniqueAirlines.map((airline) => (
                 <div key={`${airline.name}_${airline.code}`} className='flex items-center gap-4'>
                   <div
@@ -68,15 +68,17 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
                   <h6 className='text-base font-semibold leading-[155%] text-gray-700'>{airline.name}</h6>
                 </div>
               ))}
-              <div className='relative flex justify-between lg:justify-end gap-8 items-end'>
-                <div className='block space-y-1'>
+              <div className='relative flex justify-end gap-8 items-end'>
+                <div className='block space-y-1 items-end'>
                   <span className='text-sm text-muted-foreground text-center'>Full Pay</span>
-                  <h5 className='text-xl leading-5 font-medium mb-0'>{formatNGN(flight.amount)}</h5>
+                  <h5 className='text-base lg:text-xl leading-5 font-semibold lg:font-medium mb-0'>
+                    {formatNGN(flight.amount)}
+                  </h5>
                 </div>
                 <Button
                   variant={'outline'}
                   onClick={() => onSelect(flight.id)}
-                  className='py-2.5 px-4 text-[#E63A24] hover:text-white hover:bg-[#E63A24] border-[#E63A24] hover:border-[#B02D1C] cursor-pointer'
+                  className='hidden lg:inline py-2.5 px-4 text-[#E63A24] hover:text-white hover:bg-[#E63A24] border-[#E63A24] hover:border-[#B02D1C] cursor-pointer'
                 >
                   Book Now
                 </Button>
@@ -96,7 +98,7 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
               }
               return null;
             })}
-            <div className='block space-y-3.5'>
+            <div className='block space-y-3.5 mt-4 md:mt-1'>
               <div className='flex items-baseline flight-travel-heading'>
                 <h6 className='text-gray-500 font-medium m-0 leading-[155%] text-base'>Departure</h6>
                 <ul className='m-0 text-[#747678] list-none'>
@@ -113,11 +115,12 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
                   <div key={_idx} className='flex justify-between gap-6 py-3.75 px-5 bg-[#f8f8f8]'>
                     <div className='space-y-0'>
                       {/* Departure time */}
-                      <div className='w-14 font-semibold text-lg'>{parseTime(segment.departure_time)}</div>
-                      <div className='text-xs capitalize'>{`${segment.airport_from_details.city}(${segment.airport_from_details.iata_code})`}</div>
+                      <div className='font-semibold text-base lg:text-lg'>{parseTime(segment.departure_time)}</div>
+                      <div className='hidden lg:inline text-xs capitalize'>{`${segment.airport_from_details.city}(${segment.airport_from_details.iata_code})`}</div>
+                      <div className='inline lg:hidden text-xs capitalize'>{`${segment.airport_from_details.city}`}</div>
                     </div>
                     <div className='flex items-center gap-2 flex-1'>
-                      <div className='shrink-0 w-8 h-8 rounded-md overflow-hidden border bg-white shadow-sm'>
+                      <div className='hidden lg:inline shrink-0 w-8 h-8 rounded-md overflow-hidden border bg-white shadow-sm'>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={'/images/main/double-airplane-fly.png'}
@@ -138,16 +141,19 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
                         />
                       </div>
                       <div className='relative w-full'>
-                        <h6 className='absolute right-8 bottom-0 text-[#8592A6] text-[11.44px] leading-4.5'>
+                        <h6 className='absolute right-0 lg:right-8 bottom-0 text-[#8592A6] text-[11.44px] leading-4.5 w-full lg:w-fit'>
                           {formatDuration(segment.duration)}
                         </h6>
-                        <div className='h-px flex-1 bg-linear-to-r from-transparent via-gray-300 to-transparent' />
+                        <div className='h-px flex-1 bg-linear-to-r from-transparent via:gray-600 lg:via-gray-300 to-transparent' />
                       </div>
                     </div>
                     <div className='space-y-0'>
                       {/* To airport */}
-                      <div className='w-14 font-semibold text-lg'>{parseTime(segment.arrival_time)}</div>
-                      <div className='text-xs capitalize'>{`${segment.airport_to_details.city}(${segment.airport_to_details.iata_code})`}</div>
+                      <div className='w-10 lg:w-14 font-semibold text-base lg:text-lg'>
+                        {parseTime(segment.arrival_time)}
+                      </div>
+                      <div className='hidden lg:inline text-xs capitalize'>{`${segment.airport_to_details.city}(${segment.airport_to_details.iata_code})`}</div>
+                      <div className='inline lg:hidden text-xs capitalize'>{`${segment.airport_to_details.city}`}</div>
                     </div>
                   </div>
                 ))}
@@ -159,20 +165,33 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
           <Separator />
         </CardContent>
         <CardFooter className='flex items-baseline pt-0 pb-4 px-6'>
-          <div className='flex items-center gap-4 text-sm text-muted-foreground'>
-            <div className='flex items-center gap-1'>
-              <Clock className='h-4 w-4' /> <span>{formatDuration(flight.total_duration)}</span>
+          <div className='flex flex-col gap-4 w-full'>
+            <div className='flex items-center gap-4 text-sm text-muted-foreground'>
+              <div className='hidden lg:flex items-center gap-1'>
+                <Clock className='h-4 w-4' /> <span>{formatDuration(flight.total_duration)}</span>
+              </div>
+              <Badge variant='outline' className='gap-1'>
+                {flight.outbound_stops === 0 ? (
+                  <span>Non-stop</span>
+                ) : (
+                  <>
+                    {flight.outbound_stops} Stop{flight.outbound_stops > 1 ? 's' : ''}
+                  </>
+                )}
+              </Badge>
+              <div className=''>
+                {allRefundable && <Badge variant='secondary'>Refundable</Badge>} <span>{baggageInfo}</span>
+              </div>
             </div>
-            <Badge variant='outline' className='gap-1'>
-              {flight.outbound_stops === 0 ? (
-                <span>Non-stop</span>
-              ) : (
-                <>
-                  {flight.outbound_stops} Stop{flight.outbound_stops > 1 ? 's' : ''}
-                </>
-              )}
-            </Badge>
-            {allRefundable && <Badge variant='secondary'>Refundable</Badge>} <span>{baggageInfo}</span>
+            <div className='w-full'>
+              <Button
+                variant={'outline'}
+                onClick={() => onSelect(flight.id)}
+                className='w-full inline lg:hidden py-2.5 px-4 text-white bg-[#E63A24] cursor-pointer'
+              >
+                Book Now
+              </Button>
+            </div>
           </div>
         </CardFooter>
       </Card>

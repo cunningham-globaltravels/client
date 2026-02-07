@@ -106,7 +106,7 @@ const FlightSession = () => {
   };
 
   return (
-    <div className='py-2 flex flex-col gap-1 items-start'>
+    <div className='py-4 flex flex-col gap-1 items-start'>
       <RadioGroupField<TFlightFormSchema>
         name='flightType'
         control={control}
@@ -291,7 +291,7 @@ const FlightSession = () => {
                 <Button
                   type='submit'
                   disabled={isSubmitting}
-                  className={`mx-4 bg-[#E63A24] py-5 px-4 hover:bg-orange-700 rounded-[8px] text-sm leading-5 cursor-pointer inline-flex items-center space-x-2 ${
+                  className={`w-full lg:w-fit lg:mx-4 bg-[#E63A24] py-5 px-4 hover:bg-orange-700 rounded-xl text-sm leading-5 cursor-pointer inline-flex items-center space-x-2 ${
                     isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                   }`}
                 >

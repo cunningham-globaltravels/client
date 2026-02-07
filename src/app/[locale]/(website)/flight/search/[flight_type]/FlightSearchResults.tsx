@@ -171,7 +171,7 @@ const FlightSearchResults: React.FC<IFlightResultsProps> = ({ flights, onSelectF
                 {filteredFlights.length} {filteredFlights.length === 1 ? 'flight' : 'flights'} found
               </div>
               <Select value={sortBy} onValueChange={(value: filterStateType) => setSortBy(value)}>
-                <SelectTrigger className='w-full sm:w-56'>
+                <SelectTrigger className='w-full sm:w-56 bg-white'>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

@@ -223,6 +223,13 @@ figure {
   @apply flex justify-center items-center my-4;
 }
 
+.hero-section .wrapper-content,
+.flight-wrapper .wrapper-content,
+.visa-section .wrapper-content,
+.immigration-section .wrapper-content {
+  background-image: url('/images/logo/index-mobile-img.png');
+}
+
 .airporttransfer-wrapper .wrapper-overlay,
 .attractions-details-wrapper .wrapper-overlay {
   position: absolute;
@@ -435,6 +442,9 @@ figure {
   margin-bottom: 20px;
   width: 100%;
 }
+.flight-travel-heading li:not(:last-child):before {
+  @apply absolute content-["\2022"] -right-1.25 top-0;
+}
 
 .grid-template {
   gap: 10px;
@@ -465,7 +475,7 @@ figure {
   .flight-wrapper .wrapper-content,
   .visa-section .wrapper-content,
   .immigration-section .wrapper-content {
-    background-image: url('/images/logo/hero-banner.png');
+    background-image: url('/images/logo/index-img.png');
   }
 
   .hotel-wrapper .wrapper-content {
@@ -507,7 +517,7 @@ figure {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0, 0, 0, 0.45);
   }
 }
 

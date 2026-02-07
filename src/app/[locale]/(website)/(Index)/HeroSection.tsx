@@ -84,7 +84,7 @@ const HeroSection = () => {
               <div className='w-full flex flex-col justify-center items-center gap-1'>
                 <div
                   ref={buttonsRef}
-                  className='w-full max-w-xl flex flex-col md:flex-row justify-center md:justify-baseline gap-4 md:gap-10 mt-8 '
+                  className='w-full max-w-xl flex flex-row justify-center md:justify-baseline gap-0 md:gap-10 mt-3 md:mt-8'
                 >
                   {heroProfileData.map((profile, index) => (
                     <div key={profile.name} className='flex items-center gap-2 w-full'>
@@ -102,7 +102,7 @@ const HeroSection = () => {
                 </div>
                 <h1
                   ref={titleRef}
-                  className='mt-4 max-w-3xl lg:max-w-6xl text-xl font-bold text-center text-white md:text-3xl lg:text-5xl md:leading-[62px]'
+                  className='hidden md:block mt-4 max-w-3xl lg:max-w-6xl text-xl font-bold text-center text-white md:text-3xl lg:text-5xl md:leading-[62px]'
                 >
                   {t('hero_section.header')}
                 </h1>

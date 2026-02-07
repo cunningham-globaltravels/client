@@ -33,7 +33,7 @@ const HeroTabPanel: React.FC<ICustomTabPanelProps> = ({ tabs }) => {
       onValueChange={setActiveTab}
       className='relative w-full bg-transparent'
     >
-      <TabsList className='bg-[#F5F5F5] flex flex-wrap md:flex-nowrap w-full justify-start gap-2 overflow-x-auto'>
+      <TabsList className='bg-transparent md:bg-[#F5F5F5] flex flex-wrap md:flex-nowrap w-full justify-start gap-2 overflow-x-auto'>
         {tabs.map(({ value, icon: Icon }) => (
           <TabsTrigger
             key={value}

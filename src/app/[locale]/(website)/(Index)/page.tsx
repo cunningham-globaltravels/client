@@ -20,8 +20,12 @@ const page = () => {
         <div className='hidden lg:block'>
           <HeroSection />
         </div>
-        <div className='flex lg:hidden max-w-full'>
-          <HeroSectionMobile />
+        <div className='flex lg:hidden w-full'>
+          <div className='hero-section w-full'>
+            <div className='wrapper-content h-auto w-full'>
+              <HeroSectionMobile />
+            </div>
+          </div>
         </div>
         <ExploreServices />
         <TrendingFlight />
