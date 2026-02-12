@@ -27,8 +27,6 @@ const FlightProfileDetails: React.FC<IFlightCardProps> = ({ flight, onSelect }) 
   const allRefundable = flight.outbound.every((s) => s.refundable);
   const baggageInfo = flight.outbound[0]?.baggage ?? 'Not specified';
 
-  console.log('Uniques Airline Reviews: ', uniqueAirlines);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

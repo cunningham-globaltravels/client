@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FlightDetailsProps } from '@/lib/types/flight-search/response-flight-search.type';
@@ -9,7 +9,9 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import FlightFilters from './_component/testing/FlightFilters';
 import FlightProfileDetails from './_component/FlightProfileDetails';
 import EmptyFlightsState from './_component/EmptyFlightsState';
-import { flightFilterState } from '@/lib/types/flight-search/flight-search-parser';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import { Filter } from 'lucide-react';
 
 interface IFlightResultsProps {
   flights: FlightDetailsProps[];
@@ -18,21 +20,34 @@ interface IFlightResultsProps {
 type filterStateType = 'price-asc' | 'price-desc' | 'duration-asc' | 'duration-desc';
 
 const FlightSearchResults: React.FC<IFlightResultsProps> = ({ flights, onSelectFlight }) => {
-  const [filterState, setFilterState] = useState<flightFilterState>({
-    priceRange: [0, Infinity],
-    durationRange: [0, Infinity],
-    selectedStops: [] as number[],
-    selectedAirlines: [] as string[],
-    refundableOnly: false,
-  });
-  const [sortBy, setSortBy] = useState<filterStateType>('price-asc');
   const hasAnyFlights = flights.length > 0;
   // Compute extremes and uniques
   const extremes = useMemo(() => {
+    if (flights.length === 0) return { minPrice: 0, maxPrice: 1000000, maxDuration: 1440 };
     const prices = flights.map((f) => f.amount);
     const durations = flights.map((f) => f.total_duration);
     return { minPrice: Math.min(...prices), maxPrice: Math.max(...prices), maxDuration: Math.max(...durations) };
   }, [flights]);
+
+  const defaultFilterState = useMemo(
+    () => ({
+      priceRange: [extremes.minPrice, extremes.maxPrice],
+      durationRange: [0, extremes.maxDuration],
+      selectedStops: [] as number[],
+      selectedAirlines: [] as string[],
+      refundableOnly: false,
+    }),
+    [extremes],
+  );
+
+  const [filterState, setFilterState] = useState(defaultFilterState);
+  const [sortBy, setSortBy] = useState<filterStateType>('price-asc');
+
+  // Reset filters when flights change
+  useEffect(() => {
+    setFilterState(defaultFilterState);
+  }, [defaultFilterState]);
+
   const uniqueAirlines = useMemo(() => {
     const set = new Set<string>();
     flights.forEach((f) => {
@@ -40,15 +55,16 @@ const FlightSearchResults: React.FC<IFlightResultsProps> = ({ flights, onSelectF
     });
     return Array.from(set).sort();
   }, [flights]);
-  const uniqueStops = useMemo(() => Array.from(new Set(flights.map((f) => getStopValue(f.outbound_stops)))), [flights]);
 
-  const hasFiltersApplied =
-    filterState.selectedStops.length > 0 ||
-    filterState.selectedAirlines.length > 0 ||
-    filterState.refundableOnly ||
-    filterState.priceRange[0] !== extremes.minPrice ||
-    filterState.priceRange[1] !== extremes.maxPrice ||
-    filterState.durationRange[1] !== extremes.maxDuration;
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (filterState.priceRange[0] > extremes.minPrice || filterState.priceRange[1] < extremes.maxPrice) count++;
+    if (filterState.durationRange[1] < extremes.maxDuration) count++;
+    if (filterState.selectedStops.length > 0) count++;
+    if (filterState.selectedAirlines.length > 0) count++;
+    if (filterState.refundableOnly) count++;
+    return count;
+  }, [filterState, extremes]);
 
   // Filtered and sorted flights
   const filteredFlights = useMemo(() => {
@@ -125,6 +141,9 @@ const FlightSearchResults: React.FC<IFlightResultsProps> = ({ flights, onSelectF
     },
     [updateFilterState],
   );
+  const handleClearFilters = useCallback(() => {
+    setFilterState(defaultFilterState);
+  }, [defaultFilterState]);
 
   const sortOptions = [
     { value: 'price-asc' as const, label: 'Price: Lowest first' },
@@ -141,34 +160,71 @@ const FlightSearchResults: React.FC<IFlightResultsProps> = ({ flights, onSelectF
           <motion.aside
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className='lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:overflow-y-auto order-2 lg:order-1'
+            className='hidden lg:block lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:overflow-y-auto'
           >
-            <ScrollArea className='lg:h-[calc(100vh-12rem)]'>
-              <div className='lg:w-72 space-y-1 lg:space-y-4'>
-                <div className='p-4 border rounded-lg shadow-2xl bg-white'>
-                  <h3 className='font-semibold text-lg mb-6 lg:mb-4'>Filters</h3>
-                  <FlightFilters
-                    filterState={filterState}
-                    onPriceChange={handlePriceChange}
-                    onDurationChange={handleDurationChange}
-                    toggleStop={toggleStop}
-                    toggleAirline={toggleAirline}
-                    setRefundableOnly={setRefundableOnly}
-                    uniqueAirlines={uniqueAirlines}
-                    uniqueStops={uniqueStops}
-                    minPrice={extremes.minPrice}
-                    maxPrice={extremes.maxPrice}
-                    maxDuration={extremes.maxDuration}
-                  />
-                </div>
+            <ScrollArea className='h-full w-72'>
+              <div className='p-6 border rounded-lg shadow-sm bg-white'>
+                <h3 className='font-semibold text-lg mb-6'>Filters</h3>
+                <FlightFilters
+                  filterState={filterState}
+                  onPriceChange={handlePriceChange}
+                  onDurationChange={handleDurationChange}
+                  toggleStop={toggleStop}
+                  toggleAirline={toggleAirline}
+                  setRefundableOnly={setRefundableOnly}
+                  onClear={handleClearFilters}
+                  uniqueAirlines={uniqueAirlines}
+                  minPrice={extremes.minPrice}
+                  maxPrice={extremes.maxPrice}
+                  maxDuration={extremes.maxDuration}
+                />
               </div>
             </ScrollArea>
           </motion.aside>
           {/* Results */}
-          <motion.main className='order-1 lg:order-2' initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4'>
+          <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className='flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4'>
               <div className='text-2xl font-bold'>
                 {filteredFlights.length} {filteredFlights.length === 1 ? 'flight' : 'flights'} found
+              </div>
+              <div className='flex flex-col sm:flex-row gap-4 w-full lg:w-auto lg:flex-row-reverse'>
+                {/* Mobile Filter Sheet Trigger */}
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant='outline' className='block lg:hidden w-full sm:w-auto' asChild>
+                      <div className='flex items-start gap-8'>
+                        <Filter className='mr-2 h-8 w-4' />
+                        <span className='font-semibold text-sm leading-3.5'>Filters</span>
+                        {activeFiltersCount > 0 ? ` (${activeFiltersCount})` : ''}
+                      </div>
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side='right' className='w-[90vw] max-w-md max-h-[90vh] p-0'>
+                    <SheetHeader className='px-6 py-4 border-b'>
+                      <SheetTitle className='flex items-center justify-between'>
+                        Filters
+                        <span className='text-sm text-muted-foreground'>
+                          {activeFiltersCount > 0 ? `${activeFiltersCount} applied` : ''}
+                        </span>
+                      </SheetTitle>
+                    </SheetHeader>
+                    <ScrollArea className='h-[calc(100vh-120px)]'>
+                      <FlightFilters
+                        filterState={filterState}
+                        onPriceChange={handlePriceChange}
+                        onDurationChange={handleDurationChange}
+                        toggleStop={toggleStop}
+                        toggleAirline={toggleAirline}
+                        setRefundableOnly={setRefundableOnly}
+                        onClear={handleClearFilters}
+                        uniqueAirlines={uniqueAirlines}
+                        minPrice={extremes.minPrice}
+                        maxPrice={extremes.maxPrice}
+                        maxDuration={extremes.maxDuration}
+                      />
+                    </ScrollArea>
+                  </SheetContent>
+                </Sheet>
               </div>
               <Select value={sortBy} onValueChange={(value: filterStateType) => setSortBy(value)}>
                 <SelectTrigger className='w-full sm:w-56 bg-white'>
@@ -184,28 +240,13 @@ const FlightSearchResults: React.FC<IFlightResultsProps> = ({ flights, onSelectF
               </Select>
             </div>
             <AnimatePresence>
-              {filteredFlights.length === 0 ? (
-                <EmptyFlightsState
-                  hasFiltersApplied={hasFiltersApplied}
-                  onClearFilters={() =>
-                    updateFilterState({
-                      priceRange: [extremes.minPrice, extremes.maxPrice],
-                      durationRange: [0, extremes.maxDuration],
-                      selectedStops: [],
-                      selectedAirlines: [],
-                      refundableOnly: false,
-                    })
-                  }
-                />
-              ) : (
-                <div className='grid gap-6'>
-                  <AnimatePresence>
-                    {filteredFlights.map((flight) => (
-                      <FlightProfileDetails key={flight.id} flight={flight} onSelect={onSelectFlight} />
-                    ))}
-                  </AnimatePresence>
-                </div>
-              )}
+              <div className='grid gap-6'>
+                <AnimatePresence>
+                  {filteredFlights.map((flight) => (
+                    <FlightProfileDetails key={flight.id} flight={flight} onSelect={onSelectFlight} />
+                  ))}
+                </AnimatePresence>
+              </div>
             </AnimatePresence>
           </motion.main>
         </div>

@@ -96,7 +96,7 @@ const FlightSession = () => {
 
   const handleFlightInit = async (data: TFlightFormSchema) => {
     try {
-      //await new Promise((resolve) => setTimeout(resolve, 4000));
+      await new Promise((resolve) => setTimeout(resolve, 2500));
       const flight_search_url = buildFlightSearchUrl(data.flightType, data);
       router.push(flight_search_url);
     } catch (err) {

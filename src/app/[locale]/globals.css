@@ -451,6 +451,29 @@ figure {
   grid-template-columns: calc(42% - 5px) calc(58% - 5px) !important;
 }
 
+.PhoneInputInput {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Country select (flag + dropdown) */
+.PhoneInputCountry {
+  padding: 5px;
+}
+
+/* Country icon (flag) */
+.PhoneInputCountryIcon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Dropdown arrow */
+.PhoneInputCountrySelectArrow {
+  color: #555;
+}
+
 @media (max-width: 991.9px) {
   .bg-overlay {
     padding: 0;
@@ -539,5 +562,18 @@ figure {
 @media (min-width: 1200px) {
   .container {
     max-width: 1140px;
+  }
+}
+
+@layer utilities {
+  @keyframes ping-slow {
+    75%,
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  .animate-ping-slow {
+    animation: ping-slow 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }

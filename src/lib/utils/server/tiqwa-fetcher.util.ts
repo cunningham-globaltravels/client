@@ -31,24 +31,54 @@ export async function TiqwaFetcherUtil<TResponse, TBody extends RequestBody | un
 
   const url = `${process.env.TIQWA_BASE_URL_SB}${endpoint}${queryString}`;
 
-  const tiqwa_response = await fetch(url, {
-    method,
-    body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
-    headers: {
-      ...(isFormData ? {} : body ? { 'Content-Type': 'application/json' } : {}),
-      Authorization: `Bearer ${process.env.TIQWA_API_KEY_SB}`,
-      ...headers,
-    },
-    cache: 'no-store', // change if you want caching
-  });
+  let tiqwa_response: Response;
+
+  try {
+    tiqwa_response = await fetch(url, {
+      method,
+      body: body ? (isFormData ? body : JSON.stringify(body)) : undefined,
+      headers: {
+        ...(isFormData ? {} : body ? { 'Content-Type': 'application/json' } : {}),
+        Authorization: `Bearer ${process.env.TIQWA_API_KEY_SB}`,
+        ...headers,
+      },
+      cache: 'no-store', // change if you want caching
+    });
+  } catch (err) {
+    throw new TiqwaApiErrorUtil(0, 'Network error while contacting Tiqwa', err);
+  }
 
   const rawText = await tiqwa_response.text();
-  const rawData = rawText ? JSON.parse(rawText) : null;
+  const rawData = rawText ? safeJsonParse(rawText) : null;
 
   if (!tiqwa_response.ok) {
+    //console.log('Utility Fetcher middleware: ', rawData);
+    console.error('Tiqwa API Error:', {
+      status: tiqwa_response.status,
+      rawData,
+      endpoint,
+      method,
+    });
     const parsedError = parseError ? parseError(rawData) : (rawData as TError);
-    throw new TiqwaApiErrorUtil<TError>(tiqwa_response.status, 'Tiqwa API request failed', parsedError);
+    throw new TiqwaApiErrorUtil<TError>(
+      tiqwa_response.status,
+      rawData?.description || rawData?.message || 'Tiqwa API request failed',
+      {
+        error: parsedError,
+        raw: rawText,
+        endpoint,
+        method,
+      } as TError,
+    );
   }
 
   return rawData as TResponse;
+}
+
+function safeJsonParse(value: string) {
+  try {
+    return JSON.parse(value);
+  } catch {
+    return value; // preserve raw text
+  }
 }

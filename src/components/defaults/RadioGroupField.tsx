@@ -3,7 +3,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { Label } from '../ui/label';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
-interface RadioOption {
+export interface RadioOption {
   value: string;
   label: string;
 }
@@ -24,7 +24,7 @@ export default function RadioGroupField<T extends FieldValues>({
   orientation = 'vertical',
 }: RadioGroupFieldProps<T>) {
   return (
-    <div className='mb-6'>
+    <div>
       {label ? <Label className='font-normal text-sm mb-2'>{label}</Label> : null}
       <Controller
         name={name}

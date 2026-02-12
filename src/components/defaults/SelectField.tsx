@@ -22,7 +22,7 @@ export default function SelectField<T extends FieldValues>({
   placeholder,
 }: SelectFieldProps<T>) {
   return (
-    <div className='relative mb-1'>
+    <div className='relative'>
       <Controller
         name={name}
         control={control}
@@ -41,7 +41,7 @@ export default function SelectField<T extends FieldValues>({
                   {...field}
                   value={field.value ?? ''}
                   id={name as string}
-                  className='text-left focus-visible:border-none focus-visible:ring-ring/10 bg-white pb-4 pt-6 w-[200px] hover:bg-gray-50'
+                  className='text-left focus-visible:border-none focus-visible:ring-ring/10 bg-white pb-4 pt-6 w-50 hover:bg-gray-50'
                 >
                   <SelectValue placeholder={placeholder || label} />
                 </SelectTrigger>

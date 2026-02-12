@@ -6,13 +6,14 @@ import {
 import { TiqwaFetcherUtil } from '@/lib/utils/server/tiqwa-fetcher.util';
 
 export async function confirmFlightPriceService(
-  params: TTiqwaConfirmPriceRequest
+  params: TTiqwaConfirmPriceRequest,
 ): Promise<TTiqwaConfirmPriceResponse> {
   const { flight_id } = params;
-  const response = await TiqwaFetcherUtil(`/flight/confirm-price/${flight_id}`, {
+  console.log(flight_id);
+
+  const response = await TiqwaFetcherUtil(`/flight/confirm_price/${flight_id}`, {
     method: 'GET',
   });
-
   // Runtime validation + typing
   return TiqwaConfirmPriceResponseSchema.parse(response);
 }

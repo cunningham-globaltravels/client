@@ -22,20 +22,19 @@ export default function InputField<T extends FieldValues>({
   placeholder = '',
 }: InputFieldProps<T>) {
   return (
-    <div className='w-full'>
+    <div className='w-full space-y-1'>
       {label && (
         <div className='flex items-start gap-1'>
-          <label className='text-sm'>{label}</label>
+          <label className='font-medium text-sm leading-[150%]'>{label}</label>
           {important && <span className='text-[#D60000] font-black'>*</span>}
         </div>
       )}
       <Controller
         name={name}
         control={control}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <>
             <Input {...field} type={type} className={`border rounded p-2 ${className}`} placeholder={placeholder} />
-            {fieldState.error && <p className='text-red-500 text-sm'>{fieldState.error.message}</p>}
           </>
         )}
       />

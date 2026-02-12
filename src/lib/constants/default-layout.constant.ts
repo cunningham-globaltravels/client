@@ -1,6 +1,6 @@
 import { ISelectOption } from '@/types/default.type';
 import { TNavigationLinkProps, TFooterNavLinkProps } from '@/types/website-layout.type';
-import { Briefcase, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Briefcase, Facebook, Instagram, Linkedin, Youtube, X } from 'lucide-react';
 import { CabinClassEnum, FlightTypeEnum } from '../schemas/enums/flight-types.enum';
 
 export const navLinks: TNavigationLinkProps[] = [
@@ -40,17 +40,17 @@ export const footerNavLinks: TFooterNavLinkProps = {
 export const socialLinks: TNavigationLinkProps[] = [
   {
     name: 'Facebook',
-    href: 'https://facebook.com',
+    href: 'https://www.facebook.com/share/1DG8jJwoef',
     icon: Facebook,
   },
   {
     name: 'Twitter',
-    href: 'https://twitter.com',
-    icon: Twitter,
+    href: 'https://x.com/Cunningham66734',
+    icon: X,
   },
   {
     name: 'Instagram',
-    href: 'https://instagram.com',
+    href: 'https://www.instagram.com/cunningham_global?igsh=MmF2MzVuZGN3eGht',
     icon: Instagram,
   },
   {
@@ -60,7 +60,7 @@ export const socialLinks: TNavigationLinkProps[] = [
   },
   {
     name: 'YouTube',
-    href: 'https://youTube.com',
+    href: 'https://youtube.com/@cunningham_global_travels?si=ar4jxQtmPMZfBm94',
     icon: Youtube,
   },
 ];

@@ -71,7 +71,7 @@ export function CountrySelectField({
           <DialogTitle>{label}</DialogTitle>
         </DialogHeader>
         <Command>
-          <CommandInput placeholder='Search country...' value={search} onValueChange={setSearch} />
+          <CommandInput placeholder={`${label}`} value={search} onValueChange={setSearch} />
           <CommandList>
             {isLoading && <CommandEmpty>Loading...</CommandEmpty>}
             {!isLoading && countries.length === 0 && <CommandEmpty>No country found.</CommandEmpty>}

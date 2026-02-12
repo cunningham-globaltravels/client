@@ -44,7 +44,7 @@ const FooterSection = () => {
               end: 'bottom 20%',
               toggleActions: 'play none none reverse',
             },
-          }
+          },
         );
       }
     });
@@ -68,7 +68,7 @@ const FooterSection = () => {
             start: 'top 90%',
             toggleActions: 'play none none reverse',
           },
-        }
+        },
       );
     }
 
@@ -91,7 +91,7 @@ const FooterSection = () => {
             start: 'top 90%',
             toggleActions: 'play none none reverse',
           },
-        }
+        },
       );
     }
 
@@ -152,22 +152,31 @@ const FooterSection = () => {
                     </a>
                   ) : (
                     ''
-                  )
+                  ),
                 )}
               </div>
             </div>
             <div className='space-y-3'>
               <div className='flex items-center space-x-3 text-gray-50'>
                 <MapPin className='w-3 h-3 text-white' />
-                <span className='text-sm'>123 cunningham office address here</span>
+                <div className='block space-y-1'>
+                  <p className='text-sm text-gray-100'>Giruliu G. 20</p>
+                  <p className='text-sm text-gray-100'>LT-12123 Vilnius </p>
+                  <p className='font-bold text-sm'>Lithuania.</p>
+                </div>
               </div>
               <div className='flex items-center space-x-3 text-gray-50'>
                 <Phone className='w-3 h-3 text-white' />
-                <span className='text-sm'>+1 (555) 123-4567</span>
+                <div className='block space-y-1'>
+                  <p className='text-sm'>+37061961057</p>
+                  <p className='text-sm'>+31628543180</p>
+                  <p className='text-sm'>+2347066863267</p>
+                </div>
+                <span className='text-sm'></span>
               </div>
               <div className='flex items-center space-x-3 text-gray-50'>
                 <Mail className='w-3 h-3 text-white' />
-                <span className='text-sm'>hello@cunninhamtravels.com</span>
+                <span className='text-sm'>info@cunninghamglobaltravels.com</span>
               </div>
             </div>
           </div>

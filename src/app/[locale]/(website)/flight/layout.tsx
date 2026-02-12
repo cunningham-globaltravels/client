@@ -14,7 +14,7 @@ const FlightLayout = ({ children }: ILayoutProps) => {
     <section>
       <div className='flight-wrapper'>
         <div className='flex flex-col gap-8 lg:gap-16'>
-          <div className='wrapper-content h-auto lg:h-[12rem]'>
+          <div className='wrapper-content h-auto lg:h-48'>
             <div className='wrapper-overlay'>
               <div className='container row-rep py-20 lg:py-12'>
                 <div className='pb-0'>
@@ -49,15 +49,7 @@ const FlightLayout = ({ children }: ILayoutProps) => {
               </div>
             </div>
           </div>
-          <div className='w-full xl:max-w-267.5 mx-auto px-4 sm:px-6 lg:px-8 min-h-screen lg:mt-20'>
-            {children}
-            {/* <div className='grid grid-cols-1 lg:grid-cols-4 lg:gap-8 '>
-              <div className='hidden lg:block w-full mx-auto'>
-                <FlightSideSection />
-              </div>
-              <main className='col-span-3'>{children}</main>
-            </div> */}
-          </div>
+          <div className='w-full xl:max-w-267.5 mx-auto px-4 sm:px-6 lg:px-8 min-h-screen lg:mt-20'>{children}</div>
         </div>
       </div>
     </section>

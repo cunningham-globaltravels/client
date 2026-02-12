@@ -2,7 +2,7 @@
 'use client';
 
 import { Controller, Control, FieldValues, Path } from 'react-hook-form';
-import { FormItem, FormMessage } from '@/components/ui/form';
+import { FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { CountrySelectField } from './server-controls/CountrySelectField';
 
 interface IRHFCountrySelectProps<T extends FieldValues> {
@@ -24,6 +24,7 @@ export function RHFCountrySelect<T extends FieldValues>({
       name={name}
       render={({ field }) => (
         <FormItem>
+          <FormLabel>{label}</FormLabel>
           <CountrySelectField
             value={field.value}
             onChange={(country) => {
