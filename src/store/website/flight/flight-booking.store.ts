@@ -7,9 +7,11 @@ import { persist } from 'zustand/middleware';
 interface IFlightBookingState {
   flightId: string | null;
   confirmPriceState: TTiqwaConfirmPriceResponse | null;
+  flightSearchUrl: string | null;
   flightSearchParamState: FlightSearchQuery | null;
   setConfirmPriceState: (payload: TTiqwaConfirmPriceResponse, flightId: string) => void;
   setFlightSearchParamState: (payload: FlightSearchQuery) => void;
+  setFlightSearchUrl: (searchUrl: string) => void;
   resetFlightBooking: () => void;
 }
 
@@ -19,8 +21,10 @@ export const useFlightBookingStore = create<IFlightBookingState>()(
       flightId: null,
       confirmPriceState: null,
       flightSearchParamState: null,
+      flightSearchUrl: null,
       setConfirmPriceState: (payload, flightId) => set({ confirmPriceState: payload, flightId }),
       setFlightSearchParamState: (payload) => set({ flightSearchParamState: payload }),
+      setFlightSearchUrl: (searchUrl) => set({ flightSearchUrl: searchUrl }),
       resetFlightBooking: () => set({ flightId: null, confirmPriceState: null, flightSearchParamState: null }),
     }),
     {

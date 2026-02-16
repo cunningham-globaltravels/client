@@ -250,11 +250,11 @@ figure {
 }
 
 .price-range .bg-primary {
-  @apply !bg-[#E63A24];
+  @apply bg-[#E63A24]!;
 }
 
 .display-progress::before {
-  @apply content-[""] block absolute w-full h-[2px] bg-[#DADFE6] -translate-y-2/4 left-0 top-[4px] z-1;
+  @apply content-[""] block absolute w-full h-0.5 bg-[#DADFE6] -translate-y-2/4 left-0 top-[4px] z-1;
 }
 
 .static-options {

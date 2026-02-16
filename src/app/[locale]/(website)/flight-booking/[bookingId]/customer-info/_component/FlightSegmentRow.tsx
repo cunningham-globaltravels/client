@@ -12,13 +12,15 @@ const FlightSegmentRow = ({ segment }: { segment: TConfirmPriceSegment }) => {
       initial={{ opacity: 0, x: -8 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.25 }}
-      className='rounded-lg bg-transparent p-4'
+      className='rounded-lg bg-transparent p-2 md:p-4'
     >
-      <div className='flex justify-between items-start'>
-        <div className='flex items-center gap-3 mb-4'>
+      <div className='flex flex-col md:flex-row justify-baseline md:justify-between items-start'>
+        <div className='flex items-center gap-3 mb-1 md:mb-4'>
           <Image
             src={segment.airline_details.logo}
             alt={segment.airline_details.name}
+            width={24}
+            height={24}
             className='h-6 w-6 object-contain'
           />
           {/* <img src={segment.airline_details.logo} alt='' className='h-6 w-6 object-contain' /> */}
@@ -27,76 +29,54 @@ const FlightSegmentRow = ({ segment }: { segment: TConfirmPriceSegment }) => {
             <span className='font-extralight text-gray-600'>{`(${segment.flight_number})`}</span>
           </div>
         </div>
-        <div className='flex items-end justify-end'>
-          <span className='text-blue-600 font-medium'>Economy - Class N</span>
+        <div>
+          <span className='text-orange-600 text-sm lg:text-base font-medium'>{`${segment.cabin_type.toUpperCase()} class`}</span>
         </div>
       </div>
       <div className='border rounded-sm p-3 bg-gray-100'>
-        <div className='grid grid-cols-[80px_1fr_320px] gap-0'>
+        <div className='grid grid-cols-1 md:grid-cols-[80px_1fr_320px] gap-0'>
           {/* Timeline */}
-          <div className='flex justify-center pt-2'>
+          <div className='hidden md:flex justify-center pt-2'>
             <VerticalDottedLine />
           </div>
           {/* Times & Locations */}
-          <div className='space-y-4'>
+          {/* <div className='flex flex-row md:flex-col items-start gap-2'> */}
+          <div className='grid md:grid-cols-1 grid-cols-3 items-start gap-2'>
             <div className='block space-y-0'>
-              <p className='text-lg font-semibold'>{format(new Date(segment.departure_time), 'HH:mm')}</p>
-              <div className='flex items-start gap-2'>
+              <p className='text-base md:text-lg font-semibold leading-[150%]'>
+                {format(new Date(segment.departure_time), 'HH:mm')}
+              </p>
+              <div className='flex flex-col md:flex-row items-start gap-2'>
                 <p className='mt-1.5 font-medium text-sm leading-3'>
                   {truncateText(segment.airport_from_details.city, 12)}
                 </p>
-                <span className='font-bold text-base'>·</span>
-                <p className='mt-1.75 font-normal text-sm leading-2.5'>{segment.airport_from_details.iata_code}</p>
+                <span className='hidden md:block font-bold text-base'>·</span>
+                <p className='hidden md:block mt-1.75 font-normal text-sm leading-2.5'>
+                  {segment.airport_from_details.iata_code}
+                </p>
               </div>
               <p className='text-muted-foreground text-sm truncate'>{truncateText(segment.airport_from, 16)}</p>
             </div>
-            <p className='text-sm text-orange-600 font-bold'>{segment.duration} min</p>
+            <p className='text-sm text-orange-600 font-bold mt-6 md:mt-0'>{segment.duration} min</p>
             <div className='block space-y-0'>
               <p className='text-lg font-semibold'>{format(new Date(segment.arrival_time), 'HH:mm')}</p>
               <div className='flex items-start gap-2'>
                 <p className='mt-1.5 font-medium text-sm leading-3'>
                   {truncateText(segment.airport_to_details.city, 12)}
                 </p>
-                <span className='font-bold text-base'>·</span>
-                <p className='text-muted-foreground text-sm truncate'>{segment.airport_to_details.iata_code}</p>
+                <span className='hidden font-bold text-base'>·</span>
+                <p className='hidden text-muted-foreground text-sm truncate'>{segment.airport_to_details.iata_code}</p>
               </div>
               <p className='text-muted-foreground text-sm truncate'>{truncateText(segment.airport_to, 16)}</p>
             </div>
           </div>
           {/* Baggage */}
-          <div className='flex items-start gap-2 lg:mt-16'>
-            <p className='text-muted-foreground'>BAGGAGE:</p>
-            <p className=' font-semibold text-base leading-3.5 mt-0.5'>{segment.baggage}</p>
+          <div className='flex items-start gap-2 mt-8 lg:mt-16'>
+            <p className='text-sm md:text-base leading-5 text-muted-foreground font-semibold'>BAGGAGE:</p>
+            <p className='font-semibold text-sm md:text-base leading-3.5 mt-0.5'>{segment.baggage}</p>
           </div>
-          {/* <div>
-          <p className='font-semibold'>{format(new Date(segment.departure_time), 'HH:mm')}</p>
-          <p className='text-xs text-muted-foreground'>{segment.airport_from_details.iata_code}</p>
-        </div> */}
-          {/* <div className='text-center'>
-          <p className='text-xs text-muted-foreground'>{segment.duration} min</p>
-          <div className='h-px bg-border my-1' />
-        </div> */}
-          {/* <div>
-          <p className='font-semibold'>{format(new Date(segment.arrival_time), 'HH:mm')}</p>
-          <p className='text-xs text-muted-foreground'>{segment.airport_to_details.iata_code}</p>
-        </div> */}
         </div>
       </div>
-
-      {/* <div className='mt-4 text-sm grid grid-cols-2 gap-4'>
-        <div>
-          <p className='text-muted-foreground'>From</p>
-          <p>{segment.airport_from_details.name}</p>
-        </div>
-        <div>
-          <p className='text-muted-foreground'>To</p>
-          <p>{segment.airport_to_details.name}</p>
-        </div>
-        <div>
-          <p className='text-muted-foreground'>Baggage</p>
-          <p>{segment.baggage}</p>
-        </div>
-      </div> */}
     </motion.div>
   );
 };

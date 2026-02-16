@@ -5,6 +5,16 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig: NextConfig = {
   /* config options here */
   //output: 'standalone',
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'image.tiqwa.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 const withNextIntl = createNextIntlPlugin();
 

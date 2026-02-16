@@ -24,6 +24,7 @@ import { getFormErrorMessages } from '@/lib/helper/get-form-error.helper';
 import { buildFlightSearchUrl, FlightSearchQuery } from '@/lib/types/flight-search/flight-search-url';
 import { parseFlightSearchParams } from '@/lib/types/flight-search/flight-search-parser';
 import { getErrorMessage } from '@/utils/errors';
+import { useFlightBookingStore } from '@/store/website/flight/flight-booking.store';
 
 const FlightSession = () => {
   const router = useRouter();
@@ -54,6 +55,8 @@ const FlightSession = () => {
     watch,
     formState: { isSubmitting, errors },
   } = flightForm;
+
+  const setSearchURL = useFlightBookingStore((state) => state.setFlightSearchUrl);
 
   useEffect(() => {
     const searchParamsProfile = Object.fromEntries(searchParams.entries()) as FlightSearchQuery;
@@ -98,6 +101,7 @@ const FlightSession = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2500));
       const flight_search_url = buildFlightSearchUrl(data.flightType, data);
+      setSearchURL(flight_search_url);
       router.push(flight_search_url);
     } catch (err) {
       const message = getErrorMessage(err);

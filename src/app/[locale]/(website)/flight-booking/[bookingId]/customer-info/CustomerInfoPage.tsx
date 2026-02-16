@@ -139,12 +139,14 @@ const CustomerInfoPage = ({
       transition={{ duration: 0.35 }}
       className='w-full grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6'
     >
-      <div className='w-full flex flex-col item-start gap-4'>
+      <div className='order-2 md:order-1 w-full flex flex-col item-start gap-4'>
         <FlightDetailsCard data={data_profile} />
         <ImportantNotice />
         <CustomerBookingForm flightId={flight_id} searchParams={search_param} />
       </div>
-      <FareSummaryCard data={data_profile} params={search_param} />
+      <div className='order-1 md:order-2 w-full4'>
+        <FareSummaryCard data={data_profile} params={search_param} />
+      </div>
     </motion.div>
   );
 };

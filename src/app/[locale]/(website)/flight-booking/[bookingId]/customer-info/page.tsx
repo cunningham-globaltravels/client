@@ -1,17 +1,15 @@
 // src/[locale]/(website)/flight-booking/[bookingId]/customer-info/page.tsx
 'use client';
 
-import { useParams, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import CustomerInfoPage from './CustomerInfoPage';
 import { useFlightBookingStore } from '@/store/website/flight/flight-booking.store';
-import { useEffect, useState } from 'react';
-
-// interface ICustomerFlightBookingProps {
-//   params: { flightId: string };
-//   searchParams: { reqKey?: string };
-// }
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 export default function CustomerFlightBookingPage() {
+  const router = useRouter();
   const [isValidSession, setIsValidSession] = useState(true);
 
   const params = useParams();
@@ -25,6 +23,8 @@ export default function CustomerFlightBookingPage() {
     flightId: storedFlightId,
     confirmPriceState,
     flightSearchParamState: flSearchParams,
+    flightSearchUrl: flightsearchURL,
+    resetFlightBooking: resetAll,
   } = useFlightBookingStore();
 
   useEffect(() => {
@@ -45,11 +45,31 @@ export default function CustomerFlightBookingPage() {
     console.log('Customer Booking Information', confirmPriceState);
   }, [confirmPriceState, flSearchParams, storedFlightId, flightIdFromUrl]);
 
+  const handleBackToFlightSearch = () => {
+    resetAll();
+    if (flightsearchURL) router.push(flightsearchURL!);
+    else router.back();
+  };
+
   if (!isValidSession) {
     return (
-      <div className='p-8 text-center text-white'>
-        <h2 className='text-2xl font-bold mb-4'>Session expired or invalid</h2>
-        <p className='font-light'>Please start a new flight search.</p>
+      <div className='block space-y-2 p-8 text-center text-white mb-8'>
+        <h2 className='text-base md:text-xl lg:text-2xl font-bold mb-4 leading-[150%]'>Session expired or invalid</h2>
+        <p className='font-light'>Click on the Go Back button to start a new flight search.</p>
+        <div className='inline md:hidden w-full'>
+          <Button
+            onClick={handleBackToFlightSearch}
+            variant={'default'}
+            className='bg-orange-600 hover:bg-orange-800 text-white cursor-pointer'
+            asChild
+          >
+            <div className='flex items-start gap-4'>
+              <ArrowLeft className='h-4 w-4 mt-1' />
+              <span className='text-base leading-5 capitalize'>Back to flight search</span>
+            </div>
+          </Button>
+        </div>
+
         {/* You can add a button to /flight/search/... here */}
       </div>
     );
@@ -59,12 +79,20 @@ export default function CustomerFlightBookingPage() {
     return <div className='p-10 font-bold text-center text-white'>Loading flight details...</div>;
   }
   return (
-    <div className='flex flex-col gap-8 max-w-7xl mx-auto px-4 py-8'>
-      {/* You can show summary / price info here if you want */}
-      {/* <div className='bg-gray-50 p-5 rounded-lg border'>
-        <h2 className='text-xl font-semibold mb-2'>Selected Flight</h2>
-        <pre className='text-sm overflow-auto'>{JSON.stringify(confirmPriceState?.outbound?.[0], null, 2)}</pre>
-      </div> */}
+    <div className='flex flex-col gap-8 w-full lg:max-w-7xl mx-auto px-4 py-8'>
+      <div className='flex justify-center items-center md:hidden w-full'>
+        <Button
+          onClick={handleBackToFlightSearch}
+          variant={'default'}
+          className='bg-orange-600 hover:bg-orange-800 text-white cursor-pointer'
+          asChild
+        >
+          <div className='flex items-start gap-4'>
+            <ArrowLeft className='h-4 w-4 mt-1' />
+            <span className='text-base leading-5 capitalize'>Back to flight search</span>
+          </div>
+        </Button>
+      </div>
       <CustomerInfoPage flight_id={storedFlightId!} data_profile={confirmPriceState} search_param={flSearchParams!} />
     </div>
   );

@@ -167,12 +167,14 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
             <CardTitle className='py-0'>
               <div className='flex items-start justify-baseline gap-3'>
                 <NotebookPenIcon size={28} color='#E17100' />
-                <div className='block space-y-2'>
-                  <p className='mt-0.5 font-bold text-xl leading-6 text-gray-800'>Passenger Information</p>
-                  <p className='mb-6 text-gray-600'>
+                <div className='block space-y-1 md:space-y-2'>
+                  <p className='mt-0.5 font-bold text-base md:text-xl leading-[150%] text-gray-800'>
+                    Passenger Information
+                  </p>
+                  <p className='mb-6 text-gray-600 text-sm md:text-lg leading-[150%]'>
                     Please provide details for{' '}
-                    {adultCount > 0 ? (adultCount > 1 ? `${adultCount} Adults ` : `${adultCount} Adult `) : undefined}
-                    {childCount > 0 ? (childCount > 1 ? `${childCount} Children` : `${childCount} Child`) : undefined}
+                    {adultCount > 0 ? (adultCount > 1 ? `${adultCount} adults ` : `${adultCount} adult `) : undefined}
+                    {childCount > 0 ? (childCount > 1 ? `${childCount} children` : `${childCount} child`) : undefined}
                   </p>
                 </div>
               </div>
@@ -184,15 +186,15 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                 <AccordionItem key={field.id} value={`p-${index}`}>
                   <AccordionTrigger className={`py-0 ${index > 0 ? 'mt-8' : undefined}`}>
                     <div className='flex items-center gap-2'>
-                      <p>
+                      <p className='mt-0.5 font-bold text-base md:text-xl lg:text-2xl leading-[150%] text-gray-800'>
                         Passenger {index + 1} ({field.passengerType})
                       </p>
                       {isPassengerComplete(form.watch(`passengers.${index}`)) && (
-                        <span className='text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full'>✓ Complete</span>
+                        <span className='text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full'>✓ Complete</span>
                       )}
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className='grid grid-cols-1 md:grid-cols-2 gap-4 pt-4'>
+                  <AccordionContent className='flex flex-col gap-4 pt-4'>
                     <div className='w-full my-2'>
                       <RadioGroupField<TBookingFormInput>
                         name={`passengers.${index}.title`}
@@ -202,103 +204,86 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                         label='Gender'
                       />
                     </div>
-                    <div className='col-span-2 w-full lg:max-w-[80%]'>
-                      <InputField<TBookingFormInput>
-                        name={`passengers.${index}.email`}
-                        control={control}
-                        type='email'
-                        label='Email'
-                      />
-                    </div>
-                    <FormField
-                      control={control}
-                      name={`passengers.${index}.phone_number`}
-                      render={({ field }) => (
-                        <FormItem className='col-span-2 w-full md:max-w-[60%]'>
-                          <FormControl>
-                            <PhoneInput
-                              defaultCountry='NG'
-                              international
-                              value={field.value}
-                              onChange={(val) => {
-                                field.onChange(val);
-                                if (val) {
-                                  form.clearErrors(`passengers.${index}.phone_number`);
-                                }
-                              }}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <InputField<TBookingFormInput>
-                      name={`passengers.${index}.firstName`}
-                      control={control}
-                      label='First Name'
-                      placeholder='First Name'
-                    />
-                    <InputField<TBookingFormInput>
-                      name={`passengers.${index}.lastName`}
-                      control={control}
-                      label='Last Name'
-                      placeholder='Last Name'
-                    />
-                    <div className='w-full block space-y-2.5'>
-                      <Label>Gender</Label>
-                      <Select
-                        onValueChange={(v) => form.setValue(`passengers.${index}.gender`, v as 'Male' | 'Female')}
-                      >
-                        <SelectTrigger className='w-full'>
-                          <SelectValue placeholder='Gender' />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {['Male', 'Female'].map((g) => (
-                            <SelectItem key={g} value={g}>
-                              {g}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                      <div className='mt-2 w-full'>
+                        <InputField<TBookingFormInput>
+                          name={`passengers.${index}.email`}
+                          control={control}
+                          type='email'
+                          label='Email'
+                        />
+                      </div>
+                      <div className='w-full'>
+                        <FormField
+                          control={control}
+                          name={`passengers.${index}.phone_number`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className='font-medium text-sm leading-[150%]'>Phone Number</FormLabel>
+                              <FormControl>
+                                <PhoneInput
+                                  defaultCountry='NG'
+                                  international
+                                  value={field.value}
+                                  onChange={(val) => {
+                                    field.onChange(val);
+                                    if (val) {
+                                      form.clearErrors(`passengers.${index}.phone_number`);
+                                    }
+                                  }}
+                                  className='w-full md:max-w-[85%] text-sm'
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
 
-                    <InputField<TBookingFormInput>
-                      name={`passengers.${index}.passportNumber`}
-                      control={control}
-                      label='Passport Number'
-                      placeholder='Passport Number'
-                    />
-                    <div className='col-span-2 w-full flex flex-col md:flex-row items-start gap-2'>
-                      {/* <FormField
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                      <InputField<TBookingFormInput>
+                        name={`passengers.${index}.firstName`}
                         control={control}
-                        name={`passengers.${index}.dateOfBirth`}
-                        render={({ field }) => (
-                          <FormItem className='w-full'>
-                            <FormControl>
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <Button variant='outline' className='w-full justify-start text-left font-normal'>
-                                    {field.value ? (
-                                      format(new Date(field.value), 'PPP')
-                                    ) : (
-                                      <span className='text-muted-foreground'>Date of birth</span>
-                                    )}
-                                  </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className='w-auto p-0'>
-                                  <Calendar
-                                    mode='single'
-                                    selected={field.value ? new Date(field.value) : undefined}
-                                    onSelect={field.onChange}
-                                    disabled={(date) => date > new Date()}
-                                    initialFocus
-                                  />
-                                </PopoverContent>
-                              </Popover>
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      /> */}
+                        label='First Name'
+                        placeholder='First Name'
+                      />
+                      <InputField<TBookingFormInput>
+                        name={`passengers.${index}.lastName`}
+                        control={control}
+                        label='Last Name'
+                        placeholder='Last Name'
+                      />
+                    </div>
+
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                      <div className='w-full block space-y-2.5'>
+                        <Label>Gender</Label>
+                        <Select
+                          onValueChange={(v) => form.setValue(`passengers.${index}.gender`, v as 'Male' | 'Female')}
+                        >
+                          <SelectTrigger className='w-full'>
+                            <SelectValue placeholder='Gender' />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {['Male', 'Female'].map((g) => (
+                              <SelectItem key={g} value={g}>
+                                {g}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <InputField<TBookingFormInput>
+                        name={`passengers.${index}.passportNumber`}
+                        control={control}
+                        label='Passport Number'
+                        placeholder='Passport Number'
+                      />
+                    </div>
+
+                    <div className='w-full flex flex-col md:flex-row items-start gap-2'>
                       <DatePickerField<TBookingFormInput>
                         name={`passengers.${index}.dateOfBirth`}
                         control={control}
@@ -317,17 +302,19 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                         label='Passport Expiration'
                       />
                     </div>
-                    <RHFCountrySelect<TBookingFormInput>
-                      control={control}
-                      name={`passengers.${index}.nationalityCountry`}
-                      label='Nationality'
-                    />
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                      <RHFCountrySelect<TBookingFormInput>
+                        control={control}
+                        name={`passengers.${index}.nationalityCountry`}
+                        label='Nationality'
+                      />
 
-                    <RHFCountrySelect<TBookingFormInput>
-                      control={control}
-                      name={`passengers.${index}.issuingCountry`}
-                      label='Issuing Country'
-                    />
+                      <RHFCountrySelect<TBookingFormInput>
+                        control={control}
+                        name={`passengers.${index}.issuingCountry`}
+                        label='Issuing Country'
+                      />
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -340,10 +327,10 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
               <div className='flex items-start justify-baseline gap-3'>
                 <Edit3Icon className='mt-1' size={20} color='#E17100' />
                 <div className='block space-y-2'>
-                  <p className='mt-0.5 font-bold text-xl leading-6 text-gray-800 bg'>
+                  <p className='mt-0.5 font-bold text-sm md:text-base lg:text-xl leading-[150%] text-gray-800 bg'>
                     Traveller Information & Contact Details
                   </p>
-                  <span className='font-light text-gray-500 text-sm leading-3.5'>
+                  <span className='font-light text-gray-500 text-xs md:text-sm leading-[150%]'>
                     We will send you your booking confirmation to these contact details
                   </span>
                   <Button
@@ -366,7 +353,6 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
             </CardTitle>
           </CardHeader>
           <CardContent className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            {/* <Input placeholder='Email' {...register('contact.email')} /> */}
             <div className='w-full mt-1'>
               <InputField<TBookingFormInput> name={'contact.email'} control={control} type='email' label='Email' />
             </div>

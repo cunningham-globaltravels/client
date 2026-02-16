@@ -34,7 +34,7 @@ export default function RadioGroupField<T extends FieldValues>({
             <RadioGroup
               value={field.value}
               onValueChange={field.onChange}
-              className={`flex ${orientation === 'vertical' ? 'flex-col gap-2' : 'flex-row gap-4'}`}
+              className={`flex ${orientation === 'vertical' ? 'flex-col gap-2' : 'flex-row flex-wrap gap-4'}`}
             >
               {options.map(({ value, label }) => (
                 <div key={value} className='flex items-center space-x-2'>

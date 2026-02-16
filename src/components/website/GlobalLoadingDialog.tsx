@@ -20,7 +20,7 @@ export function GlobalLoadingDialog({
 }: IGlobalLoadingDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className='max-w-sm sm:max-w-md bg-white/80 backdrop-blur-sm border-none shadow-2xl'>
+      <DialogContent className='bg-white/80 backdrop-blur-sm border-none shadow-2xl'>
         <AnimatePresence>
           {open && (
             <motion.div

@@ -16,15 +16,15 @@ const FlightDetailsCard = ({ data }: { data: TTiqwaConfirmPriceResponse }) => {
       <Card>
         <Accordion type='single' defaultValue='flight' collapsible>
           <AccordionItem value='flight'>
-            <AccordionTrigger className='px-6 py-4'>
+            <AccordionTrigger className='px-3 py-4'>
               <div className='block space-y-1.5'>
                 <div className='flex items-start justify-baseline gap-4'>
-                  <h2 className='text-xl font-semibold'>{first.airport_from_details.city}</h2>
+                  <h2 className='text-base md:text-xl font-semibold'>{first.airport_from_details.city}</h2>
                   <ArrowLeftRight />
-                  <h2 className='text-xl font-semibold'>{last.airport_to_details.city}</h2>
+                  <h2 className='text-base md:text-xl font-semibold'>{last.airport_to_details.city}</h2>
                 </div>
 
-                <p className='text-sm text-muted-foreground'>
+                <p className='text-sm text-muted-foreground px-2'>
                   {data.outbound_stops} Stop • {Math.floor(data.total_duration / 60)}h {data.total_duration % 60}m
                 </p>
               </div>
