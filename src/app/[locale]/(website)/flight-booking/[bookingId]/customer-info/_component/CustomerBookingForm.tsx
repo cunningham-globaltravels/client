@@ -202,7 +202,7 @@ const CustomerBookingForm = ({
         travellerCount: totalPassengers,
         userRegistrying: bookingFlight,
       };
-      console.log('Customer Booking Profile: ', serverBooking);
+      //console.log('Customer Booking Profile: ', serverBooking);
       toast.success(`Booking Profile ${JSON.stringify(serverBooking)}`);
 
       initiateBooking.mutateAsync(serverBooking);
