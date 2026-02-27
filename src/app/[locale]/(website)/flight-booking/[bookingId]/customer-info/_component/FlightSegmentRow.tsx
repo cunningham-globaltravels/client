@@ -55,7 +55,9 @@ const FlightSegmentRow = ({ segment }: { segment: TConfirmPriceSegment }) => {
                   {segment.airport_from_details.iata_code}
                 </p>
               </div>
-              <p className='text-muted-foreground text-sm truncate'>{truncateText(segment.airport_from, 16)}</p>
+              <p className='text-muted-foreground text-sm truncate'>
+                {segment.airport_from ? truncateText(segment.airport_from, 16) : undefined}
+              </p>
             </div>
             <p className='text-sm text-orange-600 font-bold mt-6 md:mt-0'>{segment.duration} min</p>
             <div className='block space-y-0'>
@@ -67,7 +69,9 @@ const FlightSegmentRow = ({ segment }: { segment: TConfirmPriceSegment }) => {
                 <span className='hidden font-bold text-base'>·</span>
                 <p className='hidden text-muted-foreground text-sm truncate'>{segment.airport_to_details.iata_code}</p>
               </div>
-              <p className='text-muted-foreground text-sm truncate'>{truncateText(segment.airport_to, 16)}</p>
+              <p className='text-muted-foreground text-sm truncate'>
+                {segment.airport_to ? truncateText(segment.airport_to, 16) : undefined}
+              </p>
             </div>
           </div>
           {/* Baggage */}

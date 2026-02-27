@@ -5,7 +5,7 @@ import {
 import { TiqwaFetcherUtil } from '@/lib/utils/server/tiqwa-fetcher.util';
 
 export async function airportsUtilityServiceGET(query: string): Promise<TTiqwaAirportListResponse> {
-  console.log('Response from Tiqwa Server:', query);
+  //console.log('Response from Tiqwa Server:', query);
   const response = await TiqwaFetcherUtil(`/airports?keyword=${query}`, {
     method: 'GET',
   });

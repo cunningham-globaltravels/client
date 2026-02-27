@@ -1,16 +1,18 @@
+// src/app/[locale]/(website)/flight-booking/[bookingId]/customer-info/_component/CustomerBookingForm.tsx
+
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import {
-  PassengerInfoFormSchema,
-  ContactDetailsSchema,
+  BookingFormSchema,
+  TBookingProviderRequestForm,
+  TBookingRegistrationForm,
   TPassengerInfoForm,
 } from '@/lib/schemas/website/flight-booking.schema';
 import { FlightSearchQuery } from '@/lib/types/flight-search/flight-search-url';
@@ -19,39 +21,51 @@ import PhoneInput from 'react-phone-number-input';
 import { Edit3Icon, NotebookPenIcon } from 'lucide-react';
 import InputField from '@/components/defaults/InputField';
 import RadioGroupField, { RadioOption } from '@/components/defaults/RadioGroupField';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { getFormErrorMessages } from '@/lib/helper/get-form-error.helper';
 import DatePickerField from '@/components/defaults/DatePickerField';
 import { Separator } from '@/components/ui/separator';
 import { RHFCountrySelect } from '@/components/defaults/RHFCountrySelect';
+//import { loadStripe } from '@stripe/stripe-js';
+import { useInitiateFlightBooking } from '@/lib/hooks/website/flight-booking.hook';
+import { validateAndNormalizePhone } from '@/lib/utils/phone.util';
+import { IAlertProps } from '@/components/custom/AlertDisplayField';
+import { getErrorMessage } from '@/utils/errors';
+import { toast } from 'sonner';
+
+//const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 interface ICustomerBookingFormProps {
   flightId: string;
+  totalAmount: number;
   searchParams: FlightSearchQuery;
+  departureCity?: string;
+  arrivalCity?: string;
+  departureDate?: Date;
 }
 
-type TBookingFormInput = {
-  passengers: Array<{
-    passengerType: 'adult' | 'child';
-    title: 'Mr' | 'Mrs' | 'Ms' | 'Miss' | 'Mstr';
-    email: string;
-    phone_number: string;
-    firstName: string;
-    lastName: string;
-    gender: 'Male' | 'Female';
-    dateOfBirth?: string | Date;
-    passportNumber: string;
-    issuingDate?: string | Date;
-    passportExpiry?: string | Date;
-    nationalityCountry: string;
-    issuingCountry: string;
-    holder: boolean;
-  }>;
-  contact: {
-    email: string;
-    phone_number: string;
-  };
-};
+// type TBookingFormInput = {
+//   passengers: Array<{
+//     passengerType: 'adult' | 'child';
+//     title: 'Mr' | 'Mrs' | 'Ms' | 'Miss' | 'Mstr';
+//     email: string;
+//     phone_number: string;
+//     firstName: string;
+//     lastName: string;
+//     gender: 'Male' | 'Female';
+//     dateOfBirth?: string | Date;
+//     passportNumber: string;
+//     issuingDate?: string | Date;
+//     passportExpiry?: string | Date;
+//     nationalityCountry: string;
+//     issuingCountry: string;
+//     holder: boolean;
+//   }>;
+//   contact: {
+//     email: string;
+//     phone_number: string;
+//   };
+// };
 
 const titleOptions: RadioOption[] = [
   {
@@ -76,21 +90,23 @@ const titleOptions: RadioOption[] = [
   },
 ];
 
-const BookingFormSchema = z.object({
-  passengers: z.array(PassengerInfoFormSchema),
-  contact: ContactDetailsSchema,
-});
+const CustomerBookingForm = ({
+  flightId,
+  searchParams,
+  departureCity,
+  arrivalCity,
+  departureDate,
+  totalAmount = 0.0,
+}: ICustomerBookingFormProps) => {
+  const [alert, setAlert] = useState<IAlertProps>({ type: null });
 
-//type TBookingFormInput = z.infer<typeof BookingFormSchema>;
-
-const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormProps) => {
-  console.log('Flight ID:', flightId);
+  console.log('Customer Booking', alert);
   const adultCount = Number(searchParams?.adult ?? 1);
   const childCount = Number(searchParams?.child ?? 0);
   const totalPassengers = adultCount + childCount;
 
   const defaultPassengers: TPassengerInfoForm[] = Array.from({ length: totalPassengers }, (_, index) => ({
-    passengerType: index + 1 < adultCount ? 'adult' : 'child',
+    passengerType: index + 1 < adultCount ? 'child' : 'adult',
     title: 'Mr',
     email: '',
     phone_number: '',
@@ -106,7 +122,7 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
     holder: true,
   }));
 
-  type PassengerDraft = TBookingFormInput['passengers'][number];
+  type PassengerDraft = TBookingRegistrationForm['passengers'][number];
   const isPassengerComplete = (p: PassengerDraft) => {
     if (!p) return false;
     return (
@@ -121,7 +137,9 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
     );
   };
 
-  const form = useForm<TBookingFormInput>({
+  const initiateBooking = useInitiateFlightBooking();
+
+  const form = useForm<TBookingRegistrationForm>({
     resolver: zodResolver(BookingFormSchema),
     defaultValues: {
       passengers: defaultPassengers,
@@ -145,23 +163,97 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
 
   const errorMessages = useMemo(() => getFormErrorMessages(errors), [errors]);
 
-  const onSubmit = (values: TBookingFormInput) => {
-    const parsed = BookingFormSchema.parse(values); // now dates are real Date objects
-    console.log(parsed);
+  const onSubmit = async (values: TBookingRegistrationForm) => {
+    try {
+      const parsed = BookingFormSchema.parse(values); // now dates are real Date objects
+
+      // 1️⃣ Create booking in your backend
+      const validatePhoneNumber = validateAndNormalizePhone(parsed.contact.phone_number, 'NG');
+      if (!validatePhoneNumber.isValid) {
+        setAlert({
+          type: 'error',
+          title: 'Failed to validate phone number',
+          description: validatePhoneNumber.error,
+        });
+        return;
+      }
+      if (!validatePhoneNumber.normalized) {
+        setAlert({
+          type: 'error',
+          title: 'Failed!!!',
+          description: 'Phone number cannot be empty',
+        });
+        return;
+      }
+
+      const bookingFlight: TBookingRegistrationForm = {
+        ...parsed,
+        contact: {
+          email: parsed.contact.email,
+          phone_number: validatePhoneNumber.normalized,
+        },
+      };
+      const serverBooking: TBookingProviderRequestForm = {
+        flightId,
+        totalAmount,
+        origin: departureCity,
+        destination: arrivalCity,
+        travelDate: departureDate,
+        travellerCount: totalPassengers,
+        userRegistrying: bookingFlight,
+      };
+      console.log('Customer Booking Profile: ', serverBooking);
+      toast.success(`Booking Profile ${JSON.stringify(serverBooking)}`);
+
+      initiateBooking.mutateAsync(serverBooking);
+      setAlert({
+        type: 'success',
+        title: 'Registration Booking Successful',
+        description: 'Flight Booking Created!',
+      });
+
+      // 1️⃣ Create booking in your backend
+      // const bookingRes = await fetch('/api/booking/create', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     flightId,
+      //     totalAmount,
+      //     form: parsed,
+      //   }),
+      // });
+
+      // const bookingData = await bookingRes.json();
+      // if (!bookingRes.ok) {
+      //   throw new Error(bookingData.error);
+      // }
+
+      //// 2️⃣ Create Stripe session
+      // const stripeRes = await fetch('/api/stripe/checkout-session', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     bookingId: bookingData.bookingId,
+      //   }),
+      // });
+
+      // const { sessionId } = await stripeRes.json();
+
+      // 3️⃣ Redirect to Stripe Checkout
+      // const stripe = await stripePromise;
+
+      // if (!stripe) throw new Error('Stripe failed to load');
+
+      // await stripe.redirectToCheckout({ sessionId });
+    } catch (err) {
+      const message = getErrorMessage(err);
+      console.error(`Book Ticket error: ${message}`);
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
-        {errorMessages.length > 0 && (
-          <div className='mb-4 rounded-md border border-red-200 bg-red-50 p-4'>
-            <ul className='list-disc pl-5 space-y-1 text-sm text-red-700'>
-              {errorMessages.map((msg, idx) => (
-                <li key={idx}>{msg}</li>
-              ))}
-            </ul>
-          </div>
-        )}
         <Card className='gap-2'>
           <CardHeader>
             <CardTitle className='py-0'>
@@ -196,7 +288,7 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                   </AccordionTrigger>
                   <AccordionContent className='flex flex-col gap-4 pt-4'>
                     <div className='w-full my-2'>
-                      <RadioGroupField<TBookingFormInput>
+                      <RadioGroupField<TBookingRegistrationForm>
                         name={`passengers.${index}.title`}
                         control={control}
                         options={titleOptions}
@@ -206,7 +298,7 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                       <div className='mt-2 w-full'>
-                        <InputField<TBookingFormInput>
+                        <InputField<TBookingRegistrationForm>
                           name={`passengers.${index}.email`}
                           control={control}
                           type='email'
@@ -242,13 +334,13 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                     </div>
 
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                      <InputField<TBookingFormInput>
+                      <InputField<TBookingRegistrationForm>
                         name={`passengers.${index}.firstName`}
                         control={control}
                         label='First Name'
                         placeholder='First Name'
                       />
-                      <InputField<TBookingFormInput>
+                      <InputField<TBookingRegistrationForm>
                         name={`passengers.${index}.lastName`}
                         control={control}
                         label='Last Name'
@@ -275,7 +367,7 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                         </Select>
                       </div>
 
-                      <InputField<TBookingFormInput>
+                      <InputField<TBookingRegistrationForm>
                         name={`passengers.${index}.passportNumber`}
                         control={control}
                         label='Passport Number'
@@ -284,32 +376,32 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
                     </div>
 
                     <div className='w-full flex flex-col md:flex-row items-start gap-2'>
-                      <DatePickerField<TBookingFormInput>
+                      <DatePickerField<TBookingRegistrationForm>
                         name={`passengers.${index}.dateOfBirth`}
                         control={control}
                         label='Date of birth'
                       />
                       <Separator className='hidden lg:inline' orientation='vertical' />
-                      <DatePickerField<TBookingFormInput>
+                      <DatePickerField<TBookingRegistrationForm>
                         name={`passengers.${index}.issuingDate`}
                         control={control}
                         label='Issuance Date'
                       />
                       <Separator className='hidden lg:inline' orientation='vertical' />
-                      <DatePickerField<TBookingFormInput>
+                      <DatePickerField<TBookingRegistrationForm>
                         name={`passengers.${index}.passportExpiry`}
                         control={control}
                         label='Passport Expiration'
                       />
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-                      <RHFCountrySelect<TBookingFormInput>
+                      <RHFCountrySelect<TBookingRegistrationForm>
                         control={control}
                         name={`passengers.${index}.nationalityCountry`}
                         label='Nationality'
                       />
 
-                      <RHFCountrySelect<TBookingFormInput>
+                      <RHFCountrySelect<TBookingRegistrationForm>
                         control={control}
                         name={`passengers.${index}.issuingCountry`}
                         label='Issuing Country'
@@ -354,7 +446,12 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
           </CardHeader>
           <CardContent className='grid grid-cols-1 md:grid-cols-2 gap-6'>
             <div className='w-full mt-1'>
-              <InputField<TBookingFormInput> name={'contact.email'} control={control} type='email' label='Email' />
+              <InputField<TBookingRegistrationForm>
+                name={'contact.email'}
+                control={control}
+                type='email'
+                label='Email'
+              />
             </div>
             <FormField
               control={control}
@@ -379,9 +476,23 @@ const CustomerBookingForm = ({ flightId, searchParams }: ICustomerBookingFormPro
             />
           </CardContent>
         </Card>
-        <Button size='lg' className='w-full bg-[#E63A24] hover:bg-[#c5311e] text-white font-bold'>
-          Continue to Payment
+        <Button
+          type='submit'
+          size='lg'
+          className='w-full bg-[#E63A24] hover:bg-[#c5311e] text-white font-bold cursor-pointer'
+          disabled={initiateBooking.isPending}
+        >
+          {initiateBooking.isPending ? 'Initiating Booking request ...' : 'Continue to Payment'}
         </Button>
+        {errorMessages.length > 0 && (
+          <div className='mb-4 rounded-md border border-red-200 bg-red-50 p-4'>
+            <ul className='list-disc pl-5 space-y-1 text-sm text-red-700'>
+              {errorMessages.map((msg, idx) => (
+                <li key={idx}>{msg}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </form>
     </Form>
   );

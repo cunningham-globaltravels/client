@@ -17,3 +17,11 @@ export const getStopLabel = (stops: number): string => {
   return `${stops}+ stops`;
 };
 export const getStopValue = (stops: number): number => Math.min(stops, 2);
+
+export const formatDateDDMMYY = (date: Date): string => {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = String(date.getFullYear()).slice(-2);
+
+  return `${day}${month}${year}`;
+};

@@ -7,7 +7,7 @@ const today = new Date();
 const calculateAge = (dob: Date) => Math.floor((Date.now() - dob.getTime()) / (1000 * 60 * 60 * 24 * 365.25));
 
 const dateInputSchema = z.preprocess(
-  (val: string | Date | undefined) => {
+  (val: Date | undefined) => {
     if (!val) return undefined;
     if (val instanceof Date) return val;
     if (typeof val === 'string') {
@@ -86,5 +86,22 @@ export const PassengerInfoFormSchema = z
     }
   });
 
+export const BookingFormSchema = z.object({
+  passengers: z.array(PassengerInfoFormSchema),
+  contact: ContactDetailsSchema,
+});
+
+export const BookingProviderRequestSchema = z.object({
+  flightId: z.string(),
+  totalAmount: z.coerce.number().positive(),
+  origin: z.string().optional(),
+  destination: z.string().optional(),
+  travelDate: z.coerce.date().optional(),
+  travellerCount: z.number().optional(),
+  userRegistrying: BookingFormSchema,
+});
+
 export type TContactDetailsForm = z.infer<typeof ContactDetailsSchema>;
 export type TPassengerInfoForm = z.infer<typeof PassengerInfoFormSchema>;
+export type TBookingRegistrationForm = z.infer<typeof BookingFormSchema>;
+export type TBookingProviderRequestForm = z.infer<typeof BookingProviderRequestSchema>;

@@ -14,7 +14,7 @@ export function tiqwaNormalizeAirports(airports: TTiqwaAirportListResponse): Tiq
 
     map.get(airport.country)!.cities.push({
       name: airport.city,
-      city_code: airport.city_code,
+      city_code: airport.city_code ? airport.city_code : '',
     });
   }
 

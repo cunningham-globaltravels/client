@@ -61,7 +61,9 @@ export function LocationPickerField({ value, onSelect }: ILocationPickerProps) {
   function handleSelect(airport: TTiqwaAirportUtility) {
     tiqwaAddRecentSearch(airport);
     setRecent(tiqwaGetRecentSearches());
-    onSelect(airport.city_code, airport);
+    if (airport.city_code) {
+      onSelect(airport.city_code, airport);
+    }
     setOpen(false);
   }
 

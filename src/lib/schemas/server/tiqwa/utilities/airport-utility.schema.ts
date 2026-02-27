@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { IATACityCodeSchema } from '../../shared/travel.schema';
+import { IATACityCodeSchema, TiqwaIataCodeSchema } from '../../shared/travel.schema';
 
 /**********************************************************
  * ----------------- Airport Response ----------------- *
@@ -8,7 +8,7 @@ export const TiqwaAirportUtilitySchema = z.object({
   city: z.string(),
   city_code: IATACityCodeSchema,
   country: z.string(),
-  iata_code: IATACityCodeSchema,
+  iata_code: TiqwaIataCodeSchema,
   name: z.string(),
 });
 

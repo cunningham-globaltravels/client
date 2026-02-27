@@ -5,13 +5,22 @@ export const IATACityCodeSchema = z
   .trim()
   .length(3, 'IATA city code must be exactly 3 characters')
   .regex(/^[A-Z]{3}$/, 'IATA city code must be A–Z letters only')
-  .transform((v) => v.toUpperCase());
+  .transform((v) => v.toUpperCase())
+  .nullable();
 
 export const IATACountryCodeSchema = z
   .string()
   .trim()
   .length(2, 'IATA country code must be exactly 3 characters')
   .regex(/^[A-Z]{2}$/, 'IATA country code must be A–Z letters only')
+  .transform((v) => v.toUpperCase())
+  .nullable();
+
+export const TiqwaIataCodeSchema = z
+  .string()
+  .trim()
+  .min(3)
+  .max(20)
   .transform((v) => v.toUpperCase());
 
 /**

@@ -12,7 +12,8 @@ export function tiqwaCreateSearchIndex(countries: TiqwaCountry[]): ISearchItem[]
     country.cities.map((city) => ({
       country: country.name,
       city: city.name,
-      city_code: city.city_code,
+      city_code: city.city_code ? city.city_code : '',
+      airport_name: city.name,
       label: `${city.name}, ${country.name} (${city.city_code})`,
     })),
   );

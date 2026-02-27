@@ -97,7 +97,7 @@ export function LocationPickerField2({ value, onChange }: LocationPickerProps) {
         <Command shouldFilter={false}>
           <CommandInput placeholder='Search city or country...' value={query} onValueChange={setQuery} />
           <ScrollArea className='h-72'>
-            {recent.length > 0 && query.length === 0 && (
+            {recent.length > 0 && !query && query!.length === 0 && (
               <CommandGroup heading='Recent'>
                 {recent.map((item, _idx) => (
                   <CommandItem key={`${item.city_code}_${_idx}`} onSelect={() => handleSelect(item)}>
@@ -113,7 +113,7 @@ export function LocationPickerField2({ value, onChange }: LocationPickerProps) {
               {!isFetching &&
                 orderedCountries.map((country, _idx) => (
                   <CommandGroup key={`${country}_${_idx}`} heading={country} className='py-2'>
-                    <div className='grid grid-cols-[repeat(1,80px)] lg:grid-cols-[repeat(3,120px)]'>
+                    <div className='grid grid-cols-[repeat(1,80px)] lg:grid-cols-[repeat(2,220px)]'>
                       {grouped[country]
                         .sort((a, b) => a.city.localeCompare(b.city))
                         .map((item, _idx1) => (
@@ -122,11 +122,12 @@ export function LocationPickerField2({ value, onChange }: LocationPickerProps) {
                             value={`${item.city} ${item.city_code}`}
                             onSelect={() => handleSelect(item)} // ✅ FIXED
                           >
-                            <div className='w-full flex flex-row gap-1'>
-                              <h6 className='text-sm leading-[150%] text-neutral-800'>{item.city}</h6>
-                              <span className='text-muted-foreground text-xs'>({item.city_code})</span>
-                              {/* <span>{item.city}</span>
-                            <span className='text-muted-foreground text-sm'>{item.city_code}</span> */}
+                            <div className='space-y-0'>
+                              <div className='w-full flex flex-row gap-1'>
+                                <h6 className='text-sm leading-[150%] text-neutral-800'>{item.city}</h6>
+                                <span className='text-muted-foreground text-xs'>({item.city_code})</span>
+                              </div>
+                              {/* <span className='text-neutral-400 text-[10px]'>{item.name}</span> */}
                             </div>
                           </CommandItem>
                         ))}

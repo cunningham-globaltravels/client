@@ -142,7 +142,14 @@ const CustomerInfoPage = ({
       <div className='order-2 md:order-1 w-full flex flex-col item-start gap-4'>
         <FlightDetailsCard data={data_profile} />
         <ImportantNotice />
-        <CustomerBookingForm flightId={flight_id} searchParams={search_param} />
+        <CustomerBookingForm
+          flightId={flight_id}
+          totalAmount={data_profile.amount}
+          searchParams={search_param}
+          departureDate={data_profile.outbound[0].departure_time}
+          departureCity={data_profile.outbound[0].airport_from_details.city}
+          arrivalCity={data_profile.outbound[data_profile.outbound.length - 1].airport_to_details.city}
+        />
       </div>
       <div className='order-1 md:order-2 w-full4'>
         <FareSummaryCard data={data_profile} params={search_param} />

@@ -25,8 +25,8 @@ export function buildFlightSearchUrl(flightType: FlightTypeEnum, data: TFlightFo
     cabin: data.guestNumber.type,
     adult: String(data.guestNumber.adult),
     child: String(data.guestNumber.child),
-    from_code: data.leavingFrom.city_code,
-    to_code: data.goingTo.city_code,
+    from_code: data.leavingFrom.city_code ?? '',
+    to_code: data.goingTo.city_code ?? '',
     origin_country: data.leavingFrom.country,
     destination_country: data.goingTo.country,
   };

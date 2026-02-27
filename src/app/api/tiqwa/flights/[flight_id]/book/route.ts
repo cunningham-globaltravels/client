@@ -1,3 +1,5 @@
+// src/app/api/tiqwa/flights/[flight_id]/book/route.ts
+
 import { bookFlightServicePOST } from '@/app/service/tiqwa/bookFlight.service';
 import { TiqwaFlightBookingRequestSchema } from '@/lib/schemas/server/tiqwa/booking/flight-booking-request.schema';
 import { failure, success } from '@/lib/utils/server/response.util';
